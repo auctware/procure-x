@@ -1,0 +1,1 @@
+The dashboard provides a comprehensive overview of all procurement activities with real-time metrics and quick access to key modules.

@@ -1,0 +1,1 @@
+The Unified Reporting Dashboard consolidates over thirty traditional reports into one intelligent interface. Instead of navigating multiple screens, access Daily Operations, Farmer Analytics, Procurement Analytics, and Payment Analytics from a single dashboard. Generate any report on-demand with dynamic filters, interactive visualizations, and cross-report analysis capabilities.

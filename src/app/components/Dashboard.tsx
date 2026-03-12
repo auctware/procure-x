@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { 
   ChevronLeft, ChevronRight, Bell, Search, User, Settings, LogOut, 
   LayoutDashboard, Users, ShoppingCart, DollarSign, 
@@ -56,9 +56,11 @@ interface MenuItem {
 export default function Dashboard({ onLogout }: DashboardProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [notificationMenuOpen, setNotificationMenuOpen] = useState(false);
   const [activeView, setActiveView] = useState('Home');
   const [selectedFarmerId, setSelectedFarmerId] = useState<string | null>(null);
   const [isDesktop, setIsDesktop] = useState(false);
+  const notificationRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const checkDesktop = () => {
@@ -68,6 +70,21 @@ export default function Dashboard({ onLogout }: DashboardProps) {
     window.addEventListener('resize', checkDesktop);
     return () => window.removeEventListener('resize', checkDesktop);
   }, []);
+
+  // Close notification dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (notificationRef.current && !notificationRef.current.contains(event.target as Node)) {
+        setNotificationMenuOpen(false);
+      }
+    }
+    if (notificationMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [notificationMenuOpen]);
   const [menuItems, setMenuItems] = useState<MenuItem[]>([
     { icon: Home, label: 'Home', active: true, hasSubmenu: false },
     { 
@@ -367,8 +384,8 @@ export default function Dashboard({ onLogout }: DashboardProps) {
       {/* Sidebar */}
       <aside
         className={`fixed top-0 left-0 bottom-0 transition-all duration-300 z-40 flex flex-col ${
-          sidebarOpen ? 'w-64' : 'w-0 lg:w-20'
-        }`}
+          sidebarOpen ? 'w-72' : 'w-0 lg:w-24'
+        } ${!sidebarOpen ? 'lg:overflow-hidden' : ''}`}
         style={{ 
           backgroundColor: '#FFFFFF', 
           borderRight: '1px solid #E5EBEF',
@@ -376,7 +393,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         }}
       >
         {/* Home Menu & Collapse Button */}
-        <div className="h-16 flex items-center justify-between px-4 border-b" style={{ borderColor: '#E5EBEF' }}>
+        <div className="h-20 flex items-center justify-between px-5 border-b" style={{ borderColor: '#E5EBEF' }}>
           {sidebarOpen ? (
             <>
               {(() => {
@@ -391,7 +408,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                         submenuOpen: false
                       })));
                     }}
-                    className="flex items-center gap-3 px-3 py-2 rounded-lg transition-all flex-1"
+                    className="flex items-center gap-4 px-4 py-3 rounded-xl transition-all flex-1"
                     style={{
                       backgroundColor: homeItem.active ? '#F2FCFB' : 'transparent',
                       color: homeItem.active ? '#027F83' : '#666',
@@ -407,8 +424,8 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                       }
                     }}
                   >
-                    <homeItem.icon className="w-5 h-5" style={{ minWidth: '20px' }} />
-                    <span style={{ fontSize: '14px', fontWeight: '500' }}>
+                    <homeItem.icon className="w-6 h-6" style={{ minWidth: '24px' }} />
+                    <span style={{ fontSize: '16px', fontWeight: '600' }}>
                       {homeItem.label}
                     </span>
                   </button>
@@ -416,16 +433,26 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               })()}
               <button
                 onClick={() => setSidebarOpen(false)}
-                className="p-1.5 rounded-lg transition-colors"
-                style={{ color: '#666' }}
+                className="p-2 rounded-full transition-colors flex items-center justify-center relative"
+                style={{ 
+                  color: '#222',
+                  backgroundColor: '#FFFFFF',
+                  width: '36px',
+                  height: '36px',
+                  border: '1px solid #E5EBEF',
+                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                  marginTop: '4px'
+                }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = '#F7F9FA';
+                  e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.15)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.backgroundColor = '#FFFFFF';
+                  e.currentTarget.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
                 }}
               >
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronLeft className="w-5 h-5" style={{ color: '#222', marginTop: '2px' }} />
               </button>
             </>
           ) : (
@@ -442,7 +469,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                         submenuOpen: false
                       })));
                     }}
-                    className="hidden lg:flex items-center justify-center flex-1 p-2 rounded-lg transition-all"
+                    className="hidden lg:flex items-center justify-center flex-1 p-3 rounded-xl transition-all"
                     style={{
                       backgroundColor: homeItem.active ? '#F2FCFB' : 'transparent',
                       color: homeItem.active ? '#027F83' : '#666',
@@ -458,33 +485,43 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                       }
                     }}
                   >
-                    <homeItem.icon className="w-5 h-5" />
+                    <homeItem.icon className="w-6 h-6" />
                   </button>
                 ) : null;
               })()}
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="hidden lg:block p-1.5 rounded-lg transition-colors"
-                style={{ color: '#666' }}
+                className="hidden lg:block p-2 rounded-full transition-colors flex items-center justify-center relative"
+                style={{ 
+                  color: '#222',
+                  backgroundColor: '#FFFFFF',
+                  width: '36px',
+                  height: '36px',
+                  border: '1px solid #E5EBEF',
+                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                  marginTop: '4px'
+                }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = '#F7F9FA';
+                  e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.15)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.backgroundColor = '#FFFFFF';
+                  e.currentTarget.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
                 }}
               >
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="w-5 h-5" style={{ color: '#222', marginTop: '2px' }} />
               </button>
             </>
           )}
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 py-4 px-3 overflow-y-auto">
+        <nav className="flex-1 py-6 px-4 overflow-y-auto">
           {menuItems.filter(item => item.label !== 'Home').map((item, index) => {
             const originalIndex = menuItems.findIndex(m => m.label === item.label);
             return (
-            <div key={item.label} className="mb-1">
+            <div key={item.label} className="mb-2">
               <button
                 onClick={() => {
                   if (item.hasSubmenu) {
@@ -499,7 +536,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                     })));
                   }
                 }}
-                className="w-full flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg transition-all group"
+                className="w-full flex items-center justify-between gap-4 px-4 py-3.5 rounded-xl transition-all group"
                 style={{
                   backgroundColor: item.active ? '#F2FCFB' : 'transparent',
                   color: item.active ? '#027F83' : '#666',
@@ -515,17 +552,17 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                   }
                 }}
               >
-                <div className="flex items-center gap-3 flex-1 min-w-0">
-                  <item.icon className="w-5 h-5" style={{ minWidth: '20px' }} />
+                <div className="flex items-center gap-4 flex-1 min-w-0">
+                  <item.icon className="w-6 h-6" style={{ minWidth: '24px' }} />
                   {sidebarOpen && (
-                    <span style={{ fontSize: '14px', fontWeight: '500' }} className="truncate">
+                    <span style={{ fontSize: '15px', fontWeight: '600' }} className="truncate">
                       {item.label}
                     </span>
                   )}
                 </div>
                 {sidebarOpen && item.hasSubmenu && (
                   <ChevronDown 
-                    className="w-4 h-4 transition-transform" 
+                    className="w-5 h-5 transition-transform" 
                     style={{ 
                       transform: item.submenuOpen ? 'rotate(180deg)' : 'rotate(0deg)',
                       color: item.active ? '#027F83' : '#999'
@@ -536,12 +573,12 @@ export default function Dashboard({ onLogout }: DashboardProps) {
 
               {/* Submenu */}
               {item.submenuOpen && sidebarOpen && item.hasSubmenu && (
-                <div className="ml-8 mt-1 space-y-1">
+                <div className="ml-10 mt-2 space-y-1.5">
                   {item.submenu?.map((submenuItem, subIndex) => {
                     // Handle separator
                     if (submenuItem === '---') {
                       return (
-                        <div key={`separator-${subIndex}`} className="my-2">
+                        <div key={`separator-${subIndex}`} className="my-3">
                           <div className="h-px bg-[#E5EBEF] mx-2"></div>
                         </div>
                       );
@@ -552,8 +589,8 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                       return (
                         <button
                           key={`${submenuItem}-${subIndex}`}
-                          className="w-full text-left px-3 py-2 rounded-lg transition-colors"
-                          style={{ fontSize: '13px', color: '#666' }}
+                          className="w-full text-left px-4 py-2.5 rounded-lg transition-colors"
+                          style={{ fontSize: '14px', color: '#666', fontWeight: '500' }}
                           onMouseEnter={(e) => {
                             e.currentTarget.style.backgroundColor = '#F7F9FA';
                           }}
@@ -577,8 +614,8 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                     return (
                       <div key={`${subMenu.label}-${subIndex}`}>
                         <button
-                          className="w-full text-left px-3 py-2 rounded-lg transition-colors flex items-center justify-between"
-                          style={{ fontSize: '13px', color: '#666', fontWeight: '600' }}
+                          className="w-full text-left px-4 py-2.5 rounded-lg transition-colors flex items-center justify-between"
+                          style={{ fontSize: '14px', color: '#666', fontWeight: '600' }}
                           onMouseEnter={(e) => {
                             e.currentTarget.style.backgroundColor = '#F7F9FA';
                           }}
@@ -602,21 +639,21 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                         >
                           <span>{subMenu.label}</span>
                           <ChevronRight 
-                            className={`w-4 h-4 transition-transform ${subMenu.submenuOpen ? 'rotate-90' : ''}`}
+                            className={`w-5 h-5 transition-transform ${subMenu.submenuOpen ? 'rotate-90' : ''}`}
                           />
                         </button>
                         
                         {/* Sub-submenu */}
                         {subMenu.submenuOpen && subMenu.submenu && (
-                          <div className="ml-4 mt-1 space-y-1">
+                          <div className="ml-6 mt-1.5 space-y-1">
                             {subMenu.submenu.map((subSubItem) => (
                               <button
                                 key={subSubItem.viewName}
-                                className="w-full text-left px-3 py-2 rounded-lg transition-colors"
+                                className="w-full text-left px-4 py-2 rounded-lg transition-colors"
                                 style={{ 
-                                  fontSize: '12px', 
+                                  fontSize: '13px', 
                                   color: activeView === subSubItem.viewName ? '#027F83' : '#666',
-                                  fontWeight: activeView === subSubItem.viewName ? '600' : '400',
+                                  fontWeight: activeView === subSubItem.viewName ? '600' : '500',
                                   backgroundColor: activeView === subSubItem.viewName ? '#E6F7F7' : 'transparent'
                                 }}
                                 onMouseEnter={(e) => {
@@ -652,9 +689,9 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         </nav>
 
         {/* Help Section */}
-        <div className="px-3 pb-3">
+        <div className={`${sidebarOpen ? 'px-4' : 'lg:px-2'} pb-4`}>
           <button
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all ${!sidebarOpen && 'lg:justify-center'}`}
+            className={`w-full flex items-center ${sidebarOpen ? 'gap-4' : 'lg:justify-center'} ${sidebarOpen ? 'px-4' : 'lg:px-2'} py-3.5 rounded-xl transition-all`}
             style={{ color: '#666' }}
             onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor = '#F7F9FA';
@@ -663,9 +700,9 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               e.currentTarget.style.backgroundColor = 'transparent';
             }}
           >
-            <HelpCircle className="w-5 h-5" style={{ minWidth: '20px' }} />
+            <HelpCircle className="w-6 h-6 flex-shrink-0" style={{ minWidth: '24px' }} />
             {sidebarOpen && (
-              <span style={{ fontSize: '14px', fontWeight: '500' }}>
+              <span style={{ fontSize: '15px', fontWeight: '600' }}>
                 Help
               </span>
             )}
@@ -674,30 +711,30 @@ export default function Dashboard({ onLogout }: DashboardProps) {
 
         {/* Profile Section */}
         <div 
-          className="border-t px-3 py-3"
+          className="border-t px-4 py-4"
           style={{ borderColor: '#E5EBEF' }}
         >
-          <div className={`flex items-center gap-3 ${!sidebarOpen && 'lg:justify-center'}`}>
+          <div className={`flex items-center gap-4 ${!sidebarOpen && 'lg:justify-center'}`}>
             <div
-              className="w-9 h-9 rounded-full flex items-center justify-center cursor-pointer"
-              style={{ backgroundColor: '#027F83', minWidth: '36px' }}
+              className="w-12 h-12 rounded-full flex items-center justify-center cursor-pointer"
+              style={{ backgroundColor: '#E6F7F7', minWidth: '48px' }}
               onClick={() => !sidebarOpen && setUserMenuOpen(!userMenuOpen)}
             >
-              <span style={{ color: '#FFFFFF', fontSize: '14px', fontWeight: '600' }}>
+              <span style={{ color: '#027F83', fontSize: '16px', fontWeight: '700' }}>
                 PX
               </span>
             </div>
             {sidebarOpen && (
               <>
                 <div className="flex-1 min-w-0">
-                  <p style={{ fontSize: '14px', fontWeight: '600', color: '#222', lineHeight: '1.2' }} className="truncate">
+                  <p style={{ fontSize: '15px', fontWeight: '600', color: '#222', lineHeight: '1.2' }} className="truncate">
                     ProcureX
                   </p>
                 </div>
                 <div className="relative">
                   <button
                     onClick={() => setUserMenuOpen(!userMenuOpen)}
-                    className="p-1 rounded transition-colors"
+                    className="p-2 rounded-lg transition-colors"
                     style={{ color: '#666' }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.backgroundColor = '#F7F9FA';
@@ -706,7 +743,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                       e.currentTarget.style.backgroundColor = 'transparent';
                     }}
                   >
-                    <MoreVertical className="w-4 h-4" />
+                    <MoreVertical className="w-5 h-5" />
                   </button>
 
                   {/* Profile Dropdown - Expanded State */}
@@ -815,27 +852,49 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         </div>
       </aside>
 
+      {/* Floating Help Button */}
+      <button
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110"
+        style={{
+          backgroundColor: '#027F83',
+          color: '#FFFFFF',
+          boxShadow: '0 4px 12px rgba(2, 127, 131, 0.3)'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.backgroundColor = '#00897B';
+          e.currentTarget.style.boxShadow = '0 6px 16px rgba(2, 127, 131, 0.4)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = '#027F83';
+          e.currentTarget.style.boxShadow = '0 4px 12px rgba(2, 127, 131, 0.3)';
+        }}
+        title="Help"
+      >
+        <HelpCircle className="w-6 h-6" />
+      </button>
+
       {/* Main Content */}
       <div 
-        className="flex-1 flex flex-col min-w-0" 
+        className="flex-1 flex flex-col min-w-0 w-full" 
         style={{ 
           minHeight: '100vh',
-          marginLeft: sidebarOpen ? '256px' : (isDesktop ? '80px' : '0px')
+          marginLeft: sidebarOpen && isDesktop ? '288px' : (!sidebarOpen && isDesktop ? '96px' : '0px'),
+          transition: 'margin-left 0.3s ease'
         }}
       >
         {/* Header */}
         <header
-          className="h-16 flex items-center justify-between px-6 sticky top-0 z-30"
+          className="h-16 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-30"
           style={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid #E5EBEF' }}
         >
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
             {/* Logo */}
-            <img src={logoImage} alt="ProcureX" className="h-24 w-auto" />
+            <img src={logoImage} alt="ProcureX" className="h-16 sm:h-20 lg:h-24 w-auto" />
             
             {/* Mobile Menu Button */}
             <button
               onClick={() => setSidebarOpen(true)}
-              className="lg:hidden p-2 rounded-lg transition-colors"
+              className="lg:hidden p-2 rounded-lg transition-colors flex-shrink-0"
               style={{ color: '#666' }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.backgroundColor = '#F7F9FA';
@@ -845,7 +904,6 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               }}
             >
               <ChevronRight className="w-5 h-5" />
-
             </button>
 
             {/* Search */}
@@ -880,22 +938,87 @@ export default function Dashboard({ onLogout }: DashboardProps) {
           {/* Right Side */}
           <div className="flex items-center gap-3">
             {/* Notifications */}
-            <button
-              className="relative p-2 rounded-lg transition-colors"
-              style={{ color: '#666' }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#F7F9FA';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent';
-              }}
-            >
-              <Bell className="w-5 h-5" />
-              <span
-                className="absolute top-1 right-1 w-2 h-2 rounded-full"
-                style={{ backgroundColor: '#E94545' }}
-              />
-            </button>
+            <div className="relative" ref={notificationRef}>
+              <button
+                onClick={() => setNotificationMenuOpen(!notificationMenuOpen)}
+                className="relative p-2 rounded-lg transition-colors cursor-pointer"
+                style={{ 
+                  color: '#666',
+                  backgroundColor: notificationMenuOpen ? '#F7F9FA' : 'transparent'
+                }}
+                onMouseEnter={(e) => {
+                  if (!notificationMenuOpen) {
+                    e.currentTarget.style.backgroundColor = '#F7F9FA';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!notificationMenuOpen) {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                  }
+                }}
+              >
+                <Bell className="w-5 h-5" />
+                <span
+                  className="absolute top-1 right-1 w-2 h-2 rounded-full"
+                  style={{ backgroundColor: '#E94545' }}
+                />
+              </button>
+              
+              {/* Notification Dropdown */}
+              {notificationMenuOpen && (
+                <div
+                  className="absolute top-full right-0 mt-2 w-80 rounded-lg shadow-xl overflow-hidden z-50 border-2"
+                  style={{ 
+                    backgroundColor: '#FFFFFF', 
+                    borderColor: '#E5EBEF',
+                    maxHeight: '400px',
+                    overflowY: 'auto'
+                  }}
+                >
+                  <div className="px-4 py-3 border-b" style={{ borderColor: '#E5EBEF' }}>
+                    <h3 style={{ fontSize: '16px', fontWeight: '700', color: '#222' }}>
+                      Notifications
+                    </h3>
+                  </div>
+                  <div className="py-2">
+                    {/* Sample Notifications */}
+                    <div className="px-4 py-3 hover:bg-gray-50 transition-colors cursor-pointer border-b" style={{ borderColor: '#F7F9FA' }}>
+                      <p style={{ fontSize: '14px', fontWeight: '600', color: '#222', marginBottom: '4px' }}>
+                        New farmer registration
+                      </p>
+                      <p style={{ fontSize: '12px', color: '#666' }}>
+                        2 hours ago
+                      </p>
+                    </div>
+                    <div className="px-4 py-3 hover:bg-gray-50 transition-colors cursor-pointer border-b" style={{ borderColor: '#F7F9FA' }}>
+                      <p style={{ fontSize: '14px', fontWeight: '600', color: '#222', marginBottom: '4px' }}>
+                        Payment processed
+                      </p>
+                      <p style={{ fontSize: '12px', color: '#666' }}>
+                        5 hours ago
+                      </p>
+                    </div>
+                    <div className="px-4 py-3 hover:bg-gray-50 transition-colors cursor-pointer" style={{ borderColor: '#F7F9FA' }}>
+                      <p style={{ fontSize: '14px', fontWeight: '600', color: '#222', marginBottom: '4px' }}>
+                        System update available
+                      </p>
+                      <p style={{ fontSize: '12px', color: '#666' }}>
+                        1 day ago
+                      </p>
+                    </div>
+                  </div>
+                  <div className="px-4 py-3 border-t text-center" style={{ borderColor: '#E5EBEF' }}>
+                    <button
+                      onClick={() => setNotificationMenuOpen(false)}
+                      className="text-sm font-semibold transition-colors hover:text-[#027F83]"
+                      style={{ color: '#027F83' }}
+                    >
+                      View All Notifications
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
 
             
 

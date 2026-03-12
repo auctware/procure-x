@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { 
   Search, User, Phone, Mail, MapPin, Calendar, Eye, 
-  MoreVertical, Filter, Download, ChevronDown, CheckCircle2,
+  MoreVertical, Filter, Download,
   Home, ChevronRight, Mic, X
 } from 'lucide-react';
 import CustomDropdown from '@/app/components/CustomDropdown';
@@ -277,7 +277,7 @@ export default function FarmerList({ onViewDetails }: FarmerListProps) {
 
 
   return (
-    <div className="p-8 pb-20" style={{ backgroundColor: '#FFFFFF', minHeight: '100vh' }}>
+    <div className="p-8 pb-20 overflow-y-auto" style={{ backgroundColor: '#FFFFFF', minHeight: '100vh' }}>
       {/* Breadcrumb */}
       <div className="mb-6 flex items-center gap-2" style={{ fontSize: '14px', color: '#666' }}>
         <Home className="w-4 h-4" style={{ color: '#027F83' }} />

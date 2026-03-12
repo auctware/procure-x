@@ -1,5 +1,5 @@
 import { 
-  User, Phone, Mail, MapPin, Calendar, Shield, FileText, 
+  User, Mail, MapPin, Calendar, Shield, FileText, 
   LandPlot, Building2, CreditCard, Package, CheckCircle2,
   Edit, Download, Share2, ArrowLeft, Smartphone, IdCard
 } from 'lucide-react';
@@ -111,7 +111,7 @@ export default function FarmerDetailsView({ farmerData, onBack, onEdit }: Farmer
   );
 
   return (
-    <div className="min-h-screen overflow-hidden flex flex-col" style={{ backgroundColor: '#FFFFFF', height: '100vh' }}>
+    <div className="min-h-screen flex flex-col overflow-y-auto" style={{ backgroundColor: '#FFFFFF', minHeight: '100vh' }}>
       {/* Header */}
       <div className="bg-white border-b-2" style={{ borderColor: '#E5EBEF' }}>
         <div className="max-w-7xl mx-auto px-6 py-4">
@@ -202,7 +202,7 @@ export default function FarmerDetailsView({ farmerData, onBack, onEdit }: Farmer
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-8 flex-1 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 80px)' }}>
+      <div className="max-w-7xl mx-auto px-6 py-8 pb-20 flex-1" style={{ width: '100%' }}>
         {/* Profile Header Card */}
         <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-xl p-6 mb-6 border-2" style={{ borderColor: '#027F83' }}>
           <div className="flex items-start gap-6">

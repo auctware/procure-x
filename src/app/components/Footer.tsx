@@ -36,7 +36,7 @@ export default function Footer() {
                 color: '#315B78',
               }}
             >
-              Sample Technologies
+              Auctware Technologies
             </span>
           </div>
           <p
@@ -66,7 +66,7 @@ export default function Footer() {
             Links
           </h4>
           <div className="flex flex-col gap-2">
-            {['About Us', 'Privacy Policy', 'Terms and Conditions', 'Tiffin Disclaimer'].map(
+            {['About Us', 'Privacy Policy', 'Terms and Conditions'].map(
               (item) => (
                 <button
                   key={item}
@@ -108,7 +108,7 @@ export default function Footer() {
             </h4>
             <p style={{ fontSize: '13px', color: '#315B78' }}>+91 90000 00000</p>
             <p style={{ fontSize: '13px', color: '#315B78' }}>
-              support@sample.com
+              support@auctware.in
             </p>
             <p style={{ fontSize: '12px', color: '#999999', marginTop: '4px' }}>
               09:00 AM - 06:00 PM, Mon - Sat
@@ -213,7 +213,7 @@ export default function Footer() {
       <div className="border-t" style={{ borderColor: '#E5EBEF' }}>
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between text-xs">
           <span style={{ color: '#999999' }}>
-            2026 Sample Technologies © All rights reserved
+            2026 Auctware Technologies © All rights reserved
           </span>
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}

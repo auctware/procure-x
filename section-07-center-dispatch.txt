@@ -1,0 +1,1 @@
+Center dispatch handles warehouse operations with shipment tracking, transportation management, delivery confirmation, and dispatch reporting.

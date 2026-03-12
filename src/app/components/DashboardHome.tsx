@@ -19,31 +19,31 @@ interface StatCardProps {
 function StatCard({ icon: Icon, label, value, bgColor, iconBgColor, iconColor, hasInfo }: StatCardProps) {
   return (
     <div 
-      className="relative rounded-xl p-6 transition-all hover:shadow-md cursor-pointer border"
+      className="relative rounded-xl p-4 sm:p-5 lg:p-6 transition-all hover:shadow-md cursor-pointer border"
       style={{ backgroundColor: bgColor, borderColor: '#E5EBEF' }}
     >
       {hasInfo && (
         <button 
-          className="absolute top-4 right-4 w-5 h-5 rounded-full flex items-center justify-center transition-all hover:scale-110"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 w-5 h-5 rounded-full flex items-center justify-center transition-all hover:scale-110"
           style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}
         >
           <Info className="w-3 h-3" style={{ color: '#666' }} />
         </button>
       )}
       
-      <div className="flex items-start gap-4">
+      <div className="flex items-start gap-3 sm:gap-4">
         <div 
-          className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0"
+          className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center flex-shrink-0"
           style={{ backgroundColor: iconBgColor }}
         >
-          <Icon className="w-7 h-7" style={{ color: iconColor }} />
+          <Icon className="w-6 h-6 sm:w-7 sm:h-7" style={{ color: iconColor }} />
         </div>
         
         <div className="flex-1 min-w-0">
-          <p style={{ fontSize: '13px', color: '#666', marginBottom: '8px', fontWeight: '500', lineHeight: '1.4' }}>
+          <p style={{ fontSize: '12px', color: '#666', marginBottom: '6px', fontWeight: '500', lineHeight: '1.4' }}>
             {label}
           </p>
-          <p style={{ fontSize: '22px', fontWeight: '700', color: '#315B78', lineHeight: '1' }}>
+          <p style={{ fontSize: '20px', fontWeight: '700', color: '#315B78', lineHeight: '1' }}>
             {value}
           </p>
         </div>
@@ -66,7 +66,7 @@ function CircularProgress({ value, label, color, size = 140 }: CircularProgressP
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
   return (
-    <div className="flex flex-col items-center gap-3">
+    <div className="flex flex-col items-center gap-2 sm:gap-3">
       <div className="relative" style={{ width: size, height: size }}>
         <svg className="w-full h-full transform -rotate-90">
           <circle
@@ -91,7 +91,7 @@ function CircularProgress({ value, label, color, size = 140 }: CircularProgressP
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span style={{ fontSize: '28px', fontWeight: '700', color: '#315B78', lineHeight: '1' }}>
+          <span style={{ fontSize: size <= 120 ? '24px' : '28px', fontWeight: '700', color: '#315B78', lineHeight: '1' }}>
             {value}
           </span>
           <span style={{ fontSize: '11px', color: '#999', marginTop: '4px' }}>
@@ -99,7 +99,7 @@ function CircularProgress({ value, label, color, size = 140 }: CircularProgressP
           </span>
         </div>
       </div>
-      <p style={{ fontSize: '13px', color: '#666', textAlign: 'center', lineHeight: '1.5', maxWidth: '140px', fontWeight: '500' }}>
+      <p style={{ fontSize: '12px', color: '#666', textAlign: 'center', lineHeight: '1.5', maxWidth: size <= 120 ? '120px' : '140px', fontWeight: '500' }}>
         {label}
       </p>
     </div>
@@ -107,7 +107,7 @@ function CircularProgress({ value, label, color, size = 140 }: CircularProgressP
 }
 
 export default function DashboardHome() {
-  const [selectedYear, setSelectedYear] = useState('2025 - 6 Yrs');
+  const [selectedYear, setSelectedYear] = useState('2025 - 26');
   const [selectedScheme, setSelectedScheme] = useState('MMFT FOR ETHANGK KHARIF 2025');
   const [selectedState, setSelectedState] = useState('All');
   const [yearDropdownOpen, setYearDropdownOpen] = useState(false);
@@ -150,14 +150,14 @@ export default function DashboardHome() {
   }, []);
 
   const statCards = [
-    { 
-      icon: CheckCircle2, 
-      label: 'SLA Registered', 
-      value: '8', 
-      bgColor: '#FFFFFF', 
-      iconBgColor: '#E6F7F7',
-      iconColor: '#027F83'
-    },
+    // { 
+    //   icon: CheckCircle2, 
+    //   label: 'SLA Registered', 
+    //   value: '8', 
+    //   bgColor: '#FFFFFF', 
+    //   iconBgColor: '#E6F7F7',
+    //   iconColor: '#027F83'
+    // },
     { 
       icon: Users, 
       label: 'Farmers Registered', 
@@ -174,14 +174,14 @@ export default function DashboardHome() {
       iconBgColor: '#FFE5E5',
       iconColor: '#E94545'
     },
-    { 
-      icon: Users, 
-      label: 'Total pre-registered farmers', 
-      value: '12,87,320', 
-      bgColor: '#FFFFFF',
-      iconBgColor: '#E6F7F7',
-      iconColor: '#027F83'
-    },
+    // { 
+    //   icon: Users, 
+    //   label: 'Total pre-registered farmers', 
+    //   value: '12,87,320', 
+    //   bgColor: '#FFFFFF',
+    //   iconBgColor: '#E6F7F7',
+    //   iconColor: '#027F83'
+    // },
     { 
       icon: Users, 
       label: 'Commodity wise pre-registered farmers', 
@@ -192,24 +192,24 @@ export default function DashboardHome() {
     },
     { 
       icon: Truck, 
-      label: 'Dispatch To Mill', 
+      label: 'Dispatch To Warehouse', 
       value: '0', 
       bgColor: '#FFFFFF',
       iconBgColor: '#FFF3E0',
       iconColor: '#FFA200'
     },
-    { 
-      icon: FileText, 
-      label: 'Registrations', 
-      value: '1', 
-      bgColor: '#FFFFFF',
-      iconBgColor: '#E3F2FD',
-      iconColor: '#003a5d',
-      hasInfo: true 
-    },
+    // { 
+    //   icon: FileText, 
+    //   label: 'Registrations', 
+    //   value: '1', 
+    //   bgColor: '#FFFFFF',
+    //   iconBgColor: '#E3F2FD',
+    //   iconColor: '#003a5d',
+    //   hasInfo: true 
+    // },
     { 
       icon: Factory, 
-      label: 'FACs/FPO Registered', 
+      label: 'FPO Registered', 
       value: '1', 
       bgColor: '#FFFFFF',
       iconBgColor: '#E3F2FD',
@@ -231,14 +231,14 @@ export default function DashboardHome() {
       iconBgColor: '#E6F7F7',
       iconColor: '#00897B'
     },
-    { 
-      icon: Wheat, 
-      label: 'Grill (MT)', 
-      value: '0', 
-      bgColor: '#FFFFFF',
-      iconBgColor: '#F3EDFF',
-      iconColor: '#7E57C2'
-    },
+    // { 
+    //   icon: Wheat, 
+    //   label: 'Grill (MT)', 
+    //   value: '0', 
+    //   bgColor: '#FFFFFF',
+    //   iconBgColor: '#F3EDFF',
+    //   iconColor: '#7E57C2'
+    // },
     { 
       icon: Activity, 
       label: 'Procurement (MT)', 
@@ -289,10 +289,10 @@ export default function DashboardHome() {
   };
 
   return (
-    <div className="p-8 overflow-y-auto" style={{ backgroundColor: '#FFFFFF' }}>
+    <div className="p-4 sm:p-6 lg:p-8 overflow-y-auto" style={{ backgroundColor: '#FFFFFF' }}>
       {/* Breadcrumb */}
-      <div className="mb-6 flex items-center gap-2" style={{ fontSize: '14px', color: '#666' }}>
-        <Home className="w-4 h-4" style={{ color: '#027F83' }} />
+      <div className="mb-4 sm:mb-6 flex items-center gap-2 flex-wrap" style={{ fontSize: '13px', color: '#666' }}>
+        <Home className="w-4 h-4 flex-shrink-0" style={{ color: '#027F83' }} />
         <button
           onClick={() => {
             // Navigate to home - you can add navigation logic here
@@ -303,28 +303,28 @@ export default function DashboardHome() {
         >
           Home
         </button>
-        <ChevronRight className="w-4 h-4" />
+        <ChevronRight className="w-4 h-4 flex-shrink-0" />
         <span style={{ fontWeight: '600', color: '#222' }}>Dashboard Overview</span>
       </div>
 
       {/* Filters Row */}
-      <div className="mb-8">
+      <div className="mb-6 sm:mb-8">
         <div 
-          className="rounded-xl p-6 border shadow-sm"
+          className="rounded-xl p-4 sm:p-6 border shadow-sm"
           style={{ backgroundColor: '#FFFFFF', borderColor: '#E5EBEF' }}
         >
-          <div className="flex items-center justify-between gap-6">
+          <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 lg:gap-6">
             {/* Left Side - Filters */}
-            <div className="flex items-center gap-6 flex-1">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 flex-1">
               {/* Year Selector */}
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
                 <label style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.8px', whiteSpace: 'nowrap' }}>
                   Year
                 </label>
-                <div className="relative" ref={yearRef}>
+                <div className="relative flex-1 sm:flex-initial" ref={yearRef}>
                   <button
                     onClick={() => setYearDropdownOpen(!yearDropdownOpen)}
-                    className="flex items-center gap-3 px-5 py-2.5 rounded-lg border-2 transition-all hover:border-[#027F83] hover:shadow-md"
+                    className="flex items-center gap-3 px-4 sm:px-5 py-2.5 rounded-lg border-2 transition-all hover:border-[#027F83] hover:shadow-md w-full sm:w-auto"
                     style={{
                       borderColor: yearDropdownOpen ? '#027F83' : '#E5EBEF',
                       backgroundColor: '#FFFFFF',
@@ -349,7 +349,7 @@ export default function DashboardHome() {
                       className="absolute top-full left-0 mt-2 w-full rounded-lg shadow-xl overflow-hidden z-50 border-2"
                       style={{ backgroundColor: '#FFFFFF', borderColor: '#027F83' }}
                     >
-                      {['2025 - 6 Yrs', '2024 - 5 Yrs', '2023 - 4 Yrs'].map((year) => (
+                      {['2025 - 26', '2024 - 25', '2023 - 24'].map((year) => (
                         <button
                           key={year}
                           onClick={() => {
@@ -383,21 +383,21 @@ export default function DashboardHome() {
               </div>
 
               {/* Scheme Selector */}
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
                 <label style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.8px', whiteSpace: 'nowrap' }}>
                   Scheme
                 </label>
-                <div className="relative" ref={schemeRef}>
+                <div className="relative flex-1 sm:flex-initial" ref={schemeRef}>
                   <button
                     onClick={() => setSchemeDropdownOpen(!schemeDropdownOpen)}
-                    className="flex items-center gap-3 px-5 py-2.5 rounded-lg border-2 transition-all hover:border-[#027F83] hover:shadow-md"
+                    className="flex items-center gap-3 px-4 sm:px-5 py-2.5 rounded-lg border-2 transition-all hover:border-[#027F83] hover:shadow-md w-full sm:w-auto"
                     style={{
                       borderColor: schemeDropdownOpen ? '#027F83' : '#E5EBEF',
                       backgroundColor: '#FFFFFF',
                       fontSize: '14px',
                       fontWeight: '600',
                       color: '#222',
-                      minWidth: '320px',
+                      minWidth: '280px',
                       height: '44px'
                     }}
                   >
@@ -449,14 +449,14 @@ export default function DashboardHome() {
               </div>
 
               {/* State Selector */}
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
                 <label style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.8px', whiteSpace: 'nowrap' }}>
                   State
                 </label>
-                <div className="relative" ref={stateRef}>
+                <div className="relative flex-1 sm:flex-initial" ref={stateRef}>
                   <button
                     onClick={() => setStateDropdownOpen(!stateDropdownOpen)}
-                    className="flex items-center gap-3 px-5 py-2.5 rounded-lg border-2 transition-all hover:border-[#027F83] hover:shadow-md"
+                    className="flex items-center gap-3 px-4 sm:px-5 py-2.5 rounded-lg border-2 transition-all hover:border-[#027F83] hover:shadow-md w-full sm:w-auto"
                     style={{
                       borderColor: stateDropdownOpen ? '#027F83' : '#E5EBEF',
                       backgroundColor: '#FFFFFF',
@@ -516,10 +516,10 @@ export default function DashboardHome() {
             </div>
 
             {/* Right Side - Customize Button */}
-            <div className="relative" ref={customizeRef}>
+            <div className="relative w-full sm:w-auto" ref={customizeRef}>
               <button
                 onClick={() => setCustomizeOpen(!customizeOpen)}
-                className="flex items-center gap-3 px-5 py-2.5 rounded-lg transition-all hover:shadow-md h-11"
+                className="flex items-center justify-center gap-3 px-5 py-2.5 rounded-lg transition-all hover:shadow-md h-11 w-full sm:w-auto"
                 style={{
                   backgroundColor: customizeOpen ? '#027F83' : '#FFFFFF',
                   color: customizeOpen ? '#FFFFFF' : '#027F83',
@@ -595,7 +595,7 @@ export default function DashboardHome() {
 
       {/* Stats Grid */}
       {visibleSections.stats && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-6 mb-6 sm:mb-8">
           {statCards.map((card, index) => (
             <StatCard key={index} {...card} />
           ))}
@@ -604,7 +604,7 @@ export default function DashboardHome() {
 
       {/* Pending Tasks & Payment Tracker */}
       {visibleSections.pendingTasks && visibleSections.paymentTracker && (
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-8">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 sm:gap-8 mb-6 sm:mb-8">
           {/* Pending Task Tracker */}
           <div
             className="rounded-xl overflow-hidden border"
@@ -616,65 +616,67 @@ export default function DashboardHome() {
                 Pending Task Tracker
               </h3>
             </div>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead style={{ backgroundColor: '#F7F9FA' }}>
-                  <tr>
-                    <th className="px-6 py-4 text-left" style={{ fontSize: '13px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                      Estate
-                    </th>
-                    <th className="px-6 py-4 text-center" style={{ fontSize: '13px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                      Count
-                    </th>
-                    <th className="px-6 py-4 text-left" style={{ fontSize: '13px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                      Process Name
-                    </th>
-                    <th className="px-6 py-4 text-left" style={{ fontSize: '13px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                      Date of Pending
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {pendingTasks.map((task, index) => (
-                    <tr 
-                      key={index} 
-                      className="border-t transition-colors hover:bg-gray-50" 
-                      style={{ borderColor: '#E5EBEF' }}
-                    >
-                      <td className="px-6 py-4" style={{ fontSize: '14px', fontWeight: '600', color: '#315B78' }}>
-                        {task.estate}
-                      </td>
-                      <td className="px-6 py-4 text-center" style={{ fontSize: '14px', fontWeight: '700', color: '#315B78' }}>
-                        {task.count}
-                      </td>
-                      <td className="px-6 py-4" style={{ fontSize: '14px', color: '#315B78' }}>
-                        {task.processName}
-                      </td>
-                      <td className="px-6 py-4" style={{ fontSize: '14px', color: '#315B78' }}>
-                        {task.datePending}
-                      </td>
+            <div className="overflow-x-auto -mx-4 sm:mx-0">
+              <div className="inline-block min-w-full align-middle">
+                <table className="min-w-full">
+                  <thead style={{ backgroundColor: '#F7F9FA' }}>
+                    <tr>
+                      <th className="px-4 sm:px-6 py-3 sm:py-4 text-left" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px', whiteSpace: 'nowrap' }}>
+                        Estate
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 sm:py-4 text-center" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px', whiteSpace: 'nowrap' }}>
+                        Count
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 sm:py-4 text-left" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px', whiteSpace: 'nowrap' }}>
+                        Process Name
+                      </th>
+                      <th className="px-4 sm:px-6 py-3 sm:py-4 text-left" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px', whiteSpace: 'nowrap' }}>
+                        Date of Pending
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {pendingTasks.map((task, index) => (
+                      <tr 
+                        key={index} 
+                        className="border-t transition-colors hover:bg-gray-50" 
+                        style={{ borderColor: '#E5EBEF' }}
+                      >
+                        <td className="px-4 sm:px-6 py-3 sm:py-4" style={{ fontSize: '14px', fontWeight: '600', color: '#315B78' }}>
+                          {task.estate}
+                        </td>
+                        <td className="px-4 sm:px-6 py-3 sm:py-4 text-center" style={{ fontSize: '14px', fontWeight: '700', color: '#315B78' }}>
+                          {task.count}
+                        </td>
+                        <td className="px-4 sm:px-6 py-3 sm:py-4" style={{ fontSize: '14px', color: '#315B78' }}>
+                          {task.processName}
+                        </td>
+                        <td className="px-4 sm:px-6 py-3 sm:py-4" style={{ fontSize: '14px', color: '#315B78' }}>
+                          {task.datePending}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
 
           {/* Payment Tracker */}
           <div
-            className="rounded-xl p-8 border"
+            className="rounded-xl p-4 sm:p-6 lg:p-8 border"
             style={{ backgroundColor: '#FFFFFF', borderColor: '#E5EBEF' }}
           >
-            <div className="flex items-center gap-3 mb-8">
+            <div className="flex items-center gap-3 mb-6 sm:mb-8">
               <Activity className="w-5 h-5" style={{ color: '#027F83' }} />
               <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#315B78' }}>
                 Payment Tracker
               </h3>
             </div>
-            <div className="flex justify-around items-center">
-              <CircularProgress value={62} label="Total Trade Value" color="#027F83" />
-              <CircularProgress value={0} label="Total Payment Generated" color="#6B46C1" />
-              <CircularProgress value={0} label="Payment Credited to Farmers" color="#00A040" />
+            <div className="flex flex-col sm:flex-row justify-around items-center gap-6 sm:gap-4">
+              <CircularProgress value={62} label="Total Trade Value" color="#027F83" size={120} />
+              <CircularProgress value={0} label="Total Payment Generated" color="#6B46C1" size={120} />
+              <CircularProgress value={0} label="Payment Credited to Farmers" color="#00A040" size={120} />
             </div>
           </div>
         </div>
@@ -683,20 +685,20 @@ export default function DashboardHome() {
       {/* Top Performing States */}
       {visibleSections.topPerforming && (
         <div
-          className="rounded-xl overflow-hidden mb-8 border"
+          className="rounded-xl overflow-hidden mb-6 sm:mb-8 border"
           style={{ backgroundColor: '#FFFFFF', borderColor: '#E5EBEF' }}
         >
-          <div className="px-6 py-5 border-b flex flex-col sm:flex-row sm:items-center justify-between gap-4" style={{ borderColor: '#E5EBEF' }}>
+          <div className="px-4 sm:px-6 py-4 sm:py-5 border-b flex flex-col sm:flex-row sm:items-center justify-between gap-4" style={{ borderColor: '#E5EBEF' }}>
             <div className="flex items-center gap-3">
               <TrendingUp className="w-5 h-5" style={{ color: '#027F83' }} />
               <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#315B78' }}>
                 Top Performing States
               </h3>
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
               <button
                 onClick={() => setPerformanceView('farmers')}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg transition-all h-10"
+                className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-all h-10 w-full sm:w-auto"
                 style={{
                   fontSize: '13px',
                   fontWeight: '600',
@@ -722,7 +724,7 @@ export default function DashboardHome() {
               </button>
               <button
                 onClick={() => setPerformanceView('procurement')}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg transition-all h-10"
+                className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-all h-10 w-full sm:w-auto"
                 style={{
                   fontSize: '13px',
                   fontWeight: '600',
@@ -748,61 +750,63 @@ export default function DashboardHome() {
               </button>
             </div>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead style={{ backgroundColor: '#F7F9FA' }}>
-                <tr>
-                  <th className="px-6 py-4 text-left" style={{ fontSize: '13px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                    State
-                  </th>
-                  <th className="px-6 py-4 text-left" style={{ fontSize: '13px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                    Procurement (MT)
-                  </th>
-                  <th className="px-6 py-4 text-left" style={{ fontSize: '13px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                    Branch Manager
-                  </th>
-                  <th className="px-6 py-4 text-left" style={{ fontSize: '13px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                    SLA
-                  </th>
-                  <th className="px-6 py-4 text-left" style={{ fontSize: '13px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                    SLA Admin
-                  </th>
-                  <th className="px-6 py-4 text-left" style={{ fontSize: '13px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                    PACS
-                  </th>
-                  <th className="px-6 py-4 text-left" style={{ fontSize: '13px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                    PACS Admin
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {topStates.map((state, index) => (
-                  <tr key={index} className="border-t transition-colors hover:bg-gray-50" style={{ borderColor: '#E5EBEF' }}>
-                    <td className="px-6 py-4" style={{ fontSize: '14px', fontWeight: '700', color: '#315B78' }}>
-                      {state.state}
-                    </td>
-                    <td className="px-6 py-4" style={{ fontSize: '16px', fontWeight: '700', color: '#315B78' }}>
-                      {state.procurement}
-                    </td>
-                    <td className="px-6 py-4" style={{ fontSize: '14px', color: '#315B78' }}>
-                      {state.branchManager}
-                    </td>
-                    <td className="px-6 py-4" style={{ fontSize: '14px', color: '#315B78' }}>
-                      {state.sla}
-                    </td>
-                    <td className="px-6 py-4" style={{ fontSize: '14px', color: '#315B78' }}>
-                      {state.slaAdmin}
-                    </td>
-                    <td className="px-6 py-4" style={{ fontSize: '14px', color: '#315B78', maxWidth: '250px' }}>
-                      {state.pacs}
-                    </td>
-                    <td className="px-6 py-4" style={{ fontSize: '14px', color: '#315B78' }}>
-                      {state.pacsAdmin}
-                    </td>
+          <div className="overflow-x-auto -mx-4 sm:mx-0">
+            <div className="inline-block min-w-full align-middle">
+              <table className="min-w-full">
+                <thead style={{ backgroundColor: '#F7F9FA' }}>
+                  <tr>
+                    <th className="px-4 sm:px-6 py-3 sm:py-4 text-left" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px', whiteSpace: 'nowrap' }}>
+                      State
+                    </th>
+                    <th className="px-4 sm:px-6 py-3 sm:py-4 text-left" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px', whiteSpace: 'nowrap' }}>
+                      Procurement (MT)
+                    </th>
+                    <th className="px-4 sm:px-6 py-3 sm:py-4 text-left hidden md:table-cell" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px', whiteSpace: 'nowrap' }}>
+                      Branch Manager
+                    </th>
+                    <th className="px-4 sm:px-6 py-3 sm:py-4 text-left hidden lg:table-cell" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px', whiteSpace: 'nowrap' }}>
+                      SLA
+                    </th>
+                    <th className="px-4 sm:px-6 py-3 sm:py-4 text-left hidden lg:table-cell" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px', whiteSpace: 'nowrap' }}>
+                      SLA Admin
+                    </th>
+                    <th className="px-4 sm:px-6 py-3 sm:py-4 text-left hidden xl:table-cell" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px', whiteSpace: 'nowrap' }}>
+                      PACS
+                    </th>
+                    <th className="px-4 sm:px-6 py-3 sm:py-4 text-left hidden xl:table-cell" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px', whiteSpace: 'nowrap' }}>
+                      PACS Admin
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {topStates.map((state, index) => (
+                    <tr key={index} className="border-t transition-colors hover:bg-gray-50" style={{ borderColor: '#E5EBEF' }}>
+                      <td className="px-4 sm:px-6 py-3 sm:py-4" style={{ fontSize: '14px', fontWeight: '700', color: '#315B78' }}>
+                        {state.state}
+                      </td>
+                      <td className="px-4 sm:px-6 py-3 sm:py-4" style={{ fontSize: '16px', fontWeight: '700', color: '#315B78' }}>
+                        {state.procurement}
+                      </td>
+                      <td className="px-4 sm:px-6 py-3 sm:py-4 hidden md:table-cell" style={{ fontSize: '14px', color: '#315B78' }}>
+                        {state.branchManager}
+                      </td>
+                      <td className="px-4 sm:px-6 py-3 sm:py-4 hidden lg:table-cell" style={{ fontSize: '14px', color: '#315B78' }}>
+                        {state.sla}
+                      </td>
+                      <td className="px-4 sm:px-6 py-3 sm:py-4 hidden lg:table-cell" style={{ fontSize: '14px', color: '#315B78' }}>
+                        {state.slaAdmin}
+                      </td>
+                      <td className="px-4 sm:px-6 py-3 sm:py-4 hidden xl:table-cell" style={{ fontSize: '14px', color: '#315B78', maxWidth: '250px' }}>
+                        {state.pacs}
+                      </td>
+                      <td className="px-4 sm:px-6 py-3 sm:py-4 hidden xl:table-cell" style={{ fontSize: '14px', color: '#315B78' }}>
+                        {state.pacsAdmin}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       )}
@@ -813,17 +817,17 @@ export default function DashboardHome() {
           className="rounded-xl overflow-hidden border"
           style={{ backgroundColor: '#FFFFFF', borderColor: '#E5EBEF' }}
         >
-          <div className="px-6 py-5 border-b flex flex-col sm:flex-row sm:items-center justify-between gap-4" style={{ borderColor: '#E5EBEF' }}>
+          <div className="px-4 sm:px-6 py-4 sm:py-5 border-b flex flex-col sm:flex-row sm:items-center justify-between gap-4" style={{ borderColor: '#E5EBEF' }}>
             <div className="flex items-center gap-3">
               <MapPin className="w-5 h-5" style={{ color: '#027F83' }} />
               <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#315B78' }}>
                 State-Wise Details in Map View
               </h3>
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
               <button
                 onClick={() => setMapView('farmers')}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg transition-all h-10"
+                className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-all h-10 w-full sm:w-auto"
                 style={{
                   fontSize: '13px',
                   fontWeight: '600',
@@ -849,7 +853,7 @@ export default function DashboardHome() {
               </button>
               <button
                 onClick={() => setMapView('procurement')}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg transition-all h-10"
+                className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-all h-10 w-full sm:w-auto"
                 style={{
                   fontSize: '13px',
                   fontWeight: '600',
@@ -875,14 +879,14 @@ export default function DashboardHome() {
               </button>
             </div>
           </div>
-          <div className="p-8 flex flex-col lg:flex-row gap-8">
+          <div className="p-4 sm:p-6 lg:p-8 flex flex-col lg:flex-row gap-6 sm:gap-8">
             {/* Map Placeholder */}
-            <div className="flex-1 flex items-center justify-center rounded-xl" style={{ minHeight: '450px' }}>
+            <div className="flex-1 flex items-center justify-center rounded-xl" style={{ minHeight: '300px', maxHeight: '450px' }}>
               <IndiaMap stateData={mapStateData} viewType={mapView} onStateClick={handleStateClick} />
             </div>
 
             {/* Legend & Top States */}
-            <div className="lg:w-72 flex flex-col gap-6">
+            <div className="w-full lg:w-72 flex flex-col gap-4 sm:gap-6">
               <div className="p-6 rounded-xl border" style={{ backgroundColor: '#F7F9FA', borderColor: '#E5EBEF' }}>
                 <h4 style={{ fontSize: '15px', fontWeight: '700', color: '#222', marginBottom: '16px' }}>
                   Map Legend

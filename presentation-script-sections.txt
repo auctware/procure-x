@@ -1,0 +1,33 @@
+PRESENTATION AUDIO SCRIPT - PROCUREX PRODUCT DEMO
+==================================================
+
+[Section 1: General Intro - 10 seconds]
+Welcome to ProcureX - Intelligent Procurement Powered by AI. ProcureX revolutionizes agricultural procurement with smart automation, real-time insights, and AI-driven decision making.
+
+[Section 2: Dashboard - 5 seconds]
+The dashboard provides a comprehensive overview of all procurement activities with real-time metrics and quick access to key modules.
+
+[Section 3: Organisation Registration - 7 seconds]
+Organization registration enables seamless setup of procurement entities with complete configuration and management capabilities. Register procurement organizations, configure operational parameters, set up centers and warehouses, and manage organizational hierarchies with comprehensive administrative controls.
+
+[Section 4: User Registration - 7 seconds]
+User registration manages system access with role-based permissions and secure authentication for all stakeholders. Create user accounts with specific roles, assign permissions for different modules, enable multi-factor authentication, and maintain comprehensive user management with approval workflows.
+
+[Section 5: Farmer Registration - 20 seconds]
+Farmer registration streamlines onboarding with powerful AI capabilities. Face verification authenticates farmers instantly using biometric technology. OCR automatically extracts data from 7/12 land documents and bank statements, minimizing manual entry. Real-time verification validates information against government databases, ensuring accuracy while reducing registration time significantly. The system captures complete farmer profiles including personal details, land information, bank accounts, and scheme participation in a streamlined multi-step process.
+
+[Section 6: Lot Entry - 10 seconds]
+Lot entry manages procurement transactions with smart natural language processing. Simply describe the lot details in plain language, and the AI system automatically captures quantity, quality parameters, farmer information.system handle complete lot lifecycle management with minimal manual input.
+
+[Section 7: Center Dispatch - 10 seconds]
+Center dispatch handles warehouse operations with shipment tracking, transportation management, delivery confirmation, and dispatch reporting.
+
+[Section 8: WHR Creation - 10 seconds]
+Warehouse Receipt creation uses natural language and voice input for seamless documentation. Simply speak or type warehouse receipt details, and the AI system automatically generates digital receipts for stored commodities with inventory tracking.
+
+[Section 9: Inventory Management - 10 seconds]
+Inventory management offers real-time stock visibility, warehouse operations, commodity tracking, and comprehensive inventory analytics. AI-based insights detect risks, optimize inventory levels, identify unusual transaction patterns, and detect potential losses.
+
+[Section 10: AI Reporting Dashboard - 20 seconds]
+The AI Reporting Dashboard provides a complete overview of the system with AI-based analytics, insights, and alerts. Use natural language processing to generate reports by simply asking questions like "Show procurement status for last week" and get instant results. The system delivers analytics, real-time alerts for anomalies, intelligent recommendations, and comprehensive NLP-based reports powered by machine learning.The Unified Reporting Dashboard consolidates over thirty traditional reports into one intelligent interface. Instead of navigating multiple screens, access Daily Operations, Farmer Analytics, Procurement Analytics, and Payment Analytics from a single dashboard. Generate any report on-demand with dynamic filters, interactive visualizations, and cross-report analysis capabilities.
+
