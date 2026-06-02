@@ -153,7 +153,7 @@ export default function WHRManagement() {
       whrCreatedDate: '2025-01-10 10:30 AM',
       scheme: 'MMFT FOR ETHANGK KHARIF 2025',
       commodity: 'Wheat',
-      stateAgency: 'Karnataka State Agency',
+      stateAgency: 'Maharashtra State Agency',
       district: 'Bangalore Urban',
       fpoPacs: 'Bangalore FPO',
       center: 'Center A',
@@ -542,10 +542,10 @@ export default function WHRManagement() {
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       const refs = [
-        yearRef, seasonRef, schemeRef, stateRef, commodityRef, centerRef, warehouseRef, 
+        yearRef, seasonRef, schemeRef, stateRef, commodityRef, centerRef, warehouseRef,
         statusFilterRef, filterCommodityRef, filterStateRef
       ];
-      
+
       refs.forEach(ref => {
         if (ref.current && !ref.current.contains(event.target as Node)) {
           if (ref === yearRef) setYearDropdownOpen(false);
@@ -575,10 +575,10 @@ export default function WHRManagement() {
   useEffect(() => {
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      
+
       if (query.includes('approved') || query.includes('pending') || query.includes('rejected')) {
         setNlpSuggestion('Filtering by status');
-      } else if (query.includes('karnataka') || query.includes('maharashtra') || query.includes('tamil')) {
+      } else if (query.includes('Maharashtra') || query.includes('maharashtra') || query.includes('tamil')) {
         setNlpSuggestion('Searching by state');
       } else if (query.includes('wheat') || query.includes('rice') || query.includes('maize')) {
         setNlpSuggestion('Searching by commodity');
@@ -851,24 +851,24 @@ export default function WHRManagement() {
   // NLP Processing for Create WHR Form - Parse natural language input
   const processWHRNlpInput = (input: string) => {
     if (!input.trim()) return;
-    
+
     setIsProcessingNlp(true);
     setNlpFormSuggestion('');
-    
+
     // Simulate AI processing delay
     setTimeout(() => {
       const lowerInput = input.toLowerCase();
       const updates: any = {};
       let suggestion = '';
-      
+
       // Extract Year
       const yearMatch = lowerInput.match(/(?:year|yr)[:\s]*(\d{4})/i) ||
-                       lowerInput.match(/\b(202[3-5]|20[2-9]\d)\b/);
+        lowerInput.match(/\b(202[3-5]|20[2-9]\d)\b/);
       if (yearMatch) {
         updates.year = yearMatch[1];
         suggestion += `✓ Year: ${yearMatch[1]}\n`;
       }
-      
+
       // Extract Season
       if (lowerInput.includes('kharif')) {
         updates.season = 'Kharif';
@@ -877,7 +877,7 @@ export default function WHRManagement() {
         updates.season = 'Rabi';
         suggestion += '✓ Season: Rabi\n';
       }
-      
+
       // Extract Scheme
       if (lowerInput.includes('mmft') || lowerInput.includes('ethangk')) {
         updates.scheme = 'MMFT FOR ETHANGK KHARIF 2025';
@@ -889,7 +889,7 @@ export default function WHRManagement() {
         updates.scheme = 'KISAN CREDIT 2025';
         suggestion += '✓ Scheme: KISAN CREDIT 2025\n';
       }
-      
+
       // Extract Commodity
       if (lowerInput.includes('wheat')) {
         updates.commodity = 'Wheat';
@@ -901,11 +901,11 @@ export default function WHRManagement() {
         updates.commodity = 'Maize';
         suggestion += '✓ Commodity: Maize\n';
       }
-      
+
       // Extract State
-      if (lowerInput.includes('karnataka')) {
-        updates.state = 'Karnataka';
-        suggestion += '✓ State: Karnataka\n';
+      if (lowerInput.includes('Maharashtra')) {
+        updates.state = 'Maharashtra';
+        suggestion += '✓ State: Maharashtra\n';
       } else if (lowerInput.includes('tamil nadu') || lowerInput.includes('tamil')) {
         updates.state = 'Tamil Nadu';
         suggestion += '✓ State: Tamil Nadu\n';
@@ -913,10 +913,10 @@ export default function WHRManagement() {
         updates.state = 'Maharashtra';
         suggestion += '✓ State: Maharashtra\n';
       }
-      
+
       // Extract District
       const districtMatch = lowerInput.match(/district[:\s]*([^,]+)/i) ||
-                           lowerInput.match(/district[:\s]*(\w+(?:\s+\w+)*)/i);
+        lowerInput.match(/district[:\s]*(\w+(?:\s+\w+)*)/i);
       if (districtMatch) {
         updates.district = districtMatch[1].trim();
         suggestion += `✓ District: ${districtMatch[1].trim()}\n`;
@@ -930,15 +930,15 @@ export default function WHRManagement() {
         updates.district = 'Pune';
         suggestion += '✓ District: Pune\n';
       }
-      
+
       // Extract FPO/PACS
       const fpoMatch = lowerInput.match(/fpo[:\s]*([^,]+)/i) ||
-                       lowerInput.match(/pacs[:\s]*([^,]+)/i);
+        lowerInput.match(/pacs[:\s]*([^,]+)/i);
       if (fpoMatch) {
         updates.fpoPacs = fpoMatch[1].trim();
         suggestion += `✓ FPO/PACS: ${fpoMatch[1].trim()}\n`;
       }
-      
+
       // Extract Center
       if (lowerInput.includes('center a') || lowerInput.includes('centre a')) {
         updates.center = 'Center A';
@@ -950,10 +950,10 @@ export default function WHRManagement() {
         updates.center = 'Center C';
         suggestion += '✓ Center: Center C\n';
       }
-      
+
       // Extract Warehouse
       const warehouseMatch = lowerInput.match(/warehouse[:\s]*(\d+)/i) ||
-                            lowerInput.match(/warehouse\s*(\d+)/i);
+        lowerInput.match(/warehouse\s*(\d+)/i);
       if (warehouseMatch) {
         updates.warehouse = `Warehouse ${warehouseMatch[1]}`;
         suggestion += `✓ Warehouse: Warehouse ${warehouseMatch[1]}\n`;
@@ -967,39 +967,39 @@ export default function WHRManagement() {
         updates.warehouse = 'Warehouse 303';
         suggestion += '✓ Warehouse: Warehouse 303\n';
       }
-      
+
       // Extract State Agency
       const agencyMatch = lowerInput.match(/state agency[:\s]*([^,]+)/i);
       if (agencyMatch) {
         updates.stateAgency = agencyMatch[1].trim();
         suggestion += `✓ State Agency: ${agencyMatch[1].trim()}\n`;
       }
-      
+
       // Extract WHR Date
       const dateMatch = lowerInput.match(/whr date[:\s]*(\d{4}[-/]\d{1,2}[-/]\d{1,2})/i) ||
-                       lowerInput.match(/(\d{4}[-/]\d{1,2}[-/]\d{1,2})/);
+        lowerInput.match(/(\d{4}[-/]\d{1,2}[-/]\d{1,2})/);
       if (dateMatch) {
         const dateStr = dateMatch[1].replace(/\//g, '-');
         updates.whrDate = dateStr;
         suggestion += `✓ WHR Date: ${dateStr}\n`;
       }
-      
+
       // Extract Remarks
       const remarksMatch = lowerInput.match(/remark[:\s]*([^,]+)/i) ||
-                          lowerInput.match(/note[:\s]*([^,]+)/i);
+        lowerInput.match(/note[:\s]*([^,]+)/i);
       if (remarksMatch) {
         updates.remarks = remarksMatch[1].trim();
         suggestion += `✓ Remarks: ${remarksMatch[1].trim()}\n`;
       }
-      
+
       // Apply updates
       if (Object.keys(updates).length > 0) {
         setFormData(prev => ({ ...prev, ...updates }));
         setNlpFormSuggestion(suggestion.trim() || '💡 Parsed WHR form data from your input');
       } else {
-        setNlpFormSuggestion('💡 Try: "Year 2025, Kharif season, MMFT scheme, Wheat commodity, Karnataka state, Bangalore Urban district, Center A, Warehouse 101, WHR date 2025-01-15"');
+        setNlpFormSuggestion('💡 Try: "Year 2025, Kharif season, MMFT scheme, Wheat commodity, Maharashtra state, Bangalore Urban district, Center A, Warehouse 101, WHR date 2025-01-15"');
       }
-      
+
       setIsProcessingNlp(false);
     }, 800);
   };
@@ -1073,7 +1073,7 @@ export default function WHRManagement() {
 
   const getStatusBadge = (status: string) => {
     const dotColor = status === 'Approved' ? '#00A040' : status === 'Pending' ? '#FFA200' : '#E94545';
-    
+
     return (
       <span
         className="inline-flex items-center gap-2 px-3 py-1.5"
@@ -1109,9 +1109,9 @@ export default function WHRManagement() {
 
     // State Filter
     if (filters.state !== 'All') {
-      const stateMatch = filters.state === 'Karnataka' && record.stateAgency.includes('Karnataka') ||
-                        filters.state === 'Tamil Nadu' && record.stateAgency.includes('Tamil Nadu') ||
-                        filters.state === 'Maharashtra' && record.stateAgency.includes('Maharashtra');
+      const stateMatch = filters.state === 'Maharashtra' && record.stateAgency.includes('Maharashtra') ||
+        filters.state === 'Tamil Nadu' && record.stateAgency.includes('Tamil Nadu') ||
+        filters.state === 'Maharashtra' && record.stateAgency.includes('Maharashtra');
       if (!stateMatch) return false;
     }
 
@@ -1122,7 +1122,7 @@ export default function WHRManagement() {
     // Search Query
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      const matchesSearch = 
+      const matchesSearch =
         record.whrNumber.toLowerCase().includes(query) ||
         record.commodity.toLowerCase().includes(query) ||
         record.stateAgency.toLowerCase().includes(query) ||
@@ -1203,10 +1203,10 @@ export default function WHRManagement() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl mb-8">
               {/* Create WHR Card */}
-              <div 
+              <div
                 className="rounded-xl border p-8 cursor-pointer transition-all hover:shadow-lg"
-                style={{ 
-                  backgroundColor: '#FFFFFF', 
+                style={{
+                  backgroundColor: '#FFFFFF',
                   borderColor: '#E5EBEF',
                   borderWidth: '2px'
                 }}
@@ -1236,10 +1236,10 @@ export default function WHRManagement() {
               </div>
 
               {/* View WHR Card */}
-              <div 
+              <div
                 className="rounded-xl border p-8 cursor-pointer transition-all hover:shadow-lg"
-                style={{ 
-                  backgroundColor: '#FFFFFF', 
+                style={{
+                  backgroundColor: '#FFFFFF',
                   borderColor: '#E5EBEF',
                   borderWidth: '2px'
                 }}
@@ -1328,7 +1328,7 @@ export default function WHRManagement() {
                       <span style={{ color: '#315B78', fontSize: '14px', fontWeight: '600' }}>AI Natural Language / Voice Entry</span>
                     </div>
                     <div className="relative">
-                      <div 
+                      <div
                         className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-lg"
                         style={{ backgroundColor: '#F2FCFB' }}
                       >
@@ -1338,7 +1338,7 @@ export default function WHRManagement() {
                         type="text"
                         value={nlpInput}
                         onChange={(e) => handleNlpInputChange(e.target.value)}
-                        placeholder="Try: 'Year 2025, Kharif season, MMFT scheme, Wheat commodity, Karnataka state, Bangalore Urban district, Center A, Warehouse 101, WHR date 2025-01-15'"
+                        placeholder="Try: 'Year 2025, Kharif season, MMFT scheme, Wheat commodity, Maharashtra state, Bangalore Urban district, Center A, Warehouse 101, WHR date 2025-01-15'"
                         className="w-full h-12 pl-14 pr-12 rounded-lg border transition-all outline-none"
                         style={{
                           borderColor: nlpInput ? '#027F83' : '#CCD8DF',
@@ -1371,9 +1371,8 @@ export default function WHRManagement() {
                         title={isListeningForm ? 'Listening...' : isProcessingVoiceForm ? 'Processing...' : 'Voice entry'}
                       >
                         <Mic
-                          className={`w-4 h-4 transition-colors ${
-                            isListeningForm ? 'text-white' : isProcessingVoiceForm ? 'text-white' : ''
-                          }`}
+                          className={`w-4 h-4 transition-colors ${isListeningForm ? 'text-white' : isProcessingVoiceForm ? 'text-white' : ''
+                            }`}
                           style={{
                             color: isListeningForm ? '#FFFFFF' : isProcessingVoiceForm ? '#FFFFFF' : '#666666'
                           }}
@@ -1423,61 +1422,61 @@ export default function WHRManagement() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Year */}
                     <div>
-                    <label className="block mb-2" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '8px', display: 'block' }}>
-                      Year <span style={{ color: '#E94545' }}>*</span>
-                    </label>
-                    <CustomDropdown
-                      value={formData.year}
-                      onChange={(value) => setFormData({ ...formData, year: value })}
-                      options={[
-                        { value: '2025', label: '2025' },
-                        { value: '2024', label: '2024' },
-                        { value: '2023', label: '2023' }
-                      ]}
-                      isOpen={yearDropdownOpen}
-                      onToggle={() => setYearDropdownOpen(!yearDropdownOpen)}
-                      dropdownRef={yearRef}
-                    />
-                  </div>
+                      <label className="block mb-2" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '8px', display: 'block' }}>
+                        Year <span style={{ color: '#E94545' }}>*</span>
+                      </label>
+                      <CustomDropdown
+                        value={formData.year}
+                        onChange={(value) => setFormData({ ...formData, year: value })}
+                        options={[
+                          { value: '2025', label: '2025' },
+                          { value: '2024', label: '2024' },
+                          { value: '2023', label: '2023' }
+                        ]}
+                        isOpen={yearDropdownOpen}
+                        onToggle={() => setYearDropdownOpen(!yearDropdownOpen)}
+                        dropdownRef={yearRef}
+                      />
+                    </div>
 
-                  {/* Season */}
-                  <div>
-                    <label className="block mb-2" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '8px', display: 'block' }}>
-                      Season <span style={{ color: '#E94545' }}>*</span>
-                    </label>
-                    <CustomDropdown
-                      value={formData.season}
-                      onChange={(value) => setFormData({ ...formData, season: value })}
-                      options={[
-                        { value: 'Kharif', label: 'Kharif' },
-                        { value: 'Rabi', label: 'Rabi' }
-                      ]}
-                      isOpen={seasonDropdownOpen}
-                      onToggle={() => setSeasonDropdownOpen(!seasonDropdownOpen)}
-                      dropdownRef={seasonRef}
-                    />
-                  </div>
+                    {/* Season */}
+                    <div>
+                      <label className="block mb-2" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '8px', display: 'block' }}>
+                        Season <span style={{ color: '#E94545' }}>*</span>
+                      </label>
+                      <CustomDropdown
+                        value={formData.season}
+                        onChange={(value) => setFormData({ ...formData, season: value })}
+                        options={[
+                          { value: 'Kharif', label: 'Kharif' },
+                          { value: 'Rabi', label: 'Rabi' }
+                        ]}
+                        isOpen={seasonDropdownOpen}
+                        onToggle={() => setSeasonDropdownOpen(!seasonDropdownOpen)}
+                        dropdownRef={seasonRef}
+                      />
+                    </div>
 
-                  {/* Scheme */}
-                  <div>
-                    <label className="block mb-2" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '8px', display: 'block' }}>
-                      Scheme <span style={{ color: '#E94545' }}>*</span>
-                    </label>
-                    <CustomDropdown
-                      value={formData.scheme}
-                      onChange={(value) => setFormData({ ...formData, scheme: value })}
-                      options={[
-                        { value: '', label: 'Select Scheme' },
-                        { value: 'MMFT FOR ETHANGK KHARIF 2025', label: 'MMFT FOR ETHANGK KHARIF 2025' },
-                        { value: 'PMFBY 2024', label: 'PMFBY 2024' },
-                        { value: 'KISAN CREDIT 2025', label: 'KISAN CREDIT 2025' }
-                      ]}
-                      placeholder="Select Scheme"
-                      isOpen={schemeDropdownOpen}
-                      onToggle={() => setSchemeDropdownOpen(!schemeDropdownOpen)}
-                      dropdownRef={schemeRef}
-                    />
-                  </div>
+                    {/* Scheme */}
+                    <div>
+                      <label className="block mb-2" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '8px', display: 'block' }}>
+                        Scheme <span style={{ color: '#E94545' }}>*</span>
+                      </label>
+                      <CustomDropdown
+                        value={formData.scheme}
+                        onChange={(value) => setFormData({ ...formData, scheme: value })}
+                        options={[
+                          { value: '', label: 'Select Scheme' },
+                          { value: 'MMFT FOR ETHANGK KHARIF 2025', label: 'MMFT FOR ETHANGK KHARIF 2025' },
+                          { value: 'PMFBY 2024', label: 'PMFBY 2024' },
+                          { value: 'KISAN CREDIT 2025', label: 'KISAN CREDIT 2025' }
+                        ]}
+                        placeholder="Select Scheme"
+                        isOpen={schemeDropdownOpen}
+                        onToggle={() => setSchemeDropdownOpen(!schemeDropdownOpen)}
+                        dropdownRef={schemeRef}
+                      />
+                    </div>
 
                     {/* Commodity */}
                     <div>
@@ -1502,87 +1501,87 @@ export default function WHRManagement() {
 
                     {/* State */}
                     <div>
-                    <label className="block mb-2" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '8px', display: 'block' }}>
-                      State <span style={{ color: '#E94545' }}>*</span>
-                    </label>
-                    <CustomDropdown
-                      value={formData.state}
-                      onChange={(value) => setFormData({ ...formData, state: value })}
-                      options={[
-                        { value: '', label: 'Select State' },
-                        { value: 'Karnataka', label: 'Karnataka' },
-                        { value: 'Tamil Nadu', label: 'Tamil Nadu' },
-                        { value: 'Maharashtra', label: 'Maharashtra' }
-                      ]}
-                      placeholder="Select State"
-                      isOpen={stateDropdownOpen}
-                      onToggle={() => setStateDropdownOpen(!stateDropdownOpen)}
-                      dropdownRef={stateRef}
-                    />
-                  </div>
+                      <label className="block mb-2" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '8px', display: 'block' }}>
+                        State <span style={{ color: '#E94545' }}>*</span>
+                      </label>
+                      <CustomDropdown
+                        value={formData.state}
+                        onChange={(value) => setFormData({ ...formData, state: value })}
+                        options={[
+                          { value: '', label: 'Select State' },
+                          { value: 'Maharashtra', label: 'Maharashtra' },
+                          { value: 'Tamil Nadu', label: 'Tamil Nadu' },
+                          { value: 'Maharashtra', label: 'Maharashtra' }
+                        ]}
+                        placeholder="Select State"
+                        isOpen={stateDropdownOpen}
+                        onToggle={() => setStateDropdownOpen(!stateDropdownOpen)}
+                        dropdownRef={stateRef}
+                      />
+                    </div>
 
-                  {/* District */}
-                  <div>
-                    <label className="block mb-2" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '8px', display: 'block' }}>
-                      District <span style={{ color: '#E94545' }}>*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.district}
-                      onChange={(e) => setFormData({ ...formData, district: e.target.value })}
-                      placeholder="Enter District"
-                      className="w-full h-12 px-4 rounded-lg border transition-all outline-none"
-                      style={{
-                        borderColor: '#CCD8DF',
-                        color: '#315B78',
-                        fontSize: '14px',
-                        backgroundColor: '#FFFFFF'
-                      }}
-                    />
-                  </div>
+                    {/* District */}
+                    <div>
+                      <label className="block mb-2" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '8px', display: 'block' }}>
+                        District <span style={{ color: '#E94545' }}>*</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.district}
+                        onChange={(e) => setFormData({ ...formData, district: e.target.value })}
+                        placeholder="Enter District"
+                        className="w-full h-12 px-4 rounded-lg border transition-all outline-none"
+                        style={{
+                          borderColor: '#CCD8DF',
+                          color: '#315B78',
+                          fontSize: '14px',
+                          backgroundColor: '#FFFFFF'
+                        }}
+                      />
+                    </div>
 
-                  {/* FPO/PACS */}
-                  <div>
-                    <label className="block mb-2" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '8px', display: 'block' }}>
-                      FPO/PACS <span style={{ color: '#E94545' }}>*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.fpoPacs}
-                      onChange={(e) => setFormData({ ...formData, fpoPacs: e.target.value })}
-                      placeholder="Enter FPO/PACS"
-                      className="w-full h-12 px-4 rounded-lg border transition-all outline-none"
-                      style={{
-                        borderColor: '#CCD8DF',
-                        color: '#315B78',
-                        fontSize: '14px',
-                        backgroundColor: '#FFFFFF'
-                      }}
-                    />
-                  </div>
+                    {/* FPO/PACS */}
+                    <div>
+                      <label className="block mb-2" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '8px', display: 'block' }}>
+                        FPO/PACS <span style={{ color: '#E94545' }}>*</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.fpoPacs}
+                        onChange={(e) => setFormData({ ...formData, fpoPacs: e.target.value })}
+                        placeholder="Enter FPO/PACS"
+                        className="w-full h-12 px-4 rounded-lg border transition-all outline-none"
+                        style={{
+                          borderColor: '#CCD8DF',
+                          color: '#315B78',
+                          fontSize: '14px',
+                          backgroundColor: '#FFFFFF'
+                        }}
+                      />
+                    </div>
 
-                  {/* Center - IMPORTANT: Triggers dispatch fetch */}
-                  <div>
-                    <label className="block mb-2" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '8px', display: 'block' }}>
-                      Center <span style={{ color: '#E94545' }}>*</span>
-                    </label>
-                    <CustomDropdown
-                      value={formData.center}
-                      onChange={(value) => setFormData({ ...formData, center: value })}
-                      options={[
-                        { value: '', label: 'Select Center' },
-                        { value: 'Center A', label: 'Center A' },
-                        { value: 'Center B', label: 'Center B' },
-                        { value: 'Center C', label: 'Center C' }
-                      ]}
-                      placeholder="Select Center"
-                      isOpen={centerDropdownOpen}
-                      onToggle={() => setCenterDropdownOpen(!centerDropdownOpen)}
-                      dropdownRef={centerRef}
-                    />
-                  </div>
+                    {/* Center - IMPORTANT: Triggers dispatch fetch */}
+                    <div>
+                      <label className="block mb-2" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '8px', display: 'block' }}>
+                        Center <span style={{ color: '#E94545' }}>*</span>
+                      </label>
+                      <CustomDropdown
+                        value={formData.center}
+                        onChange={(value) => setFormData({ ...formData, center: value })}
+                        options={[
+                          { value: '', label: 'Select Center' },
+                          { value: 'Center A', label: 'Center A' },
+                          { value: 'Center B', label: 'Center B' },
+                          { value: 'Center C', label: 'Center C' }
+                        ]}
+                        placeholder="Select Center"
+                        isOpen={centerDropdownOpen}
+                        onToggle={() => setCenterDropdownOpen(!centerDropdownOpen)}
+                        dropdownRef={centerRef}
+                      />
+                    </div>
 
                     {/* Warehouse - IMPORTANT: Triggers dispatch fetch */}
                     <div>
@@ -1627,23 +1626,23 @@ export default function WHRManagement() {
 
                     {/* WHR Date */}
                     <div>
-                    <label className="block mb-2" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '8px', display: 'block' }}>
-                      WHR Date <span style={{ color: '#E94545' }}>*</span>
-                    </label>
-                    <input
-                      type="date"
-                      required
-                      value={formData.whrDate}
-                      onChange={(e) => setFormData({ ...formData, whrDate: e.target.value })}
-                      className="w-full h-12 px-4 rounded-lg border transition-all outline-none"
-                      style={{
-                        borderColor: '#CCD8DF',
-                        color: '#315B78',
-                        fontSize: '14px',
-                        backgroundColor: '#FFFFFF'
-                      }}
-                    />
-                  </div>
+                      <label className="block mb-2" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '8px', display: 'block' }}>
+                        WHR Date <span style={{ color: '#E94545' }}>*</span>
+                      </label>
+                      <input
+                        type="date"
+                        required
+                        value={formData.whrDate}
+                        onChange={(e) => setFormData({ ...formData, whrDate: e.target.value })}
+                        className="w-full h-12 px-4 rounded-lg border transition-all outline-none"
+                        style={{
+                          borderColor: '#CCD8DF',
+                          color: '#315B78',
+                          fontSize: '14px',
+                          backgroundColor: '#FFFFFF'
+                        }}
+                      />
+                    </div>
 
                     {/* Remarks - Full width */}
                     <div className="md:col-span-2">
@@ -1668,301 +1667,301 @@ export default function WHRManagement() {
 
                   {/* Dispatch Details Section - Shows when Center and Warehouse selected */}
                   {formData.center && formData.warehouse && dispatchData.length > 0 && (
-              <div className="rounded-xl border overflow-hidden" style={{ backgroundColor: '#FFFFFF', borderColor: '#E5EBEF' }}>
-                <div className="px-6 py-4 border-b flex items-center justify-between" style={{ borderColor: '#E5EBEF' }}>
-                  <div>
-                    <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#777777' }}>
-                      Dispatch Details
-                    </h2>
-                    <p style={{ fontSize: '13px', color: '#666', marginTop: '4px' }}>
-                      From {formData.center} to {formData.warehouse} • {dispatchData.length} dispatch(es) found
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="text-right">
-                      <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>Total Quantity</div>
-                      <div style={{ fontSize: '20px', fontWeight: '700', color: '#027F83' }}>
-                        {dispatchData.reduce((sum, d) => sum + d.actualDispatchQty, 0)} QTL
+                    <div className="rounded-xl border overflow-hidden" style={{ backgroundColor: '#FFFFFF', borderColor: '#E5EBEF' }}>
+                      <div className="px-6 py-4 border-b flex items-center justify-between" style={{ borderColor: '#E5EBEF' }}>
+                        <div>
+                          <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#777777' }}>
+                            Dispatch Details
+                          </h2>
+                          <p style={{ fontSize: '13px', color: '#666', marginTop: '4px' }}>
+                            From {formData.center} to {formData.warehouse} • {dispatchData.length} dispatch(es) found
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-4">
+                          <div className="text-right">
+                            <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>Total Quantity</div>
+                            <div style={{ fontSize: '20px', fontWeight: '700', color: '#027F83' }}>
+                              {dispatchData.reduce((sum, d) => sum + d.actualDispatchQty, 0)} QTL
+                            </div>
+                          </div>
+                          <button
+                            onClick={handleCreateWHR}
+                            className="flex items-center gap-2 px-6 h-12 rounded-lg transition-all"
+                            style={{
+                              backgroundColor: 'transparent',
+                              color: '#027F83',
+                              border: '1px solid #027F83',
+                              fontSize: '14px',
+                              fontWeight: '600'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.backgroundColor = '#E6F7F7';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.backgroundColor = 'transparent';
+                            }}
+                          >
+                            <Check className="w-5 h-5" />
+                            Create WHR
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                    <button
-                      onClick={handleCreateWHR}
-                      className="flex items-center gap-2 px-6 h-12 rounded-lg transition-all"
-                      style={{
-                        backgroundColor: 'transparent',
-                        color: '#027F83',
-                        border: '1px solid #027F83',
-                        fontSize: '14px',
-                        fontWeight: '600'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor = '#E6F7F7';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundColor = 'transparent';
-                      }}
-                    >
-                      <Check className="w-5 h-5" />
-                      Create WHR
-                    </button>
-                  </div>
-                </div>
 
-                {/* Dispatch Table */}
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr style={{ backgroundColor: '#F7F9FA', borderBottom: '1px solid #E5EBEF' }}>
-                        <th className="px-6 py-4 text-left" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                          Dispatch Date
-                        </th>
-                        <th className="px-6 py-4 text-left" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                          Dispatch ID
-                        </th>
-                        <th className="px-6 py-4 text-right" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                          Dispatch Qty (QTL)
-                        </th>
-                        <th className="px-6 py-4 text-right" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                          Dispatch Bags
-                        </th>
-                        <th className="px-6 py-4 text-right" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                          Actual Dispatch Qty
-                        </th>
-                        <th className="px-6 py-4 text-right" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                          Actual Dispatch Bags
-                        </th>
-                        <th className="px-6 py-4 text-right" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                          Replaced Qty
-                        </th>
-                        <th className="px-6 py-4 text-right" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                          Replaced Bags
-                        </th>
-                        <th className="px-6 py-4 text-left" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                          Package Type
-                        </th>
-                        <th className="px-6 py-4 text-center" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                          View Lot Details
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {dispatchData.slice(0, dispatchRecordsLimit).map((dispatch) => (
-                        <>
-                          {/* Dispatch Row */}
-                          <tr key={dispatch.id} className="border-b transition-colors hover:bg-gray-50" style={{ borderColor: '#E5EBEF' }}>
-                            <td className="px-6 py-4">
-                              <div className="flex items-center gap-1.5" style={{ fontSize: '13px', color: '#315B78' }}>
-                                <Calendar className="w-3.5 h-3.5" style={{ color: '#999' }} />
-                                {dispatch.dispatchDate}
-                              </div>
-                            </td>
-                            <td className="px-6 py-4">
-                              <div style={{ fontSize: '13px', fontWeight: '600', color: '#315B78' }}>
-                                {dispatch.dispatchId}
-                              </div>
-                            </td>
-                            <td className="px-6 py-4 text-right">
-                              <div style={{ fontSize: '14px', fontWeight: '600', color: '#315B78' }}>
-                                {dispatch.dispatchQty}
-                              </div>
-                            </td>
-                            <td className="px-6 py-4 text-right">
-                              <div style={{ fontSize: '14px', fontWeight: '600', color: '#315B78' }}>
-                                {dispatch.dispatchBags}
-                              </div>
-                            </td>
-                            <td className="px-6 py-4 text-right">
-                              <div style={{ fontSize: '14px', fontWeight: '700', color: '#027F83' }}>
-                                {dispatch.actualDispatchQty}
-                              </div>
-                            </td>
-                            <td className="px-6 py-4 text-right">
-                              <div style={{ fontSize: '14px', fontWeight: '600', color: '#027F83' }}>
-                                {dispatch.actualDispatchBags}
-                              </div>
-                            </td>
-                            <td className="px-6 py-4 text-right">
-                              <div style={{ fontSize: '14px', fontWeight: '600', color: dispatch.replacedQty > 0 ? '#FF9800' : '#315B78' }}>
-                                {dispatch.replacedQty}
-                              </div>
-                            </td>
-                            <td className="px-6 py-4 text-right">
-                              <div style={{ fontSize: '14px', fontWeight: '600', color: dispatch.replacedBags > 0 ? '#FF9800' : '#315B78' }}>
-                                {dispatch.replacedBags}
-                              </div>
-                            </td>
-                            <td className="px-6 py-4">
-                              <div
-                                className="inline-block px-3 py-1.5 rounded-lg"
-                                style={{ backgroundColor: '#E6F7F7', color: '#027F83', fontSize: '12px', fontWeight: '600' }}
-                              >
-                                {dispatch.packageType}
-                              </div>
-                            </td>
-                            <td className="px-6 py-4 text-center">
-                              <button
-                                onClick={() => setExpandedDispatchId(expandedDispatchId === dispatch.id ? null : dispatch.id)}
-                                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg transition-all"
-                                style={{
-                                  color: expandedDispatchId === dispatch.id ? '#027F83' : '#315B78',
-                                  fontSize: '13px',
-                                  fontWeight: '600',
-                                  border: '1px solid',
-                                  borderColor: expandedDispatchId === dispatch.id ? '#027F83' : '#CCD8DF',
-                                  backgroundColor: 'transparent'
-                                }}
-                                onMouseEnter={(e) => {
-                                  e.currentTarget.style.backgroundColor = '#F7F9FA';
-                                }}
-                                onMouseLeave={(e) => {
-                                  e.currentTarget.style.backgroundColor = 'transparent';
-                                }}
-                              >
-                                <Package className="w-4 h-4" />
-                                {dispatch.lots.length} Lots
-                                {expandedDispatchId === dispatch.id ? (
-                                  <ChevronUp className="w-4 h-4" />
-                                ) : (
-                                  <ChevronDown className="w-4 h-4" />
-                                )}
-                              </button>
-                            </td>
-                          </tr>
+                      {/* Dispatch Table */}
+                      <div className="overflow-x-auto">
+                        <table className="w-full">
+                          <thead>
+                            <tr style={{ backgroundColor: '#F7F9FA', borderBottom: '1px solid #E5EBEF' }}>
+                              <th className="px-6 py-4 text-left" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                Dispatch Date
+                              </th>
+                              <th className="px-6 py-4 text-left" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                Dispatch ID
+                              </th>
+                              <th className="px-6 py-4 text-right" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                Dispatch Qty (QTL)
+                              </th>
+                              <th className="px-6 py-4 text-right" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                Dispatch Bags
+                              </th>
+                              <th className="px-6 py-4 text-right" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                Actual Dispatch Qty
+                              </th>
+                              <th className="px-6 py-4 text-right" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                Actual Dispatch Bags
+                              </th>
+                              <th className="px-6 py-4 text-right" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                Replaced Qty
+                              </th>
+                              <th className="px-6 py-4 text-right" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                Replaced Bags
+                              </th>
+                              <th className="px-6 py-4 text-left" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                Package Type
+                              </th>
+                              <th className="px-6 py-4 text-center" style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                View Lot Details
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {dispatchData.slice(0, dispatchRecordsLimit).map((dispatch) => (
+                              <>
+                                {/* Dispatch Row */}
+                                <tr key={dispatch.id} className="border-b transition-colors hover:bg-gray-50" style={{ borderColor: '#E5EBEF' }}>
+                                  <td className="px-6 py-4">
+                                    <div className="flex items-center gap-1.5" style={{ fontSize: '13px', color: '#315B78' }}>
+                                      <Calendar className="w-3.5 h-3.5" style={{ color: '#999' }} />
+                                      {dispatch.dispatchDate}
+                                    </div>
+                                  </td>
+                                  <td className="px-6 py-4">
+                                    <div style={{ fontSize: '13px', fontWeight: '600', color: '#315B78' }}>
+                                      {dispatch.dispatchId}
+                                    </div>
+                                  </td>
+                                  <td className="px-6 py-4 text-right">
+                                    <div style={{ fontSize: '14px', fontWeight: '600', color: '#315B78' }}>
+                                      {dispatch.dispatchQty}
+                                    </div>
+                                  </td>
+                                  <td className="px-6 py-4 text-right">
+                                    <div style={{ fontSize: '14px', fontWeight: '600', color: '#315B78' }}>
+                                      {dispatch.dispatchBags}
+                                    </div>
+                                  </td>
+                                  <td className="px-6 py-4 text-right">
+                                    <div style={{ fontSize: '14px', fontWeight: '700', color: '#027F83' }}>
+                                      {dispatch.actualDispatchQty}
+                                    </div>
+                                  </td>
+                                  <td className="px-6 py-4 text-right">
+                                    <div style={{ fontSize: '14px', fontWeight: '600', color: '#027F83' }}>
+                                      {dispatch.actualDispatchBags}
+                                    </div>
+                                  </td>
+                                  <td className="px-6 py-4 text-right">
+                                    <div style={{ fontSize: '14px', fontWeight: '600', color: dispatch.replacedQty > 0 ? '#FF9800' : '#315B78' }}>
+                                      {dispatch.replacedQty}
+                                    </div>
+                                  </td>
+                                  <td className="px-6 py-4 text-right">
+                                    <div style={{ fontSize: '14px', fontWeight: '600', color: dispatch.replacedBags > 0 ? '#FF9800' : '#315B78' }}>
+                                      {dispatch.replacedBags}
+                                    </div>
+                                  </td>
+                                  <td className="px-6 py-4">
+                                    <div
+                                      className="inline-block px-3 py-1.5 rounded-lg"
+                                      style={{ backgroundColor: '#E6F7F7', color: '#027F83', fontSize: '12px', fontWeight: '600' }}
+                                    >
+                                      {dispatch.packageType}
+                                    </div>
+                                  </td>
+                                  <td className="px-6 py-4 text-center">
+                                    <button
+                                      onClick={() => setExpandedDispatchId(expandedDispatchId === dispatch.id ? null : dispatch.id)}
+                                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg transition-all"
+                                      style={{
+                                        color: expandedDispatchId === dispatch.id ? '#027F83' : '#315B78',
+                                        fontSize: '13px',
+                                        fontWeight: '600',
+                                        border: '1px solid',
+                                        borderColor: expandedDispatchId === dispatch.id ? '#027F83' : '#CCD8DF',
+                                        backgroundColor: 'transparent'
+                                      }}
+                                      onMouseEnter={(e) => {
+                                        e.currentTarget.style.backgroundColor = '#F7F9FA';
+                                      }}
+                                      onMouseLeave={(e) => {
+                                        e.currentTarget.style.backgroundColor = 'transparent';
+                                      }}
+                                    >
+                                      <Package className="w-4 h-4" />
+                                      {dispatch.lots.length} Lots
+                                      {expandedDispatchId === dispatch.id ? (
+                                        <ChevronUp className="w-4 h-4" />
+                                      ) : (
+                                        <ChevronDown className="w-4 h-4" />
+                                      )}
+                                    </button>
+                                  </td>
+                                </tr>
 
-                          {/* Lot Details - Expanded Row */}
-                          {expandedDispatchId === dispatch.id && (
-                            <tr>
-                              <td colSpan={10} style={{ backgroundColor: '#F7F9FA', padding: 0 }}>
-                                <div className="px-12 py-6">
-                                  <div className="mb-4 flex items-center gap-2">
-                                    <Package className="w-4 h-4" style={{ color: '#027F83' }} />
-                                    <span style={{ fontSize: '14px', fontWeight: '700', color: '#315B78' }}>
-                                      Lot Details for {dispatch.dispatchId}
-                                    </span>
-                                  </div>
-                                  
-                                  {/* Lot Details Table */}
-                                  <table className="w-full rounded-lg overflow-hidden" style={{ backgroundColor: '#FFFFFF' }}>
-                                    <thead>
-                                      <tr style={{ backgroundColor: '#E6F7F7', borderBottom: '1px solid #E5EBEF' }}>
-                                        <th className="px-4 py-3 text-left" style={{ fontSize: '12px', fontWeight: '700', color: '#027F83', textTransform: 'uppercase' }}>
-                                          Lot Number
-                                        </th>
-                                        <th className="px-4 py-3 text-right" style={{ fontSize: '12px', fontWeight: '700', color: '#027F83', textTransform: 'uppercase' }}>
-                                          Quantity (QTL)
-                                        </th>
-                                        <th className="px-4 py-3 text-right" style={{ fontSize: '12px', fontWeight: '700', color: '#027F83', textTransform: 'uppercase' }}>
-                                          Bags
-                                        </th>
-                                        <th className="px-4 py-3 text-left" style={{ fontSize: '12px', fontWeight: '700', color: '#027F83', textTransform: 'uppercase' }}>
-                                          Quality
-                                        </th>
-                                        <th className="px-4 py-3 text-left" style={{ fontSize: '12px', fontWeight: '700', color: '#027F83', textTransform: 'uppercase' }}>
-                                          Grade
-                                        </th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      {dispatch.lots.slice(0, lotDetailsLimits[dispatch.id] || 5).map((lot) => (
-                                        <tr key={lot.id} className="border-b" style={{ borderColor: '#E5EBEF' }}>
-                                          <td className="px-4 py-3">
-                                            <div style={{ fontSize: '13px', fontWeight: '600', color: '#315B78' }}>
-                                              {lot.lotNumber}
-                                            </div>
-                                          </td>
-                                          <td className="px-4 py-3 text-right">
-                                            <div style={{ fontSize: '13px', fontWeight: '600', color: '#027F83' }}>
-                                              {lot.quantity}
-                                            </div>
-                                          </td>
-                                          <td className="px-4 py-3 text-right">
-                                            <div style={{ fontSize: '13px', fontWeight: '600', color: '#315B78' }}>
-                                              {lot.bags}
-                                            </div>
-                                          </td>
-                                          <td className="px-4 py-3">
-                                            <div style={{ fontSize: '13px', fontWeight: '600', color: '#315B78' }}>
-                                              {lot.quality}
-                                            </div>
-                                          </td>
-                                          <td className="px-4 py-3">
-                                            <div
-                                              className="inline-block px-3 py-1 rounded-full"
+                                {/* Lot Details - Expanded Row */}
+                                {expandedDispatchId === dispatch.id && (
+                                  <tr>
+                                    <td colSpan={10} style={{ backgroundColor: '#F7F9FA', padding: 0 }}>
+                                      <div className="px-12 py-6">
+                                        <div className="mb-4 flex items-center gap-2">
+                                          <Package className="w-4 h-4" style={{ color: '#027F83' }} />
+                                          <span style={{ fontSize: '14px', fontWeight: '700', color: '#315B78' }}>
+                                            Lot Details for {dispatch.dispatchId}
+                                          </span>
+                                        </div>
+
+                                        {/* Lot Details Table */}
+                                        <table className="w-full rounded-lg overflow-hidden" style={{ backgroundColor: '#FFFFFF' }}>
+                                          <thead>
+                                            <tr style={{ backgroundColor: '#E6F7F7', borderBottom: '1px solid #E5EBEF' }}>
+                                              <th className="px-4 py-3 text-left" style={{ fontSize: '12px', fontWeight: '700', color: '#027F83', textTransform: 'uppercase' }}>
+                                                Lot Number
+                                              </th>
+                                              <th className="px-4 py-3 text-right" style={{ fontSize: '12px', fontWeight: '700', color: '#027F83', textTransform: 'uppercase' }}>
+                                                Quantity (QTL)
+                                              </th>
+                                              <th className="px-4 py-3 text-right" style={{ fontSize: '12px', fontWeight: '700', color: '#027F83', textTransform: 'uppercase' }}>
+                                                Bags
+                                              </th>
+                                              <th className="px-4 py-3 text-left" style={{ fontSize: '12px', fontWeight: '700', color: '#027F83', textTransform: 'uppercase' }}>
+                                                Quality
+                                              </th>
+                                              <th className="px-4 py-3 text-left" style={{ fontSize: '12px', fontWeight: '700', color: '#027F83', textTransform: 'uppercase' }}>
+                                                Grade
+                                              </th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            {dispatch.lots.slice(0, lotDetailsLimits[dispatch.id] || 5).map((lot) => (
+                                              <tr key={lot.id} className="border-b" style={{ borderColor: '#E5EBEF' }}>
+                                                <td className="px-4 py-3">
+                                                  <div style={{ fontSize: '13px', fontWeight: '600', color: '#315B78' }}>
+                                                    {lot.lotNumber}
+                                                  </div>
+                                                </td>
+                                                <td className="px-4 py-3 text-right">
+                                                  <div style={{ fontSize: '13px', fontWeight: '600', color: '#027F83' }}>
+                                                    {lot.quantity}
+                                                  </div>
+                                                </td>
+                                                <td className="px-4 py-3 text-right">
+                                                  <div style={{ fontSize: '13px', fontWeight: '600', color: '#315B78' }}>
+                                                    {lot.bags}
+                                                  </div>
+                                                </td>
+                                                <td className="px-4 py-3">
+                                                  <div style={{ fontSize: '13px', fontWeight: '600', color: '#315B78' }}>
+                                                    {lot.quality}
+                                                  </div>
+                                                </td>
+                                                <td className="px-4 py-3">
+                                                  <div
+                                                    className="inline-block px-3 py-1 rounded-full"
+                                                    style={{
+                                                      backgroundColor: lot.grade === 'Grade A' ? '#E8F8F5' : '#FFF4E6',
+                                                      color: lot.grade === 'Grade A' ? '#00A67E' : '#FF9800',
+                                                      fontSize: '11px',
+                                                      fontWeight: '600'
+                                                    }}
+                                                  >
+                                                    {lot.grade}
+                                                  </div>
+                                                </td>
+                                              </tr>
+                                            ))}
+                                          </tbody>
+                                        </table>
+
+                                        {/* Load More Button for Lot Details */}
+                                        {dispatch.lots.length > (lotDetailsLimits[dispatch.id] || 5) && (
+                                          <div className="mt-4 flex justify-center">
+                                            <button
+                                              onClick={() => loadMoreLotDetails(dispatch.id)}
+                                              className="px-4 py-2 rounded-lg transition-all"
                                               style={{
-                                                backgroundColor: lot.grade === 'Grade A' ? '#E8F8F5' : '#FFF4E6',
-                                                color: lot.grade === 'Grade A' ? '#00A67E' : '#FF9800',
-                                                fontSize: '11px',
+                                                backgroundColor: 'transparent',
+                                                color: '#027F83',
+                                                border: '1px solid #027F83',
+                                                fontSize: '13px',
                                                 fontWeight: '600'
                                               }}
+                                              onMouseEnter={(e) => {
+                                                e.currentTarget.style.backgroundColor = '#E6F7F7';
+                                              }}
+                                              onMouseLeave={(e) => {
+                                                e.currentTarget.style.backgroundColor = 'transparent';
+                                              }}
                                             >
-                                              {lot.grade}
-                                            </div>
-                                          </td>
-                                        </tr>
-                                      ))}
-                                    </tbody>
-                                  </table>
+                                              Load More Lots ({dispatch.lots.length - (lotDetailsLimits[dispatch.id] || 5)} more)
+                                            </button>
+                                          </div>
+                                        )}
+                                      </div>
+                                    </td>
+                                  </tr>
+                                )}
+                              </>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
 
-                                  {/* Load More Button for Lot Details */}
-                                  {dispatch.lots.length > (lotDetailsLimits[dispatch.id] || 5) && (
-                                    <div className="mt-4 flex justify-center">
-                                      <button
-                                        onClick={() => loadMoreLotDetails(dispatch.id)}
-                                        className="px-4 py-2 rounded-lg transition-all"
-                                        style={{
-                                          backgroundColor: 'transparent',
-                                          color: '#027F83',
-                                          border: '1px solid #027F83',
-                                          fontSize: '13px',
-                                          fontWeight: '600'
-                                        }}
-                                        onMouseEnter={(e) => {
-                                          e.currentTarget.style.backgroundColor = '#E6F7F7';
-                                        }}
-                                        onMouseLeave={(e) => {
-                                          e.currentTarget.style.backgroundColor = 'transparent';
-                                        }}
-                                      >
-                                        Load More Lots ({dispatch.lots.length - (lotDetailsLimits[dispatch.id] || 5)} more)
-                                      </button>
-                                    </div>
-                                  )}
-                                </div>
-                              </td>
-                            </tr>
-                          )}
-                        </>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-
-                {/* Load More Button for Dispatch Records */}
-                {dispatchData.length > dispatchRecordsLimit && (
-                  <div className="px-6 py-4 border-t flex justify-center" style={{ borderColor: '#E5EBEF' }}>
-                    <button
-                      onClick={loadMoreDispatchRecords}
-                      className="px-6 py-2 rounded-lg transition-all"
-                      style={{
-                        backgroundColor: 'transparent',
-                        color: '#027F83',
-                        border: '1px solid #027F83',
-                        fontSize: '14px',
-                        fontWeight: '600'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor = '#E6F7F7';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundColor = 'transparent';
-                      }}
-                    >
-                      Load More ({dispatchData.length - dispatchRecordsLimit} more)
-                    </button>
-                  </div>
-                )}
-              </div>
-            )}
+                      {/* Load More Button for Dispatch Records */}
+                      {dispatchData.length > dispatchRecordsLimit && (
+                        <div className="px-6 py-4 border-t flex justify-center" style={{ borderColor: '#E5EBEF' }}>
+                          <button
+                            onClick={loadMoreDispatchRecords}
+                            className="px-6 py-2 rounded-lg transition-all"
+                            style={{
+                              backgroundColor: 'transparent',
+                              color: '#027F83',
+                              border: '1px solid #027F83',
+                              fontSize: '14px',
+                              fontWeight: '600'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.backgroundColor = '#E6F7F7';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.backgroundColor = 'transparent';
+                            }}
+                          >
+                            Load More ({dispatchData.length - dispatchRecordsLimit} more)
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                   {/* Empty State when no center/warehouse selected */}
                   {(!formData.center || !formData.warehouse) && (
@@ -2000,7 +1999,7 @@ export default function WHRManagement() {
                         </div>
                       </div>
                     </div>
-                    
+
                     {/* Selected Values */}
                     <div className="p-6 space-y-5">
                       {/* Basic Information Section */}
@@ -2011,7 +2010,7 @@ export default function WHRManagement() {
                             Basic Information
                           </h4>
                         </div>
-                        
+
                         <div className="p-3 rounded-lg" style={{ backgroundColor: '#F7F9FA' }}>
                           <div className="flex items-center gap-2 mb-2">
                             <Calendar className="w-3.5 h-3.5" style={{ color: '#027F83' }} />
@@ -2283,7 +2282,7 @@ export default function WHRManagement() {
             <div className="flex items-center gap-3">
               {/* NLP Search */}
               <div className="relative">
-                <div 
+                <div
                   className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-lg"
                   style={{ backgroundColor: '#F2FCFB' }}
                 >
@@ -2291,7 +2290,7 @@ export default function WHRManagement() {
                 </div>
                 <input
                   type="text"
-                  placeholder="Try: 'approved WHR', 'Karnataka', 'WHR2025001'..."
+                  placeholder="Try: 'approved WHR', 'Maharashtra', 'WHR2025001'..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="h-12 pl-14 pr-12 rounded-lg border transition-all outline-none"
@@ -2321,9 +2320,8 @@ export default function WHRManagement() {
                   title={isListening ? 'Listening...' : isProcessingVoice ? 'Processing...' : 'Voice search'}
                 >
                   <Mic
-                    className={`w-4 h-4 transition-colors ${
-                      isListening ? 'text-white' : isProcessingVoice ? 'text-white' : ''
-                    }`}
+                    className={`w-4 h-4 transition-colors ${isListening ? 'text-white' : isProcessingVoice ? 'text-white' : ''
+                      }`}
                     style={{
                       color: isListening ? '#FFFFFF' : isProcessingVoice ? '#FFFFFF' : '#666666'
                     }}
@@ -2357,13 +2355,13 @@ export default function WHRManagement() {
                 <div className="flex items-center gap-2">
                   <Filter className="w-5 h-5" />
                   {activeFilterCount > 0 && (
-                    <span 
+                    <span
                       className="w-5 h-5 rounded-full flex items-center justify-center"
-                      style={{ 
-                        backgroundColor: '#027F83', 
-                        color: '#FFFFFF', 
-                        fontSize: '11px', 
-                        fontWeight: '700' 
+                      style={{
+                        backgroundColor: '#027F83',
+                        color: '#FFFFFF',
+                        fontSize: '11px',
+                        fontWeight: '700'
                       }}
                     >
                       {activeFilterCount}
@@ -2563,14 +2561,14 @@ export default function WHRManagement() {
       {/* Filter Drawer */}
       {filterDrawerOpen && (
         <>
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-30 z-40 transition-opacity"
             onClick={() => setFilterDrawerOpen(false)}
           />
 
-          <div 
+          <div
             className="fixed top-0 right-0 h-full w-full md:w-[450px] bg-white shadow-2xl z-50 overflow-y-auto"
-            style={{ 
+            style={{
               animation: 'slideInRight 0.3s ease-out',
               borderLeft: '1px solid #E5EBEF'
             }}
@@ -2644,7 +2642,7 @@ export default function WHRManagement() {
                     onChange={(value) => setFilters({ ...filters, state: value })}
                     options={[
                       { value: 'All', label: 'All States' },
-                      { value: 'Karnataka', label: 'Karnataka' },
+                      { value: 'Maharashtra', label: 'Maharashtra' },
                       { value: 'Tamil Nadu', label: 'Tamil Nadu' },
                       { value: 'Maharashtra', label: 'Maharashtra' }
                     ]}
@@ -2731,7 +2729,7 @@ export default function WHRManagement() {
                 >
                   Clear All
                 </button>
-                
+
                 <button
                   onClick={() => {
                     setFilterDrawerOpen(false);

@@ -436,14 +436,14 @@ export default function UnifiedReportingDashboard() {
   };
 
   // Get current report config
-  const currentReportConfig = selectedReport 
+  const currentReportConfig = selectedReport
     ? reportConfigs.find(r => r.id === selectedReport)
     : null;
 
   // Mock AI Insights
   const generateAIInsights = (reportType: string): AIInsight[] => {
     const insights: AIInsight[] = [];
-    
+
     if (reportType.includes('payment')) {
       insights.push({
         id: '2',
@@ -457,7 +457,7 @@ export default function UnifiedReportingDashboard() {
         data: { pendingCount: 3, avgDelay: 52 }
       });
     }
-    
+
     if (reportType.includes('farmer')) {
       insights.push({
         id: '3',
@@ -528,10 +528,10 @@ export default function UnifiedReportingDashboard() {
         setSelectedReport(matchedReport.id);
         setActiveCategory(matchedReport.category);
         setFilters(extractedFilters);
-        
+
         const mockData = generateMockReportData(matchedReport.id);
         const insights = generateAIInsights(matchedReport.id);
-        
+
         setQueryResponse({
           reportType: matchedReport.id,
           filters: extractedFilters,
@@ -555,10 +555,10 @@ export default function UnifiedReportingDashboard() {
   // Generate mock report data
   const generateMockReportData = (reportId: string): any[] => {
     const data: any[] = [];
-    const states = ['Maharashtra', 'Karnataka', 'Gujarat', 'Rajasthan', 'Punjab', 'Haryana', 'Uttar Pradesh', 'Madhya Pradesh'];
+    const states = ['Maharashtra', 'Maharashtra', 'Gujarat', 'Rajasthan', 'Punjab', 'Haryana', 'Uttar Pradesh', 'Madhya Pradesh'];
     const districts = ['Pune', 'Mumbai', 'Nagpur', 'Nashik', 'Bangalore', 'Ahmedabad', 'Jaipur', 'Ludhiana'];
     const commodities = ['Wheat', 'Rice', 'Paddy', 'Cotton', 'Sugarcane'];
-    
+
     for (let i = 1; i <= 20; i++) {
       data.push({
         id: i,
@@ -638,7 +638,7 @@ export default function UnifiedReportingDashboard() {
   useEffect(() => {
     if (aiQuery.trim()) {
       const query = aiQuery.toLowerCase();
-      
+
       if (query.includes('procurement') || query.includes('procure')) {
         setNlpSuggestion('💡 Try: "Show procurement status", "Compare procurement by district"');
       } else if (query.includes('payment') || query.includes('pay')) {
@@ -661,8 +661,8 @@ export default function UnifiedReportingDashboard() {
 
   // Toggle favorite
   const toggleFavorite = (reportId: string) => {
-    setFavorites(prev => 
-      prev.includes(reportId) 
+    setFavorites(prev =>
+      prev.includes(reportId)
         ? prev.filter(id => id !== reportId)
         : [...prev, reportId]
     );
@@ -709,7 +709,7 @@ export default function UnifiedReportingDashboard() {
       {/* Breadcrumb */}
       <div className="mb-6 flex items-center gap-2" style={{ fontSize: '14px', color: '#666' }}>
         <Home className="w-4 h-4" style={{ color: '#027F83' }} />
-        <button 
+        <button
           onClick={() => console.log('Navigate to home')}
           className="hover:underline transition-colors cursor-pointer"
           style={{ color: '#027F83', fontWeight: '500', background: 'none', border: 'none', padding: 0 }}
@@ -768,16 +768,16 @@ export default function UnifiedReportingDashboard() {
       </div> */}
 
       {/* AI Query Interface - Premium Design */}
-      <div className="mb-6 rounded-2xl border-2 overflow-visible shadow-xl" style={{ 
+      <div className="mb-6 rounded-2xl border-2 overflow-visible shadow-xl" style={{
         borderColor: '#027F83',
         backgroundColor: '#FFFFFF',
         background: 'linear-gradient(to bottom, #F0FDF4 0%, #FFFFFF 100%)'
       }}>
-        <div className="px-6 py-5 border-b flex items-center gap-3" style={{ 
+        <div className="px-6 py-5 border-b flex items-center gap-3" style={{
           borderColor: '#E5EBEF',
           background: 'linear-gradient(135deg, #E6F7F7 0%, #F0FDF4 100%)'
         }}>
-          <div className="p-3 rounded-xl shadow-md" style={{ 
+          <div className="p-3 rounded-xl shadow-md" style={{
             background: 'linear-gradient(135deg, #027F83 0%, #00A040 100%)',
             boxShadow: '0 4px 12px rgba(2, 127, 131, 0.3)'
           }}>
@@ -804,9 +804,9 @@ export default function UnifiedReportingDashboard() {
 
         <div className="p-6 relative" style={{ zIndex: 10 }}>
           <div className="relative">
-            <div 
+            <div
               className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 rounded-xl shadow-md"
-              style={{ 
+              style={{
                 background: 'linear-gradient(135deg, #E6F7F7 0%, #F0FDF4 100%)',
                 boxShadow: '0 2px 8px rgba(2, 127, 131, 0.2)'
               }}
@@ -852,9 +852,8 @@ export default function UnifiedReportingDashboard() {
                 title={isListening ? 'Listening...' : isProcessingVoice ? 'Processing...' : 'Voice input'}
               >
                 <Mic
-                  className={`w-5 h-5 transition-colors ${
-                    isListening ? 'text-white' : isProcessingVoice ? 'text-white' : ''
-                  }`}
+                  className={`w-5 h-5 transition-colors ${isListening ? 'text-white' : isProcessingVoice ? 'text-white' : ''
+                    }`}
                   style={{
                     color: isListening ? '#FFFFFF' : isProcessingVoice ? '#FFFFFF' : '#666666'
                   }}
@@ -865,7 +864,7 @@ export default function UnifiedReportingDashboard() {
                 disabled={!aiQuery.trim() || isProcessingQuery}
                 className="h-10 px-6 rounded-xl transition-all flex items-center gap-2 disabled:opacity-50 shadow-lg font-semibold"
                 style={{
-                  background: isProcessingQuery 
+                  background: isProcessingQuery
                     ? 'linear-gradient(135deg, #CCD8DF 0%, #E5EBEF 100%)'
                     : 'linear-gradient(135deg, #027F83 0%, #00A040 100%)',
                   color: '#FFFFFF',
@@ -896,10 +895,10 @@ export default function UnifiedReportingDashboard() {
               </button>
             </div>
             {nlpSuggestion && (
-              <div className="absolute top-full left-0 mt-3 px-4 py-2.5 rounded-xl z-50 shadow-xl border-2 animate-in slide-in-from-top-2" style={{ 
-                backgroundColor: '#E6F7F7', 
-                fontSize: '13px', 
-                fontWeight: '600', 
+              <div className="absolute top-full left-0 mt-3 px-4 py-2.5 rounded-xl z-50 shadow-xl border-2 animate-in slide-in-from-top-2" style={{
+                backgroundColor: '#E6F7F7',
+                fontSize: '13px',
+                fontWeight: '600',
                 color: '#027F83',
                 borderColor: '#027F83',
                 maxWidth: '600px'
@@ -912,7 +911,7 @@ export default function UnifiedReportingDashboard() {
 
           {/* Query History Dropdown */}
           {showQueryHistory && queryHistory.length > 0 && (
-            <div className="absolute top-full left-0 right-0 mt-2 rounded-xl border-2 shadow-2xl z-50 overflow-hidden" style={{ 
+            <div className="absolute top-full left-0 right-0 mt-2 rounded-xl border-2 shadow-2xl z-50 overflow-hidden" style={{
               backgroundColor: '#FFFFFF',
               borderColor: '#E5EBEF',
               maxHeight: '300px',
@@ -962,7 +961,7 @@ export default function UnifiedReportingDashboard() {
           const Icon = category.icon;
           const colors = categoryColors[category.id as keyof typeof categoryColors];
           const isActive = activeCategory === category.id;
-          
+
           return (
             <button
               key={category.id}
@@ -973,7 +972,7 @@ export default function UnifiedReportingDashboard() {
               }}
               className="px-6 py-3 rounded-xl transition-all flex items-center gap-2 whitespace-nowrap shadow-sm"
               style={{
-                background: isActive 
+                background: isActive
                   ? `linear-gradient(135deg, ${colors.bg} 0%, ${colors.bg} 100%)`
                   : '#FFFFFF',
                 border: `2px solid ${isActive ? colors.border : '#E5EBEF'}`,
@@ -999,7 +998,7 @@ export default function UnifiedReportingDashboard() {
               <Icon className="w-5 h-5" />
               {category.label}
               {category.id !== 'all' && (
-                <span className="px-2 py-0.5 rounded-full text-xs font-bold" style={{ 
+                <span className="px-2 py-0.5 rounded-full text-xs font-bold" style={{
                   backgroundColor: isActive ? colors.text : '#CCD8DF',
                   color: isActive ? '#FFFFFF' : '#666'
                 }}>
@@ -1015,18 +1014,18 @@ export default function UnifiedReportingDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Report Selection Sidebar */}
         <div className="lg:col-span-1">
-          <div className="rounded-2xl border-2 shadow-lg overflow-hidden sticky top-4" style={{ 
+          <div className="rounded-2xl border-2 shadow-lg overflow-hidden sticky top-4" style={{
             borderColor: '#E5EBEF',
             backgroundColor: '#FFFFFF'
           }}>
-            <div className="px-4 py-4 border-b flex items-center justify-between" style={{ 
+            <div className="px-4 py-4 border-b flex items-center justify-between" style={{
               borderColor: '#E5EBEF',
               backgroundColor: '#F7F9FA'
             }}>
               <h3 style={{ fontSize: '16px', fontWeight: '700', color: '#003A5D' }}>
                 Available Reports
               </h3>
-              <span className="px-2 py-1 rounded-full text-xs font-bold" style={{ 
+              <span className="px-2 py-1 rounded-full text-xs font-bold" style={{
                 backgroundColor: '#027F83',
                 color: '#FFFFFF'
               }}>
@@ -1056,7 +1055,7 @@ export default function UnifiedReportingDashboard() {
                           setActiveCategory(report.category);
                         }}
                         className="w-full text-left px-3 py-2 rounded-lg transition-all flex items-center gap-2 hover:bg-white"
-                        style={{ 
+                        style={{
                           backgroundColor: selectedReport === favId ? '#E6F7F7' : 'transparent'
                         }}
                       >
@@ -1093,7 +1092,7 @@ export default function UnifiedReportingDashboard() {
                           setActiveCategory(report.category);
                         }}
                         className="w-full text-left px-3 py-2 rounded-lg transition-all flex items-center gap-2 hover:bg-gray-50"
-                        style={{ 
+                        style={{
                           backgroundColor: selectedReport === reportId ? '#E6F7F7' : 'transparent'
                         }}
                       >
@@ -1115,13 +1114,13 @@ export default function UnifiedReportingDashboard() {
                   const Icon = report.icon;
                   const colors = categoryColors[report.category];
                   const isSelected = selectedReport === report.id;
-                  
+
                   return (
                     <button
                       key={report.id}
                       onClick={() => setSelectedReport(report.id)}
                       className="w-full text-left px-3 py-3 rounded-xl transition-all flex items-start gap-3 group relative"
-                      style={{ 
+                      style={{
                         backgroundColor: isSelected ? colors.bg : 'transparent',
                         border: `2px solid ${isSelected ? colors.border : 'transparent'}`,
                         boxShadow: isSelected ? `0 2px 8px ${colors.border}30` : 'none'
@@ -1142,9 +1141,9 @@ export default function UnifiedReportingDashboard() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-2">
-                          <p style={{ 
-                            fontSize: '13px', 
-                            fontWeight: isSelected ? '700' : '600', 
+                          <p style={{
+                            fontSize: '13px',
+                            fontWeight: isSelected ? '700' : '600',
                             color: isSelected ? colors.text : '#003A5D',
                             marginBottom: '4px',
                             lineHeight: '1.4'
@@ -1182,16 +1181,16 @@ export default function UnifiedReportingDashboard() {
           {selectedReport && currentReportConfig ? (
             <div className="space-y-6">
               {/* Report Header */}
-              <div className="rounded-2xl border-2 shadow-lg overflow-hidden" style={{ 
+              <div className="rounded-2xl border-2 shadow-lg overflow-hidden" style={{
                 borderColor: '#E5EBEF',
                 backgroundColor: '#FFFFFF'
               }}>
-                <div className="px-6 py-5 border-b flex items-center justify-between" style={{ 
+                <div className="px-6 py-5 border-b flex items-center justify-between" style={{
                   borderColor: '#E5EBEF',
                   background: `linear-gradient(135deg, ${categoryColors[currentReportConfig.category].bg} 0%, #FFFFFF 100%)`
                 }}>
                   <div className="flex items-center gap-4">
-                    <div className="p-3 rounded-xl shadow-md" style={{ 
+                    <div className="p-3 rounded-xl shadow-md" style={{
                       backgroundColor: categoryColors[currentReportConfig.category].text
                     }}>
                       <currentReportConfig.icon className="w-6 h-6" style={{ color: '#FFFFFF' }} />
@@ -1223,7 +1222,7 @@ export default function UnifiedReportingDashboard() {
                         // Export functionality
                         const csv = [
                           currentReportConfig.columns.join(','),
-                          ...(queryResponse?.data || []).map((row: any) => 
+                          ...(queryResponse?.data || []).map((row: any) =>
                             currentReportConfig.columns.map(col => row[col] || '').join(',')
                           )
                         ].join('\n');
@@ -1323,11 +1322,11 @@ export default function UnifiedReportingDashboard() {
 
               {/* AI Insights Panel */}
               {showInsights && queryResponse?.insights && queryResponse.insights.length > 0 && (
-                <div className="rounded-2xl border-2 shadow-lg overflow-hidden" style={{ 
+                <div className="rounded-2xl border-2 shadow-lg overflow-hidden" style={{
                   borderColor: '#027F83',
                   backgroundColor: '#FFFFFF'
                 }}>
-                  <div className="px-6 py-4 border-b flex items-center justify-between" style={{ 
+                  <div className="px-6 py-4 border-b flex items-center justify-between" style={{
                     borderColor: '#E5EBEF',
                     background: 'linear-gradient(135deg, #E6F7F7 0%, #F0FDF4 100%)'
                   }}>
@@ -1338,7 +1337,7 @@ export default function UnifiedReportingDashboard() {
                       <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#003A5D' }}>
                         AI-Powered Insights
                       </h3>
-                      <span className="px-2 py-1 rounded-full text-xs font-bold" style={{ 
+                      <span className="px-2 py-1 rounded-full text-xs font-bold" style={{
                         backgroundColor: '#027F83',
                         color: '#FFFFFF'
                       }}>
@@ -1358,10 +1357,10 @@ export default function UnifiedReportingDashboard() {
                         const Icon = getInsightIcon(insight.type);
                         const colors = getInsightColor(insight.type);
                         return (
-                          <div 
+                          <div
                             key={insight.id}
                             className="p-5 rounded-xl border-2 transition-all hover:shadow-lg"
-                            style={{ 
+                            style={{
                               borderColor: colors.border,
                               backgroundColor: colors.bg
                             }}
@@ -1372,17 +1371,17 @@ export default function UnifiedReportingDashboard() {
                               </div>
                               <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-2">
-                                  <span 
+                                  <span
                                     className="px-2 py-1 rounded-full text-xs font-bold"
                                     style={{ backgroundColor: colors.text, color: '#FFFFFF' }}
                                   >
                                     {insight.type.toUpperCase()}
                                   </span>
-                                  <span 
+                                  <span
                                     className="px-2 py-1 rounded-full text-xs font-semibold"
-                                    style={{ 
-                                      backgroundColor: insight.impact === 'high' ? '#E94545' : 
-                                                     insight.impact === 'medium' ? '#FFA200' : '#00A040',
+                                    style={{
+                                      backgroundColor: insight.impact === 'high' ? '#E94545' :
+                                        insight.impact === 'medium' ? '#FFA200' : '#00A040',
                                       color: '#FFFFFF'
                                     }}
                                   >
@@ -1425,7 +1424,7 @@ export default function UnifiedReportingDashboard() {
               )}
             </div>
           ) : (
-            <div className="rounded-2xl border-2 shadow-lg p-12 text-center" style={{ 
+            <div className="rounded-2xl border-2 shadow-lg p-12 text-center" style={{
               borderColor: '#E5EBEF',
               backgroundColor: '#FFFFFF'
             }}>
@@ -1445,7 +1444,7 @@ export default function UnifiedReportingDashboard() {
                 ].map((feature, idx) => {
                   const FeatureIcon = feature.icon;
                   return (
-                    <div 
+                    <div
                       key={idx}
                       className="p-6 rounded-xl border-2 transition-all hover:shadow-lg"
                       style={{ borderColor: '#E5EBEF', backgroundColor: '#FFFFFF' }}
@@ -1471,21 +1470,21 @@ export default function UnifiedReportingDashboard() {
       {/* Filter Drawer */}
       {filterDrawerOpen && currentReportConfig && (
         <>
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-30 z-40 transition-opacity"
             onClick={() => setFilterDrawerOpen(false)}
           />
 
-          <div 
+          <div
             className="fixed top-0 right-0 h-full w-full md:w-[500px] bg-white shadow-2xl z-50 overflow-y-auto"
-            style={{ 
+            style={{
               animation: 'slideInRight 0.3s ease-out',
               borderLeft: '1px solid #E5EBEF'
             }}
           >
-            <div className="sticky top-0 z-10 px-6 py-5 border-b flex items-center justify-between" style={{ 
-              backgroundColor: '#FFFFFF', 
-              borderColor: '#E5EBEF' 
+            <div className="sticky top-0 z-10 px-6 py-5 border-b flex items-center justify-between" style={{
+              backgroundColor: '#FFFFFF',
+              borderColor: '#E5EBEF'
             }}>
               <div>
                 <h2 style={{ fontSize: '20px', fontWeight: '700', color: '#003A5D', marginBottom: '4px' }}>
@@ -1507,14 +1506,14 @@ export default function UnifiedReportingDashboard() {
               <div className="space-y-4">
                 {currentReportConfig.filters.map((filter) => (
                   <div key={filter}>
-                    <label style={{ 
-                      fontSize: '12px', 
-                      fontWeight: '700', 
-                      color: '#777777', 
-                      textTransform: 'uppercase', 
-                      letterSpacing: '0.8px', 
-                      marginBottom: '8px', 
-                      display: 'block' 
+                    <label style={{
+                      fontSize: '12px',
+                      fontWeight: '700',
+                      color: '#777777',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.8px',
+                      marginBottom: '8px',
+                      display: 'block'
                     }}>
                       {filter.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
                     </label>
@@ -1561,7 +1560,7 @@ export default function UnifiedReportingDashboard() {
                 >
                   Apply Filters
                 </button>
-                
+
                 <button
                   onClick={() => {
                     setFilters({});

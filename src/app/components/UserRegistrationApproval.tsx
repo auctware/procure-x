@@ -44,7 +44,7 @@ export default function UserRegistrationApproval() {
       userType: 'Maker',
       orgName: 'Sample Farmers Co-op One',
       aadhaarNo: '9000 0000 0001',
-      address: 'Plot No. 45, Industrial Area, Bangalore, Karnataka - 560001',
+      address: 'Plot No. 45, Industrial Area, Bangalore, Maharashtra - 560001',
       status: 'Pending',
       emailId: 'user1@dummy.com',
       designation: 'Manager',
@@ -117,7 +117,7 @@ export default function UserRegistrationApproval() {
   useEffect(() => {
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      
+
       if (query.includes('pending') || query.includes('approved') || query.includes('rejected')) {
         setNlpSuggestion('Filtering by status');
       } else if (query.includes('admin') || query.includes('operator') || query.includes('viewer')) {
@@ -207,7 +207,7 @@ export default function UserRegistrationApproval() {
   const filteredUsers = users.filter(user => {
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      const matchesSearch = 
+      const matchesSearch =
         user.userId.toLowerCase().includes(query) ||
         user.userName.toLowerCase().includes(query) ||
         user.mobileNo.includes(query) ||
@@ -220,7 +220,7 @@ export default function UserRegistrationApproval() {
         user.designation.toLowerCase().includes(query) ||
         user.employeeCode.toLowerCase().includes(query) ||
         user.status.toLowerCase().includes(query);
-      
+
       if (!matchesSearch) return false;
     }
 
@@ -299,7 +299,7 @@ export default function UserRegistrationApproval() {
       {/* Breadcrumb */}
       <div className="mb-6 flex items-center gap-2" style={{ fontSize: '14px', color: '#666' }}>
         <Home className="w-4 h-4" style={{ color: '#027F83' }} />
-        <button 
+        <button
           onClick={() => console.log('Navigate to home')}
           className="hover:underline transition-colors cursor-pointer"
           style={{ color: '#027F83', fontWeight: '500', background: 'none', border: 'none', padding: 0 }}
@@ -331,7 +331,7 @@ export default function UserRegistrationApproval() {
           <div className="flex items-center gap-3">
             {/* NLP Search */}
             <div className="relative">
-              <div 
+              <div
                 className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-lg"
                 style={{ backgroundColor: '#F2FCFB' }}
               >
@@ -369,9 +369,8 @@ export default function UserRegistrationApproval() {
                 title={isListening ? 'Listening...' : isProcessingVoice ? 'Processing...' : 'Voice search'}
               >
                 <Mic
-                  className={`w-4 h-4 transition-colors ${
-                    isListening ? 'text-white' : isProcessingVoice ? 'text-white' : ''
-                  }`}
+                  className={`w-4 h-4 transition-colors ${isListening ? 'text-white' : isProcessingVoice ? 'text-white' : ''
+                    }`}
                   style={{
                     color: isListening ? '#FFFFFF' : isProcessingVoice ? '#FFFFFF' : '#666666'
                   }}
@@ -558,7 +557,7 @@ export default function UserRegistrationApproval() {
                             </button>
 
                             {activeActionMenu === user.id && (
-                              <div 
+                              <div
                                 className="absolute right-0 top-full mt-1 w-48 rounded-lg shadow-xl overflow-hidden z-50 border"
                                 style={{ backgroundColor: '#FFFFFF', borderColor: '#E5EBEF' }}
                                 onClick={(e) => e.stopPropagation()}
@@ -617,14 +616,14 @@ export default function UserRegistrationApproval() {
       {/* View Details Drawer */}
       {viewDrawerOpen && selectedUser && (
         <>
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-30 z-40 transition-opacity"
             onClick={() => setViewDrawerOpen(false)}
           />
 
-          <div 
+          <div
             className="fixed top-0 right-0 h-full w-full md:w-[700px] bg-white shadow-2xl z-50 overflow-y-auto"
-            style={{ 
+            style={{
               animation: 'slideInRight 0.3s ease-out',
               borderLeft: '1px solid #E5EBEF'
             }}
@@ -884,14 +883,14 @@ export default function UserRegistrationApproval() {
       {/* Filter Drawer */}
       {filterDrawerOpen && (
         <>
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-30 z-40 transition-opacity"
             onClick={() => setFilterDrawerOpen(false)}
           />
 
-          <div 
+          <div
             className="fixed top-0 right-0 h-full w-full md:w-[450px] bg-white shadow-2xl z-50 overflow-y-auto"
-            style={{ 
+            style={{
               animation: 'slideInRight 0.3s ease-out',
               borderLeft: '1px solid #E5EBEF'
             }}
@@ -986,7 +985,7 @@ export default function UserRegistrationApproval() {
                 >
                   Apply Filters
                 </button>
-                
+
                 <button
                   onClick={clearFilters}
                   className="px-6 h-12 rounded-lg transition-all"
@@ -1009,7 +1008,7 @@ export default function UserRegistrationApproval() {
       {/* Confirmation Modal */}
       {confirmModalOpen && selectedUser && (
         <>
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-30 z-50 transition-opacity"
             onClick={() => {
               setConfirmModalOpen(false);
@@ -1018,7 +1017,7 @@ export default function UserRegistrationApproval() {
             }}
           />
 
-          <div 
+          <div
             className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-white rounded-2xl shadow-2xl z-50 border"
             style={{ borderColor: '#E5EBEF' }}
             onClick={(e) => e.stopPropagation()}
@@ -1029,7 +1028,7 @@ export default function UserRegistrationApproval() {
                   {pendingAction === 'Approved' ? 'Confirm Approval' : 'Confirm Rejection'}
                 </h2>
                 <p style={{ fontSize: '14px', color: '#666' }}>
-                  {pendingAction === 'Approved' 
+                  {pendingAction === 'Approved'
                     ? `Are you sure you want to approve user ${selectedUser.userId}?`
                     : `Are you sure you want to reject user ${selectedUser.userId}?`
                   }
@@ -1108,7 +1107,7 @@ export default function UserRegistrationApproval() {
                     </>
                   )}
                 </button>
-                
+
                 <button
                   onClick={() => {
                     setConfirmModalOpen(false);

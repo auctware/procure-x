@@ -24,10 +24,10 @@ export default function IndividualReport({
   useEffect(() => {
     const generateData = () => {
       const mockData: any[] = [];
-      const states = ['Maharashtra', 'Karnataka', 'Gujarat', 'Rajasthan', 'Punjab', 'Haryana', 'Uttar Pradesh', 'Madhya Pradesh'];
+      const states = ['Maharashtra', 'Maharashtra', 'Gujarat', 'Rajasthan', 'Punjab', 'Haryana', 'Uttar Pradesh', 'Madhya Pradesh'];
       const districts = ['Pune', 'Mumbai', 'Nagpur', 'Nashik', 'Bangalore', 'Ahmedabad', 'Jaipur', 'Ludhiana'];
       const commodities = ['Wheat', 'Rice', 'Paddy', 'Cotton', 'Sugarcane'];
-      
+
       for (let i = 1; i <= 20; i++) {
         mockData.push({
           id: i,
@@ -81,11 +81,11 @@ export default function IndividualReport({
       </div>
 
       {/* Report Header */}
-      <div className="rounded-2xl border-2 shadow-lg overflow-hidden mb-6" style={{ 
+      <div className="rounded-2xl border-2 shadow-lg overflow-hidden mb-6" style={{
         borderColor: '#E5EBEF',
         backgroundColor: '#FFFFFF'
       }}>
-        <div className="px-6 py-5 border-b flex items-center justify-between" style={{ 
+        <div className="px-6 py-5 border-b flex items-center justify-between" style={{
           borderColor: '#E5EBEF',
           background: `linear-gradient(135deg, ${categoryColors[category].bg} 0%, #FFFFFF 100%)`
         }}>
@@ -113,7 +113,7 @@ export default function IndividualReport({
               onClick={() => {
                 const csv = [
                   columns.join(','),
-                  ...data.map((row: any) => 
+                  ...data.map((row: any) =>
                     columns.map(col => row[col] || '').join(',')
                   )
                 ].join('\n');

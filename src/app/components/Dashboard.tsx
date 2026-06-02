@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import { 
-  ChevronLeft, ChevronRight, Bell, Search, User, Settings, LogOut, 
-  LayoutDashboard, Users, ShoppingCart, DollarSign, 
+import {
+  ChevronLeft, ChevronRight, Bell, Search, User, Settings, LogOut,
+  LayoutDashboard, Users, ShoppingCart, DollarSign,
   TrendingUp, Package, FileText, BarChart3, ChevronDown,
   ArrowUpRight, ArrowDownRight, Home, Briefcase, CreditCard, Building2,
-  HelpCircle, MoreVertical
+  HelpCircle, MoreVertical, ArrowRightLeft
 } from 'lucide-react';
 import logoImage from '../../assets/logo.png';
 import DashboardHome from '@/app/components/DashboardHome';
@@ -28,6 +28,27 @@ import AIReportingDashboard from '@/app/components/AIReportingDashboard';
 import UnifiedReportingDashboard from '@/app/components/UnifiedReportingDashboard';
 import IndividualReport from '@/app/components/reports/IndividualReport';
 import ViewLotEntry from '@/app/components/ViewLotEntry';
+import GunnyBagDeposit from '@/app/components/GunnyBagDeposit';
+import GunnyBagInventory from '@/app/components/GunnyBagInventory';
+import GunnyBagArrival from '@/app/components/GunnyBagArrival';
+import CenterWiseGunnyBagInventory from '@/app/components/CenterWiseGunnyBagInventory';
+import CenterGodownWiseInventory from '@/app/components/CenterGodownWiseInventory';
+import DuesBook from '@/app/components/DuesBook';
+import PaymentFileDetailsPFMS from '@/app/components/PaymentFileDetailsPFMS';
+import PFMSTracker from '@/app/components/PFMSTracker';
+import DOGeneration from '@/app/components/DOGeneration';
+import CenterToMillDispatch from '@/app/components/CenterToMillDispatch';
+import CenterToMillArrival from '@/app/components/CenterToMillArrival';
+import MillerGunnyBagInventory from '@/app/components/MillerGunnyBagInventory';
+import CMROGeneration from '@/app/components/CMROGeneration';
+import MillToWarehouseDispatch from '@/app/components/MillToWarehouseDispatch';
+import MillToWarehouseArrival from '@/app/components/MillToWarehouseArrival';
+import WHArrivalAssaying from '@/app/components/WHArrivalAssaying';
+import MillingBillingReport from '@/app/components/MillingBillingReport';
+import MillingBillingDetails from '@/app/components/MillingBillingDetails';
+import WHRCreation from '@/app/components/WHRCreation';
+import CreateIssue from '@/app/components/CreateIssue';
+import ViewIssue from '@/app/components/ViewIssue';
 
 interface DashboardProps {
   onLogout: () => void;
@@ -87,11 +108,11 @@ export default function Dashboard({ onLogout }: DashboardProps) {
   }, [notificationMenuOpen]);
   const [menuItems, setMenuItems] = useState<MenuItem[]>([
     { icon: Home, label: 'Home', active: true, hasSubmenu: false },
-    { 
-      icon: Users, 
-      label: 'User Registration', 
-      active: false, 
-      hasSubmenu: true, 
+    {
+      icon: Users,
+      label: 'User Registration',
+      active: false,
+      hasSubmenu: true,
       submenuOpen: false,
       submenu: [
         'Organization Registration',
@@ -101,11 +122,11 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         'View Farmer Details'
       ]
     },
-    { 
-      icon: ShoppingCart, 
-      label: 'Operations', 
-      active: false, 
-      hasSubmenu: true, 
+    {
+      icon: ShoppingCart,
+      label: 'Operations',
+      active: false,
+      hasSubmenu: true,
       submenuOpen: false,
       submenu: [
         'Lot Entry',
@@ -115,10 +136,10 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         'Inventory Management'
       ]
     },
-    { 
-      icon: BarChart3, 
-      label: 'AI Reporting', 
-      active: false, 
+    {
+      icon: BarChart3,
+      label: 'AI Reporting',
+      active: false,
       hasSubmenu: true,
       submenuOpen: false,
       submenu: [
@@ -167,11 +188,54 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         }
       ]
     },
-    { 
-      icon: Settings, 
-      label: 'Settings', 
-      active: false, 
-      hasSubmenu: true, 
+    {
+      icon: DollarSign,
+      label: 'Settlement & Funds',
+      active: false,
+      hasSubmenu: true,
+      submenuOpen: false,
+      submenu: [
+        'Dues Book',
+        'Payment File Details (PFMS)',
+        'PFMS Tracker'
+      ]
+    },
+    {
+      icon: Briefcase,
+      label: 'Mill Operations',
+      active: false,
+      hasSubmenu: true,
+      submenuOpen: false,
+      submenu: [
+        'DO Generation',
+        'Center to Mill Dispatch',
+        'Center to Mill Arrival',
+        'Miller Gunny Bag Inventory',
+        'CMRO Generation',
+        'Mill to Warehouse Dispatch',
+        'Mill to Warehouse Arrival',
+        'Warehouse Arrival Assaying',
+        'Milling Billing Report',
+        'Milling Billing Details'
+      ]
+    },
+    {
+      icon: ArrowRightLeft,
+      label: 'Transactions',
+      active: false,
+      hasSubmenu: true,
+      submenuOpen: false,
+      submenu: [
+        'WHR Creation',
+        'Create Issue',
+        'View Issue'
+      ]
+    },
+    {
+      icon: Settings,
+      label: 'Settings',
+      active: false,
+      hasSubmenu: true,
       submenuOpen: false,
       submenu: [
         'Create Center',
@@ -182,13 +246,27 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         'State Limit Configuration'
       ]
     },
+    {
+      icon: Package,
+      label: 'Gunny Bag Module',
+      active: false,
+      hasSubmenu: true,
+      submenuOpen: false,
+      submenu: [
+        'Gunny Bag Deposit',
+        'Gunny Bag Inventory',
+        'Gunny Bag Arrival',
+        'Center Wise Gunny Bag Inventory',
+        'Center Godown Wise Inventory Position'
+      ]
+    },
   ]);
 
   const toggleSubmenu = (index: number) => {
     if (!sidebarOpen) {
       setSidebarOpen(true);
     }
-    setMenuItems(menuItems.map((item, i) => 
+    setMenuItems(menuItems.map((item, i) =>
       i === index ? { ...item, submenuOpen: !item.submenuOpen } : item
     ));
   };
@@ -336,12 +414,12 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         dateOfBirth: '1992-07-10',
         gender: 'Female',
         fatherName: 'Father Three',
-        address: 'Village: Sample Village Three, Taluka: Sample Taluka, District: Sample District, State: Karnataka',
+        address: 'Village: Sample Village Three, Taluka: Sample Taluka, District: Sample District, State: Maharashtra',
         pincode: '560001',
         mobileNumber: '9000000003',
         emailId: 'farmer3@dummy.com',
         agristackFarmerId: 'AGR900000003',
-        state: 'Karnataka',
+        state: 'Maharashtra',
         district: 'Bangalore',
         taluka: 'Bangalore',
         village: 'Bangalore South',
@@ -367,7 +445,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         status: 'Pending'
       }
     };
-    
+
     return farmerDataMap[farmerId] || farmerDataMap['1'];
   };
 
@@ -375,7 +453,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
     <div className="flex" style={{ backgroundColor: '#FFFFFF', height: '100vh', overflow: 'hidden' }}>
       {/* Mobile Overlay */}
       {sidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
@@ -383,11 +461,10 @@ export default function Dashboard({ onLogout }: DashboardProps) {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 bottom-0 transition-all duration-300 z-40 flex flex-col ${
-          sidebarOpen ? 'w-72' : 'w-0 lg:w-24'
-        } ${!sidebarOpen ? 'lg:overflow-hidden' : ''}`}
-        style={{ 
-          backgroundColor: '#FFFFFF', 
+        className={`fixed top-0 left-0 bottom-0 transition-all duration-300 z-40 flex flex-col ${sidebarOpen ? 'w-72' : 'w-0 lg:w-24'
+          } ${!sidebarOpen ? 'lg:overflow-hidden' : ''}`}
+        style={{
+          backgroundColor: '#FFFFFF',
           borderRight: '1px solid #E5EBEF',
           height: '100vh'
         }}
@@ -434,7 +511,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               <button
                 onClick={() => setSidebarOpen(false)}
                 className="p-2 rounded-full transition-colors flex items-center justify-center relative"
-                style={{ 
+                style={{
                   color: '#222',
                   backgroundColor: '#FFFFFF',
                   width: '36px',
@@ -492,7 +569,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               <button
                 onClick={() => setSidebarOpen(true)}
                 className="hidden lg:block p-2 rounded-full transition-colors flex items-center justify-center relative"
-                style={{ 
+                style={{
                   color: '#222',
                   backgroundColor: '#FFFFFF',
                   width: '36px',
@@ -521,169 +598,182 @@ export default function Dashboard({ onLogout }: DashboardProps) {
           {menuItems.filter(item => item.label !== 'Home').map((item, index) => {
             const originalIndex = menuItems.findIndex(m => m.label === item.label);
             return (
-            <div key={item.label} className="mb-2">
-              <button
-                onClick={() => {
-                  if (item.hasSubmenu) {
-                    toggleSubmenu(originalIndex);
-                  } else {
-                    // Handle menu item click
-                    setActiveView(item.label);
-                    setMenuItems(menuItems.map((menu, i) => ({
-                      ...menu,
-                      active: i === originalIndex,
-                      submenuOpen: false
-                    })));
-                  }
-                }}
-                className="w-full flex items-center justify-between gap-4 px-4 py-3.5 rounded-xl transition-all group"
-                style={{
-                  backgroundColor: item.active ? '#F2FCFB' : 'transparent',
-                  color: item.active ? '#027F83' : '#666',
-                }}
-                onMouseEnter={(e) => {
-                  if (!item.active) {
-                    e.currentTarget.style.backgroundColor = '#F7F9FA';
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!item.active) {
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                  }
-                }}
-              >
-                <div className="flex items-center gap-4 flex-1 min-w-0">
-                  <item.icon className="w-6 h-6" style={{ minWidth: '24px' }} />
-                  {sidebarOpen && (
-                    <span style={{ fontSize: '15px', fontWeight: '600' }} className="truncate">
-                      {item.label}
-                    </span>
+              <div key={item.label} className="mb-2">
+                <button
+                  onClick={() => {
+                    if (item.hasSubmenu) {
+                      toggleSubmenu(originalIndex);
+                    } else {
+                      // Handle menu item click
+                      setActiveView(item.label);
+                      setMenuItems(menuItems.map((menu, i) => ({
+                        ...menu,
+                        active: i === originalIndex,
+                        submenuOpen: false
+                      })));
+                    }
+                  }}
+                  className="w-full flex items-center justify-between gap-4 px-4 py-3.5 rounded-xl transition-all group duration-300"
+                  style={{
+                    backgroundColor: item.active ? '#003A5D' : 'transparent',
+                    color: item.active ? '#FFFFFF' : '#64748B',
+                    boxShadow: item.active ? '0 4px 10px rgba(0, 58, 93, 0.2)' : 'none'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!item.active) {
+                      e.currentTarget.style.backgroundColor = '#F8FAFC';
+                      e.currentTarget.style.transform = 'translateY(-1px)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!item.active) {
+                      e.currentTarget.style.backgroundColor = 'transparent';
+                      e.currentTarget.style.transform = 'translateY(0px)';
+                    }
+                  }}
+                >
+                  <div className="flex items-center gap-4 flex-1 min-w-0">
+                    <item.icon className="w-6 h-6" style={{ minWidth: '24px' }} />
+                    {sidebarOpen && (
+                      <span style={{ fontSize: '15px', fontWeight: '600' }} className="truncate">
+                        {item.label}
+                      </span>
+                    )}
+                  </div>
+                  {sidebarOpen && item.hasSubmenu && (
+                    <ChevronDown
+                      className="w-5 h-5 transition-transform duration-300"
+                      style={{
+                        transform: item.submenuOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                        color: item.active ? '#FFFFFF' : '#94A3B8'
+                      }}
+                    />
                   )}
-                </div>
-                {sidebarOpen && item.hasSubmenu && (
-                  <ChevronDown 
-                    className="w-5 h-5 transition-transform" 
-                    style={{ 
-                      transform: item.submenuOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                      color: item.active ? '#027F83' : '#999'
-                    }} 
-                  />
-                )}
-              </button>
+                </button>
 
-              {/* Submenu */}
-              {item.submenuOpen && sidebarOpen && item.hasSubmenu && (
-                <div className="ml-10 mt-2 space-y-1.5">
-                  {item.submenu?.map((submenuItem, subIndex) => {
-                    // Handle separator
-                    if (submenuItem === '---') {
+                {/* Submenu */}
+                {item.submenuOpen && sidebarOpen && item.hasSubmenu && (
+                  <div className="ml-10 mt-2 space-y-1.5">
+                    {item.submenu?.map((submenuItem, subIndex) => {
+                      // Handle separator
+                      if (submenuItem === '---') {
+                        return (
+                          <div key={`separator-${subIndex}`} className="my-3">
+                            <div className="h-px bg-[#E5EBEF] mx-2"></div>
+                          </div>
+                        );
+                      }
+
+                      // Handle string items (direct menu items like "Unified Reporting Dashboard")
+                      if (typeof submenuItem === 'string') {
+                        return (
+                          <button
+                            key={`${submenuItem}-${subIndex}`}
+                            className="w-full text-left px-4 py-2.5 rounded-lg transition-colors"
+                            style={{ 
+                              fontSize: '14px', 
+                              color: activeView === submenuItem ? '#02B8C2' : '#64748B', 
+                              fontWeight: activeView === submenuItem ? '700' : '500',
+                              backgroundColor: activeView === submenuItem ? 'rgba(2, 184, 194, 0.1)' : 'transparent'
+                            }}
+                            onMouseEnter={(e) => {
+                              if(activeView !== submenuItem) e.currentTarget.style.backgroundColor = '#F8FAFC';
+                            }}
+                            onMouseLeave={(e) => {
+                              if(activeView !== submenuItem) e.currentTarget.style.backgroundColor = 'transparent';
+                            }}
+                            onClick={() => {
+                              setActiveView(submenuItem);
+                              setMenuItems(menuItems.map((menu, i) =>
+                                i === originalIndex ? { ...menu, active: true } : { ...menu, active: false }
+                              ));
+                            }}
+                          >
+                            {submenuItem}
+                          </button>
+                        );
+                      }
+
+                      // Handle SubMenuItem objects (nested submenus)
+                      const subMenu = submenuItem as SubMenuItem;
                       return (
-                        <div key={`separator-${subIndex}`} className="my-3">
-                          <div className="h-px bg-[#E5EBEF] mx-2"></div>
+                        <div key={`${subMenu.label}-${subIndex}`}>
+                          <button
+                            className="w-full text-left px-4 py-2.5 rounded-lg transition-colors flex items-center justify-between group"
+                            style={{ fontSize: '13px', color: '#64748B', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.backgroundColor = '#F8FAFC';
+                              e.currentTarget.style.color = '#003A5D';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.backgroundColor = 'transparent';
+                              e.currentTarget.style.color = '#64748B';
+                            }}
+                            onClick={() => {
+                              setMenuItems(menuItems.map((menu, i) => {
+                                if (i === originalIndex) {
+                                  const updatedSubmenu = menu.submenu?.map((sub) => {
+                                    if (typeof sub === 'object' && sub.label === subMenu.label) {
+                                      return { ...sub, submenuOpen: !sub.submenuOpen };
+                                    }
+                                    return sub;
+                                  });
+                                  return { ...menu, submenu: updatedSubmenu };
+                                }
+                                return menu;
+                              }));
+                            }}
+                          >
+                            <span>{subMenu.label}</span>
+                            <ChevronRight
+                              className={`w-5 h-5 transition-transform ${subMenu.submenuOpen ? 'rotate-90' : ''}`}
+                            />
+                          </button>
+
+                          {/* Sub-submenu */}
+                          {subMenu.submenuOpen && subMenu.submenu && (
+                            <div className="ml-6 mt-1.5 space-y-1">
+                              {subMenu.submenu.map((subSubItem) => (
+                                <button
+                                  key={subSubItem.viewName}
+                                  className="w-full text-left px-4 py-2 rounded-lg transition-all duration-200"
+                                  style={{
+                                    fontSize: '14px',
+                                    color: activeView === subSubItem.viewName ? '#02B8C2' : '#64748B',
+                                    fontWeight: activeView === subSubItem.viewName ? '700' : '500',
+                                    backgroundColor: activeView === subSubItem.viewName ? 'rgba(2, 184, 194, 0.1)' : 'transparent',
+                                    borderLeft: activeView === subSubItem.viewName ? '3px solid #02B8C2' : '3px solid transparent'
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    if (activeView !== subSubItem.viewName) {
+                                      e.currentTarget.style.backgroundColor = '#F8FAFC';
+                                      e.currentTarget.style.color = '#334155';
+                                    }
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    if (activeView !== subSubItem.viewName) {
+                                      e.currentTarget.style.backgroundColor = 'transparent';
+                                      e.currentTarget.style.color = '#64748B';
+                                    }
+                                  }}
+                                  onClick={() => {
+                                    setActiveView(subSubItem.viewName);
+                                    setMenuItems(menuItems.map((menu, i) =>
+                                      i === originalIndex ? { ...menu, active: true } : { ...menu, active: false }
+                                    ));
+                                  }}
+                                >
+                                  {subSubItem.label}
+                                </button>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       );
-                    }
-                    
-                    // Handle string items (direct menu items like "Unified Reporting Dashboard")
-                    if (typeof submenuItem === 'string') {
-                      return (
-                        <button
-                          key={`${submenuItem}-${subIndex}`}
-                          className="w-full text-left px-4 py-2.5 rounded-lg transition-colors"
-                          style={{ fontSize: '14px', color: '#666', fontWeight: '500' }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.backgroundColor = '#F7F9FA';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.backgroundColor = 'transparent';
-                          }}
-                          onClick={() => {
-                            setActiveView(submenuItem);
-                            setMenuItems(menuItems.map((menu, i) => 
-                              i === originalIndex ? { ...menu, active: true } : { ...menu, active: false }
-                            ));
-                          }}
-                        >
-                          {submenuItem}
-                        </button>
-                      );
-                    }
-                    
-                    // Handle SubMenuItem objects (nested submenus)
-                    const subMenu = submenuItem as SubMenuItem;
-                    return (
-                      <div key={`${subMenu.label}-${subIndex}`}>
-                        <button
-                          className="w-full text-left px-4 py-2.5 rounded-lg transition-colors flex items-center justify-between"
-                          style={{ fontSize: '14px', color: '#666', fontWeight: '600' }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.backgroundColor = '#F7F9FA';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.backgroundColor = 'transparent';
-                          }}
-                          onClick={() => {
-                            setMenuItems(menuItems.map((menu, i) => {
-                              if (i === originalIndex) {
-                                const updatedSubmenu = menu.submenu?.map((sub) => {
-                                  if (typeof sub === 'object' && sub.label === subMenu.label) {
-                                    return { ...sub, submenuOpen: !sub.submenuOpen };
-                                  }
-                                  return sub;
-                                });
-                                return { ...menu, submenu: updatedSubmenu };
-                              }
-                              return menu;
-                            }));
-                          }}
-                        >
-                          <span>{subMenu.label}</span>
-                          <ChevronRight 
-                            className={`w-5 h-5 transition-transform ${subMenu.submenuOpen ? 'rotate-90' : ''}`}
-                          />
-                        </button>
-                        
-                        {/* Sub-submenu */}
-                        {subMenu.submenuOpen && subMenu.submenu && (
-                          <div className="ml-6 mt-1.5 space-y-1">
-                            {subMenu.submenu.map((subSubItem) => (
-                              <button
-                                key={subSubItem.viewName}
-                                className="w-full text-left px-4 py-2 rounded-lg transition-colors"
-                                style={{ 
-                                  fontSize: '13px', 
-                                  color: activeView === subSubItem.viewName ? '#027F83' : '#666',
-                                  fontWeight: activeView === subSubItem.viewName ? '600' : '500',
-                                  backgroundColor: activeView === subSubItem.viewName ? '#E6F7F7' : 'transparent'
-                                }}
-                                onMouseEnter={(e) => {
-                                  if (activeView !== subSubItem.viewName) {
-                                    e.currentTarget.style.backgroundColor = '#F7F9FA';
-                                  }
-                                }}
-                                onMouseLeave={(e) => {
-                                  if (activeView !== subSubItem.viewName) {
-                                    e.currentTarget.style.backgroundColor = 'transparent';
-                                  }
-                                }}
-                                onClick={() => {
-                                  setActiveView(subSubItem.viewName);
-                                  setMenuItems(menuItems.map((menu, i) => 
-                                    i === originalIndex ? { ...menu, active: true } : { ...menu, active: false }
-                                  ));
-                                }}
-                              >
-                                {subSubItem.label}
-                              </button>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
+                    })}
+                  </div>
+                )}
+              </div>
             );
           })}
         </nav>
@@ -710,7 +800,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         </div>
 
         {/* Profile Section */}
-        <div 
+        <div
           className="border-t px-4 py-4"
           style={{ borderColor: '#E5EBEF' }}
         >
@@ -798,7 +888,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                 </div>
               </>
             )}
-            
+
             {/* Profile Dropdown - Collapsed State */}
             {!sidebarOpen && userMenuOpen && (
               <div
@@ -874,9 +964,9 @@ export default function Dashboard({ onLogout }: DashboardProps) {
       </button>
 
       {/* Main Content */}
-      <div 
-        className="flex-1 flex flex-col min-w-0 w-full" 
-        style={{ 
+      <div
+        className="flex-1 flex flex-col min-w-0 w-full"
+        style={{
           minHeight: '100vh',
           marginLeft: sidebarOpen && isDesktop ? '288px' : (!sidebarOpen && isDesktop ? '96px' : '0px'),
           transition: 'margin-left 0.3s ease'
@@ -884,13 +974,13 @@ export default function Dashboard({ onLogout }: DashboardProps) {
       >
         {/* Header */}
         <header
-          className="h-16 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-30"
-          style={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid #E5EBEF' }}
+          className="h-20 flex items-center justify-between px-6 lg:px-8 sticky top-0 z-30 shadow-sm backdrop-blur-md bg-white/90"
+          style={{ borderBottom: '1px solid rgba(229, 235, 239, 0.8)' }}
         >
-          <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-4 sm:gap-6">
             {/* Logo */}
-            <img src={logoImage} alt="ProcureX" className="h-16 sm:h-20 lg:h-24 w-auto" />
-            
+            <img src={logoImage} alt="ProcureX" className="h-14 sm:h-16 lg:h-20 w-auto object-contain drop-shadow-sm" />
+
             {/* Mobile Menu Button */}
             <button
               onClick={() => setSidebarOpen(true)}
@@ -942,7 +1032,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               <button
                 onClick={() => setNotificationMenuOpen(!notificationMenuOpen)}
                 className="relative p-2 rounded-lg transition-colors cursor-pointer"
-                style={{ 
+                style={{
                   color: '#666',
                   backgroundColor: notificationMenuOpen ? '#F7F9FA' : 'transparent'
                 }}
@@ -963,13 +1053,13 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                   style={{ backgroundColor: '#E94545' }}
                 />
               </button>
-              
+
               {/* Notification Dropdown */}
               {notificationMenuOpen && (
                 <div
                   className="absolute top-full right-0 mt-2 w-80 rounded-lg shadow-xl overflow-hidden z-50 border-2"
-                  style={{ 
-                    backgroundColor: '#FFFFFF', 
+                  style={{
+                    backgroundColor: '#FFFFFF',
                     borderColor: '#E5EBEF',
                     maxHeight: '400px',
                     overflowY: 'auto'
@@ -1020,7 +1110,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               )}
             </div>
 
-            
+
 
             {/* Mobile Profile Avatar */}
             <div
@@ -1041,7 +1131,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         {activeView === 'User Registration Approval' && <UserRegistrationApproval />}
         {activeView === 'Farmer Registration' && <FarmerRegistration />}
         {activeView === 'View Farmer Details' && !selectedFarmerId && (
-          <FarmerList 
+          <FarmerList
             onViewDetails={(farmerId) => setSelectedFarmerId(farmerId)}
           />
         )}
@@ -1069,7 +1159,14 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         {activeView === 'Unified Reporting Dashboard' && <UnifiedReportingDashboard />}
         {activeView === 'AI Reporting Dashboard' && <AIReportingDashboard />}
         {activeView === 'AI Reporting' && <UnifiedReportingDashboard />}
-        
+
+        {/* Gunny Bag Module */}
+        {activeView === 'Gunny Bag Deposit' && <GunnyBagDeposit />}
+        {activeView === 'Gunny Bag Inventory' && <GunnyBagInventory />}
+        {activeView === 'Gunny Bag Arrival' && <GunnyBagArrival />}
+        {activeView === 'Center Wise Gunny Bag Inventory' && <CenterWiseGunnyBagInventory />}
+        {activeView === 'Center Godown Wise Inventory Position' && <CenterGodownWiseInventory />}
+
         {/* Daily Reports */}
         {activeView === 'Procurement Status Report' && (
           <IndividualReport
@@ -1116,7 +1213,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
             defaultView="table"
           />
         )}
-        
+
         {/* Farmer Reports */}
         {activeView === 'Provisional Registration' && (
           <IndividualReport
@@ -1163,7 +1260,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
             defaultView="chart"
           />
         )}
-        
+
         {/* Procurement Reports */}
         {activeView === 'Procurement Status' && (
           <IndividualReport
@@ -1192,7 +1289,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
             defaultView="table"
           />
         )}
-        
+
         {/* Payment Reports */}
         {activeView === 'Pending Payment View' && (
           <IndividualReport
@@ -1221,6 +1318,28 @@ export default function Dashboard({ onLogout }: DashboardProps) {
             defaultView="table"
           />
         )}
+
+        {/* Settlement & Funds */}
+        {activeView === 'Dues Book' && <DuesBook />}
+        {activeView === 'Payment File Details (PFMS)' && <PaymentFileDetailsPFMS />}
+        {activeView === 'PFMS Tracker' && <PFMSTracker />}
+
+        {/* Mill Operations */}
+        {activeView === 'DO Generation' && <DOGeneration />}
+        {activeView === 'Center to Mill Dispatch' && <CenterToMillDispatch />}
+        {activeView === 'Center to Mill Arrival' && <CenterToMillArrival />}
+        {activeView === 'Miller Gunny Bag Inventory' && <MillerGunnyBagInventory />}
+        {activeView === 'CMRO Generation' && <CMROGeneration />}
+        {activeView === 'Mill to Warehouse Dispatch' && <MillToWarehouseDispatch />}
+        {activeView === 'Mill to Warehouse Arrival' && <MillToWarehouseArrival />}
+        {activeView === 'Warehouse Arrival Assaying' && <WHArrivalAssaying />}
+        {activeView === 'Milling Billing Report' && <MillingBillingReport />}
+        {activeView === 'Milling Billing Details' && <MillingBillingDetails />}
+
+        {/* Transactions */}
+        {activeView === 'WHR Creation' && <WHRCreation />}
+        {activeView === 'Create Issue' && <CreateIssue />}
+        {activeView === 'View Issue' && <ViewIssue />}
       </div>
     </div>
   );

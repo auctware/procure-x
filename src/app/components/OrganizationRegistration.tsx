@@ -99,9 +99,9 @@ export default function OrganizationRegistration() {
       aadhaarNo: '9000 0000 0001',
       mobileNo: '9000000001',
       emailId: 'person1@dummy.com',
-      state: 'Karnataka',
+      state: 'Maharashtra',
       scheme: 'MMFT FOR ETHANGK KHARIF 2025',
-      address: 'Plot No. 45, Industrial Area, Bangalore, Karnataka - 560001',
+      address: 'Plot No. 45, Industrial Area, Bangalore, Maharashtra - 560001',
       registeredDate: '2025-01-10',
       status: 'Active'
     },
@@ -174,10 +174,10 @@ export default function OrganizationRegistration() {
   useEffect(() => {
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      
+
       if (query.includes('active') || query.includes('pending') || query.includes('inactive')) {
         setNlpSuggestion('Filtering by status');
-      } else if (query.includes('karnataka') || query.includes('maharashtra') || query.includes('tamil')) {
+      } else if (query.includes('Maharashtra') || query.includes('maharashtra') || query.includes('tamil')) {
         setNlpSuggestion('Searching by state');
       } else if (query.includes('farmer') || query.includes('shg') || query.includes('cooperative')) {
         setNlpSuggestion('Searching by category');
@@ -242,7 +242,7 @@ export default function OrganizationRegistration() {
     // NLP Search
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      const matchesSearch = 
+      const matchesSearch =
         org.orgName.toLowerCase().includes(query) ||
         org.userId.toLowerCase().includes(query) ||
         org.nameAsPerAadhaar.toLowerCase().includes(query) ||
@@ -252,7 +252,7 @@ export default function OrganizationRegistration() {
         org.emailId.toLowerCase().includes(query) ||
         org.aadhaarNo.includes(query) ||
         org.status.toLowerCase().includes(query);
-      
+
       if (!matchesSearch) return false;
     }
 
@@ -278,13 +278,13 @@ export default function OrganizationRegistration() {
     if (!file) return;
 
     setIsScanning(true);
-    
+
     setTimeout(() => {
       setFormData({
         ...formData,
         nameAsPerAadhaar: 'Person Four',
         aadhaarNo: '9000 0000 0002',
-        address: 'House No. 23, Village Road, Hubli, Karnataka - 580020'
+        address: 'House No. 23, Village Road, Hubli, Maharashtra - 580020'
       });
       setIsScanning(false);
       setAadhaarVerified(true);
@@ -334,18 +334,18 @@ export default function OrganizationRegistration() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const newOrg: Organization = {
       id: editingId || (organizations.length + 1).toString(),
       ...formData,
-      registeredDate: editingId 
+      registeredDate: editingId
         ? organizations.find(o => o.id === editingId)?.registeredDate || new Date().toISOString().split('T')[0]
         : new Date().toISOString().split('T')[0],
       status: 'Active'
     };
 
     if (editingId) {
-      setOrganizations(organizations.map(org => 
+      setOrganizations(organizations.map(org =>
         org.id === editingId ? newOrg : org
       ));
     } else {
@@ -431,7 +431,7 @@ export default function OrganizationRegistration() {
       {/* Breadcrumb */}
       <div className="mb-6 flex items-center gap-2" style={{ fontSize: '14px', color: '#666' }}>
         <Home className="w-4 h-4" style={{ color: '#027F83' }} />
-        <button 
+        <button
           onClick={() => {
             // Navigate to home - you can add navigation logic here
             console.log('Navigate to home');
@@ -477,7 +477,7 @@ export default function OrganizationRegistration() {
           <div className="flex items-center gap-3">
             {/* NLP Search */}
             <div className="relative">
-              <div 
+              <div
                 className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-lg"
                 style={{ backgroundColor: '#F2FCFB' }}
               >
@@ -515,9 +515,8 @@ export default function OrganizationRegistration() {
                 title={isListening ? 'Listening...' : isProcessingVoice ? 'Processing...' : 'Voice search'}
               >
                 <Mic
-                  className={`w-4 h-4 transition-colors ${
-                    isListening ? 'text-white' : isProcessingVoice ? 'text-white' : ''
-                  }`}
+                  className={`w-4 h-4 transition-colors ${isListening ? 'text-white' : isProcessingVoice ? 'text-white' : ''
+                    }`}
                   style={{
                     color: isListening ? '#FFFFFF' : isProcessingVoice ? '#FFFFFF' : '#666666'
                   }}
@@ -551,13 +550,13 @@ export default function OrganizationRegistration() {
               <div className="flex items-center gap-2">
                 <Filter className="w-5 h-5" />
                 {activeFilterCount > 0 && (
-                  <span 
+                  <span
                     className="w-5 h-5 rounded-full flex items-center justify-center"
-                    style={{ 
-                      backgroundColor: '#027F83', 
-                      color: '#FFFFFF', 
-                      fontSize: '11px', 
-                      fontWeight: '700' 
+                    style={{
+                      backgroundColor: '#027F83',
+                      color: '#FFFFFF',
+                      fontSize: '11px',
+                      fontWeight: '700'
                     }}
                   >
                     {activeFilterCount}
@@ -623,9 +622,9 @@ export default function OrganizationRegistration() {
             <tbody>
               {filteredOrgs.length > 0 ? (
                 filteredOrgs.map((org) => (
-                  <tr 
+                  <tr
                     key={org.id}
-                    className="border-t transition-colors hover:bg-gray-50" 
+                    className="border-t transition-colors hover:bg-gray-50"
                     style={{ borderColor: '#E5EBEF' }}
                   >
                     <td className="px-6 py-4" style={{ color: '#315B78' }}>
@@ -721,7 +720,7 @@ export default function OrganizationRegistration() {
 
                           {/* Dropdown Menu */}
                           {activeActionMenu === org.id && (
-                            <div 
+                            <div
                               className="absolute right-0 top-full mt-1 w-40 rounded-lg shadow-xl overflow-hidden z-50 border"
                               style={{ backgroundColor: '#FFFFFF', borderColor: '#E5EBEF' }}
                               onClick={(e) => e.stopPropagation()}
@@ -785,14 +784,14 @@ export default function OrganizationRegistration() {
       {/* Filter Drawer */}
       {filterDrawerOpen && (
         <>
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-30 z-40 transition-opacity"
             onClick={() => setFilterDrawerOpen(false)}
           />
 
-          <div 
+          <div
             className="fixed top-0 right-0 h-full w-full md:w-[450px] bg-white shadow-2xl z-50 overflow-y-auto"
-            style={{ 
+            style={{
               animation: 'slideInRight 0.3s ease-out',
               borderLeft: '1px solid #E5EBEF'
             }}
@@ -867,7 +866,7 @@ export default function OrganizationRegistration() {
                     onChange={(value) => setFilters({ ...filters, state: value })}
                     options={[
                       { value: 'All', label: 'All States' },
-                      { value: 'Karnataka', label: 'Karnataka' },
+                      { value: 'Maharashtra', label: 'Maharashtra' },
                       { value: 'Tamil Nadu', label: 'Tamil Nadu' },
                       { value: 'Maharashtra', label: 'Maharashtra' },
                       { value: 'Gujarat', label: 'Gujarat' },
@@ -960,7 +959,7 @@ export default function OrganizationRegistration() {
                 >
                   Apply Filters
                 </button>
-                
+
                 <button
                   onClick={clearFilters}
                   className="px-6 h-12 rounded-lg transition-all"
@@ -983,14 +982,14 @@ export default function OrganizationRegistration() {
       {/* Form Drawer */}
       {drawerOpen && (
         <>
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-30 z-40 transition-opacity"
             onClick={handleCloseDrawer}
           />
 
-          <div 
+          <div
             className="fixed top-0 right-0 h-full w-full md:w-[600px] bg-white shadow-2xl z-50 overflow-y-auto"
-            style={{ 
+            style={{
               animation: 'slideInRight 0.3s ease-out',
               borderLeft: '1px solid #E5EBEF'
             }}
@@ -1175,9 +1174,9 @@ export default function OrganizationRegistration() {
                         readOnly={userIdMode === 'auto'}
                         placeholder={userIdMode === 'auto' ? 'Auto Generated' : 'Enter User ID'}
                         className="w-full h-12 px-4 rounded-lg border transition-all outline-none"
-                        style={{ 
-                          borderColor: '#CCD8DF', 
-                          fontSize: '14px', 
+                        style={{
+                          borderColor: '#CCD8DF',
+                          fontSize: '14px',
                           color: userIdMode === 'auto' ? '#027F83' : '#222',
                           fontWeight: '600',
                           backgroundColor: userIdMode === 'auto' ? '#F7F9FA' : '#FFFFFF'
@@ -1414,7 +1413,7 @@ export default function OrganizationRegistration() {
                         onChange={(value) => setFormData({ ...formData, state: value })}
                         options={[
                           { value: '', label: 'Select State' },
-                          { value: 'Karnataka', label: 'Karnataka' },
+                          { value: 'Maharashtra', label: 'Maharashtra' },
                           { value: 'Tamil Nadu', label: 'Tamil Nadu' },
                           { value: 'Maharashtra', label: 'Maharashtra' },
                           { value: 'Gujarat', label: 'Gujarat' },
@@ -1501,7 +1500,7 @@ export default function OrganizationRegistration() {
                     <CheckCircle2 className="w-5 h-5" style={{ color: '#027F83' }} />
                     {editingId ? 'Update Organization' : 'Save Organization'}
                   </button>
-                  
+
                   <button
                     type="button"
                     onClick={handleCloseDrawer}
@@ -1525,16 +1524,16 @@ export default function OrganizationRegistration() {
 
       {/* OTP Modal */}
       {showOtpModal && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4" 
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
           style={{ backgroundColor: 'rgba(0, 58, 93, 0.7)' }}
           onClick={() => {
             setShowOtpModal(false);
             setOtp(['', '', '', '', '', '']);
           }}
         >
-          <div 
-            className="rounded-2xl p-8 max-w-md w-full" 
+          <div
+            className="rounded-2xl p-8 max-w-md w-full"
             style={{ backgroundColor: '#FFFFFF' }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -1587,9 +1586,9 @@ export default function OrganizationRegistration() {
                     }
                   }}
                   className="w-full h-14 text-center rounded-xl border-2 transition-all focus:border-[#027F83] focus:outline-none"
-                  style={{ 
+                  style={{
                     borderColor: digit ? '#027F83' : '#E5EBEF',
-                    fontSize: '24px', 
+                    fontSize: '24px',
                     fontWeight: '700',
                     color: '#003A5D',
                     backgroundColor: digit ? '#E6F7F7' : '#FFFFFF'

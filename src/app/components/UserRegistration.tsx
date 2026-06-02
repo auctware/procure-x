@@ -108,7 +108,7 @@ export default function UserRegistration() {
       mobileNo: '9000000001',
       emailId: 'user1@dummy.com',
       scheme: 'MMFT FOR ETHANGK KHARIF 2025',
-      address: 'Plot No. 45, Industrial Area, Bangalore, Karnataka - 560001',
+      address: 'Plot No. 45, Industrial Area, Bangalore, Maharashtra - 560001',
       registeredDate: '2025-01-10',
       status: 'Active'
     },
@@ -188,7 +188,7 @@ export default function UserRegistration() {
   useEffect(() => {
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      
+
       if (query.includes('active') || query.includes('pending') || query.includes('inactive')) {
         setNlpSuggestion('Filtering by status');
       } else if (query.includes('sla') || query.includes('pacs') || query.includes('branch')) {
@@ -254,7 +254,7 @@ export default function UserRegistration() {
     // NLP Search
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      const matchesSearch = 
+      const matchesSearch =
         user.userId.toLowerCase().includes(query) ||
         user.nameAsPerAadhaar.toLowerCase().includes(query) ||
         user.orgName.toLowerCase().includes(query) ||
@@ -263,7 +263,7 @@ export default function UserRegistration() {
         user.emailId.toLowerCase().includes(query) ||
         user.aadhaarNo.includes(query) ||
         user.status.toLowerCase().includes(query);
-      
+
       if (!matchesSearch) return false;
     }
 
@@ -289,12 +289,12 @@ export default function UserRegistration() {
     if (!file) return;
 
     setIsScanning(true);
-    
+
     setTimeout(() => {
       setFormData({
         ...formData,
         userName: 'User Four',
-        address: 'House No. 23, Village Road, Hubli, Karnataka - 580020'
+        address: 'House No. 23, Village Road, Hubli, Maharashtra - 580020'
       });
       setIsScanning(false);
       setAadhaarVerified(true);
@@ -334,7 +334,7 @@ export default function UserRegistration() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Map new form structure to old User interface for backward compatibility
     const newUser: User = {
       id: editingId || (users.length + 1).toString(),
@@ -347,14 +347,14 @@ export default function UserRegistration() {
       emailId: formData.emailId,
       scheme: '',
       address: formData.address,
-      registeredDate: editingId 
+      registeredDate: editingId
         ? users.find(u => u.id === editingId)?.registeredDate || new Date().toISOString().split('T')[0]
         : new Date().toISOString().split('T')[0],
       status: 'Active'
     };
 
     if (editingId) {
-      setUsers(users.map(user => 
+      setUsers(users.map(user =>
         user.id === editingId ? newUser : user
       ));
     } else {
@@ -446,7 +446,7 @@ export default function UserRegistration() {
       {/* Breadcrumb */}
       <div className="mb-6 flex items-center gap-2" style={{ fontSize: '14px', color: '#666' }}>
         <Home className="w-4 h-4" style={{ color: '#027F83' }} />
-        <button 
+        <button
           onClick={() => {
             console.log('Navigate to home');
           }}
@@ -490,7 +490,7 @@ export default function UserRegistration() {
           <div className="flex items-center gap-3">
             {/* NLP Search */}
             <div className="relative">
-              <div 
+              <div
                 className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-lg"
                 style={{ backgroundColor: '#F2FCFB' }}
               >
@@ -528,9 +528,8 @@ export default function UserRegistration() {
                 title={isListening ? 'Listening...' : isProcessingVoice ? 'Processing...' : 'Voice search'}
               >
                 <Mic
-                  className={`w-4 h-4 transition-colors ${
-                    isListening ? 'text-white' : isProcessingVoice ? 'text-white' : ''
-                  }`}
+                  className={`w-4 h-4 transition-colors ${isListening ? 'text-white' : isProcessingVoice ? 'text-white' : ''
+                    }`}
                   style={{
                     color: isListening ? '#FFFFFF' : isProcessingVoice ? '#FFFFFF' : '#666666'
                   }}
@@ -564,13 +563,13 @@ export default function UserRegistration() {
               <div className="flex items-center gap-2">
                 <Filter className="w-5 h-5" />
                 {activeFilterCount > 0 && (
-                  <span 
+                  <span
                     className="w-5 h-5 rounded-full flex items-center justify-center"
-                    style={{ 
-                      backgroundColor: '#027F83', 
-                      color: '#FFFFFF', 
-                      fontSize: '11px', 
-                      fontWeight: '700' 
+                    style={{
+                      backgroundColor: '#027F83',
+                      color: '#FFFFFF',
+                      fontSize: '11px',
+                      fontWeight: '700'
                     }}
                   >
                     {activeFilterCount}
@@ -636,9 +635,9 @@ export default function UserRegistration() {
             <tbody>
               {filteredUsers.length > 0 ? (
                 filteredUsers.map((user) => (
-                  <tr 
+                  <tr
                     key={user.id}
-                    className="border-t transition-colors hover:bg-gray-50" 
+                    className="border-t transition-colors hover:bg-gray-50"
                     style={{ borderColor: '#E5EBEF' }}
                   >
                     <td className="px-6 py-4" style={{ color: '#315B78' }}>
@@ -733,7 +732,7 @@ export default function UserRegistration() {
 
                           {/* Dropdown Menu */}
                           {activeActionMenu === user.id && (
-                            <div 
+                            <div
                               className="absolute right-0 top-full mt-1 w-40 rounded-lg shadow-xl overflow-hidden z-50 border"
                               style={{ backgroundColor: '#FFFFFF', borderColor: '#E5EBEF' }}
                               onClick={(e) => e.stopPropagation()}
@@ -797,14 +796,14 @@ export default function UserRegistration() {
       {/* Filter Drawer */}
       {filterDrawerOpen && (
         <>
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-30 z-40 transition-opacity"
             onClick={() => setFilterDrawerOpen(false)}
           />
 
-          <div 
+          <div
             className="fixed top-0 right-0 h-full w-full md:w-[450px] bg-white shadow-2xl z-50 overflow-y-auto"
-            style={{ 
+            style={{
               animation: 'slideInRight 0.3s ease-out',
               borderLeft: '1px solid #E5EBEF'
             }}
@@ -969,7 +968,7 @@ export default function UserRegistration() {
                 >
                   Apply Filters
                 </button>
-                
+
                 <button
                   onClick={clearFilters}
                   className="px-6 h-12 rounded-lg transition-all"
@@ -992,14 +991,14 @@ export default function UserRegistration() {
       {/* Form Drawer */}
       {drawerOpen && (
         <>
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-30 z-40 transition-opacity"
             onClick={handleCloseDrawer}
           />
 
-          <div 
+          <div
             className="fixed top-0 right-0 h-full w-full md:w-[600px] bg-white shadow-2xl z-50 overflow-y-auto"
-            style={{ 
+            style={{
               animation: 'slideInRight 0.3s ease-out',
               borderLeft: '1px solid #E5EBEF'
             }}
@@ -1204,9 +1203,9 @@ export default function UserRegistration() {
                         placeholder={formData.userIdMode === 'mobile' ? 'Enter Mobile No' : 'Auto Generated'}
                         disabled={formData.userIdMode === 'auto'}
                         className="w-full h-12 px-4 rounded-lg border transition-all outline-none"
-                        style={{ 
-                          borderColor: '#CCD8DF', 
-                          fontSize: '14px', 
+                        style={{
+                          borderColor: '#CCD8DF',
+                          fontSize: '14px',
                           color: formData.userIdMode === 'auto' ? '#999' : '#222222',
                           backgroundColor: formData.userIdMode === 'auto' ? '#F7F9FA' : '#FFFFFF'
                         }}
@@ -1330,7 +1329,7 @@ export default function UserRegistration() {
                         onChange={(value) => setFormData({ ...formData, state: value })}
                         options={[
                           { value: '', label: 'Select State' },
-                          { value: 'Karnataka', label: 'Karnataka' },
+                          { value: 'Maharashtra', label: 'Maharashtra' },
                           { value: 'Maharashtra', label: 'Maharashtra' },
                           { value: 'Tamil Nadu', label: 'Tamil Nadu' },
                           { value: 'Gujarat', label: 'Gujarat' }
@@ -1467,7 +1466,7 @@ export default function UserRegistration() {
                     <CheckCircle2 className="w-5 h-5" style={{ color: '#027F83' }} />
                     {editingId ? 'Update User' : 'Save User'}
                   </button>
-                  
+
                   <button
                     type="button"
                     onClick={handleCloseDrawer}
@@ -1491,16 +1490,16 @@ export default function UserRegistration() {
 
       {/* OTP Modal */}
       {showOtpModal && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4" 
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
           style={{ backgroundColor: 'rgba(0, 58, 93, 0.7)' }}
           onClick={() => {
             setShowOtpModal(false);
             setOtp(['', '', '', '', '', '']);
           }}
         >
-          <div 
-            className="rounded-2xl p-8 max-w-md w-full" 
+          <div
+            className="rounded-2xl p-8 max-w-md w-full"
             style={{ backgroundColor: '#FFFFFF' }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -1553,9 +1552,9 @@ export default function UserRegistration() {
                     }
                   }}
                   className="w-full h-14 text-center rounded-xl border-2 transition-all focus:border-[#027F83] focus:outline-none"
-                  style={{ 
+                  style={{
                     borderColor: digit ? '#027F83' : '#E5EBEF',
-                    fontSize: '24px', 
+                    fontSize: '24px',
                     fontWeight: '700',
                     color: '#003A5D',
                     backgroundColor: digit ? '#E6F7F7' : '#FFFFFF'

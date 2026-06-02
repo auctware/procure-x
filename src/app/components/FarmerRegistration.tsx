@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import CustomDropdown from '@/app/components/CustomDropdown';
 import FarmerDetailsView from '@/app/components/FarmerDetailsView';
+import gisMapFarmBoundary from '../../assets/gis_map_farm_boundary.png';
 
 // Type declarations for Web Speech API
 declare global {
@@ -21,7 +22,7 @@ interface FarmerFormData {
   aadhaarNumber: string;
   authenticationMethod: 'face' | 'fingerprint' | 'offline';
   consentGiven: boolean;
-  
+
   // Personal Details (from Aadhaar)
   farmerName: string;
   dateOfBirth: string;
@@ -31,7 +32,7 @@ interface FarmerFormData {
   pincode: string;
   mobileNumber: string;
   emailId: string;
-  
+
   // Agristack/Portal Details
   agristackFarmerId: string;
   state: string;
@@ -41,7 +42,7 @@ interface FarmerFormData {
   farmerCategory: string;
   classCategory: string;
   otherBackwardClasses: string;
-  
+
   // Land Details
   surveyNumber: string;
   khataNumber: string;
@@ -53,14 +54,14 @@ interface FarmerFormData {
   landType: string;
   center: string;
   landOwnerName: string;
-  
+
   // Bank Details
   accountHolderName: string;
   ifscCode: string;
   bankName: string;
   bankAccountNumber: string;
   confirmBankAccountNumber: string;
-  
+
   // Scheme Participation
   selectedScheme: string;
   supportingDocument: File | null;
@@ -69,7 +70,7 @@ interface FarmerFormData {
 export default function FarmerRegistration() {
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 6;
-  
+
   const [formData, setFormData] = useState<FarmerFormData>({
     aadhaarNumber: '',
     authenticationMethod: 'face',
@@ -136,6 +137,8 @@ export default function FarmerRegistration() {
   const [offlineOtpRefs, setOfflineOtpRefs] = useState<(HTMLInputElement | null)[]>([]);
   const [offlineProgressMessage, setOfflineProgressMessage] = useState('');
   const [showDetailsView, setShowDetailsView] = useState(false);
+  const [showGisMap, setShowGisMap] = useState(false);
+  const [isScanningGis, setIsScanningGis] = useState(false);
 
   // Dropdown states
   const [stateDropdownOpen, setStateDropdownOpen] = useState(false);
@@ -174,7 +177,7 @@ export default function FarmerRegistration() {
   // Mock data
   const states = [
     { value: 'Maharashtra', label: 'Maharashtra' },
-    { value: 'Karnataka', label: 'Karnataka' },
+    { value: 'Maharashtra', label: 'Maharashtra' },
     { value: 'Gujarat', label: 'Gujarat' },
     { value: 'Rajasthan', label: 'Rajasthan' }
   ];
@@ -278,22 +281,22 @@ export default function FarmerRegistration() {
     const mockImage = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k=';
     setCapturedFaceImage(mockImage);
     setShowFaceCapture(false);
-    
+
     // Simulate processing
     setTimeout(() => {
       setFaceVerificationStatus('success');
-      
+
       // Prepare Aadhaar data for confirmation
       const aadhaarData = {
-              farmerName: 'Farmer One',
+        farmerName: 'Farmer One',
         dateOfBirth: '1990-05-15',
         gender: 'Male',
-              fatherName: 'Father One',
+        fatherName: 'Father One',
         address: 'Village: Sample Village, Taluka: Sample Taluka, District: Sample District, State: Maharashtra',
         pincode: '443001',
         aadhaarNumber: formData.aadhaarNumber
       };
-      
+
       setPendingAadhaarData(aadhaarData);
       setShowDetailsConfirmation(true);
     }, 2000);
@@ -327,7 +330,7 @@ export default function FarmerRegistration() {
     setOfflineVerificationStatus('otp-sent');
     setOfflineProgressMessage('Sending OTP to registered mobile number...');
     setShowOfflineOtpModal(true);
-    
+
     // Simulate OTP sending
     setTimeout(() => {
       setOfflineProgressMessage('OTP sent to your registered mobile number');
@@ -342,7 +345,7 @@ export default function FarmerRegistration() {
       setOfflineVerificationStatus('otp-verified');
       setOfflineProgressMessage('OTP verified successfully');
       setShowOfflineOtpModal(false);
-      
+
       // Step 2: Process OCR
       setTimeout(() => {
         processOfflineAadhaarOCR();
@@ -354,11 +357,11 @@ export default function FarmerRegistration() {
   const processOfflineAadhaarOCR = async () => {
     setOfflineVerificationStatus('ocr-processing');
     setOfflineProgressMessage('Extracting details from Aadhaar document...');
-    
+
     // Simulate OCR processing
     setTimeout(() => {
       setOfflineProgressMessage('Aadhaar details extracted successfully');
-      
+
       // Step 3: Liveness Check
       setTimeout(() => {
         performOfflineLivenessCheck();
@@ -371,11 +374,11 @@ export default function FarmerRegistration() {
     setOfflineVerificationStatus('liveness-checking');
     setOfflineProgressMessage('Please look at the camera for liveness detection...');
     setShowFaceCapture(true);
-    
+
     // Simulate liveness check
     setTimeout(() => {
       setOfflineProgressMessage('Liveness check passed');
-      
+
       // Step 4: Face Verification
       setTimeout(() => {
         performOfflineFaceVerification();
@@ -387,15 +390,15 @@ export default function FarmerRegistration() {
   const performOfflineFaceVerification = () => {
     setOfflineVerificationStatus('face-verifying');
     setOfflineProgressMessage('Verifying face match with Aadhaar photo...');
-    
+
     // Simulate face verification
     setTimeout(() => {
       const mockImage = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k=';
       setCapturedFaceImage(mockImage);
-      
+
       setTimeout(() => {
         setOfflineProgressMessage('Face verified successfully');
-        
+
         // Step 5: Complete verification and populate data
         setTimeout(() => {
           completeOfflineVerification();
@@ -409,7 +412,7 @@ export default function FarmerRegistration() {
     setOfflineVerificationStatus('completed');
     setOfflineProgressMessage('All verifications completed successfully');
     setShowFaceCapture(false);
-    
+
     // Extract and populate Aadhaar data
     const aadhaarData = {
       farmerName: 'Farmer One',
@@ -420,7 +423,7 @@ export default function FarmerRegistration() {
       pincode: '443001',
       aadhaarNumber: formData.aadhaarNumber
     };
-    
+
     setPendingAadhaarData(aadhaarData);
     setShowDetailsConfirmation(true);
   };
@@ -441,12 +444,12 @@ export default function FarmerRegistration() {
     const newOtp = [...offlineOtp];
     newOtp[index] = value;
     setOfflineOtp(newOtp);
-    
+
     // Auto-focus next input
     if (value && index < 5) {
       offlineOtpRefs[index + 1]?.focus();
     }
-    
+
     // Auto-verify when all digits are entered
     if (newOtp.every(digit => digit !== '') && newOtp.join('').length === 6) {
       setTimeout(() => verifyOfflineOtp(), 500);
@@ -515,10 +518,10 @@ export default function FarmerRegistration() {
       setTimeout(() => {
         const locationMap: any = {
           '443001': { state: 'Maharashtra', district: 'Buldhana', taluka: 'Sangrampur', village: 'Sangrampur' },
-          '560001': { state: 'Karnataka', district: 'Bangalore', taluka: 'Bangalore', village: 'Bangalore' },
+          '560001': { state: 'Maharashtra', district: 'Bangalore', taluka: 'Bangalore', village: 'Bangalore' },
           '380001': { state: 'Gujarat', district: 'Ahmedabad', taluka: 'Ahmedabad', village: 'Ahmedabad' }
         };
-        
+
         const location = locationMap[formData.pincode];
         if (location) {
           setSmartLocationData(location);
@@ -604,7 +607,7 @@ export default function FarmerRegistration() {
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Final validation
     if (!formData.consentGiven) {
       alert('Please provide consent for authentication');
@@ -842,12 +845,12 @@ export default function FarmerRegistration() {
                 )}
                 <span style={{ fontSize: '14px', fontWeight: '600', color: '#003A5D' }}>
                   {offlineVerificationStatus === 'otp-sent' ? 'OTP Sent' :
-                   offlineVerificationStatus === 'otp-verified' ? 'OTP Verified' :
-                   offlineVerificationStatus === 'ocr-processing' ? 'Extracting Aadhaar Details' :
-                   offlineVerificationStatus === 'liveness-checking' ? 'Checking Liveness' :
-                   offlineVerificationStatus === 'face-verifying' ? 'Verifying Face' :
-                   offlineVerificationStatus === 'completed' ? 'Verification Completed' :
-                   offlineVerificationStatus === 'failed' ? 'Verification Failed' : 'Processing...'}
+                    offlineVerificationStatus === 'otp-verified' ? 'OTP Verified' :
+                      offlineVerificationStatus === 'ocr-processing' ? 'Extracting Aadhaar Details' :
+                        offlineVerificationStatus === 'liveness-checking' ? 'Checking Liveness' :
+                          offlineVerificationStatus === 'face-verifying' ? 'Verifying Face' :
+                            offlineVerificationStatus === 'completed' ? 'Verification Completed' :
+                              offlineVerificationStatus === 'failed' ? 'Verification Failed' : 'Processing...'}
                 </span>
               </div>
               {offlineProgressMessage && (
@@ -1020,11 +1023,11 @@ export default function FarmerRegistration() {
                   setFormData(prev => ({ ...prev, pincode: value }));
                 }}
                 className="w-full h-12 px-4 pr-12 rounded-lg border transition-all outline-none"
-                style={{ 
-                  borderColor: smartLocationData ? '#10B981' : '#CCD8DF', 
-                  color: '#222222', 
-                  fontSize: '14px', 
-                  backgroundColor: '#FFFFFF' 
+                style={{
+                  borderColor: smartLocationData ? '#10B981' : '#CCD8DF',
+                  color: '#222222',
+                  fontSize: '14px',
+                  backgroundColor: '#FFFFFF'
                 }}
                 placeholder="Enter pincode"
               />
@@ -1444,18 +1447,84 @@ export default function FarmerRegistration() {
             />
           </div>
 
-          <div>
+          <div className="col-span-1 sm:col-span-2 lg:col-span-3">
             <label style={{ fontSize: '12px', fontWeight: '700', color: '#777777', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '8px', display: 'block' }}>
               Survey No <span style={{ color: '#E94545' }}>*</span>
             </label>
-            <input
-              type="text"
-              value={formData.surveyNumber}
-              onChange={(e) => setFormData(prev => ({ ...prev, surveyNumber: e.target.value }))}
-              className="w-full h-12 px-4 rounded-lg border transition-all outline-none"
-              style={{ borderColor: '#CCD8DF', color: '#222222', fontSize: '14px', backgroundColor: '#FFFFFF' }}
-              placeholder="Enter Survey No"
-            />
+            <div className="flex flex-col md:flex-row gap-3">
+              <input
+                type="text"
+                value={formData.surveyNumber}
+                onChange={(e) => setFormData(prev => ({ ...prev, surveyNumber: e.target.value }))}
+                className="flex-1 h-12 px-4 rounded-lg border transition-all outline-none"
+                style={{ borderColor: '#CCD8DF', color: '#222222', fontSize: '14px', backgroundColor: '#FFFFFF' }}
+                placeholder="Enter Survey No (e.g. AG-4573)"
+              />
+              <button
+                type="button"
+                className="h-12 px-6 rounded-lg font-bold text-white flex items-center justify-center gap-2"
+                style={{ backgroundColor: '#003A5D' }}
+                onClick={() => {
+                  if (!formData.surveyNumber) return;
+                  setIsScanningGis(true);
+                  setTimeout(() => {
+                    setIsScanningGis(false);
+                    setShowGisMap(true);
+                  }, 1500);
+                }}
+                disabled={!formData.surveyNumber}
+              >
+                {isScanningGis ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <LandPlot className="w-5 h-5" />
+                )}
+                Satellite Survey
+              </button>
+            </div>
+
+            {showGisMap && (
+              <div className="mt-4 rounded-xl border shadow-sm flex flex-col overflow-hidden" style={{ borderColor: '#CCD8DF', backgroundColor: '#F8FAFC' }}>
+                <div className="bg-[#003A5D] px-5 py-3 flex justify-between items-center text-white">
+                  <div className="flex flex-col">
+                    <span className="font-bold text-sm tracking-wide">Satellite GIS Survey</span>
+                    <span className="text-xs text-blue-200">Plot ID: {formData.surveyNumber}</span>
+                  </div>
+                  <button type="button" onClick={() => setShowGisMap(false)} className="text-blue-200 hover:text-white">
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+                <div className="relative">
+                  <img
+                    src={gisMapFarmBoundary}
+                    alt="GIS Farm Boundary"
+                    className="w-full h-[400px] object-cover"
+                  />
+                  <div className="absolute inset-x-4 bottom-4 bg-white/95 backdrop-blur-sm shadow-xl rounded-xl p-5 border border-blue-100 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div>
+                      <div className="text-xs font-black tracking-widest text-[#003A5D] uppercase mb-1 flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Survey Match Found</div>
+                      <div className="text-[15px] font-medium text-slate-700">Calculated Area: <strong className="font-black text-[#027F83]">84.6 Acres (34.2 HA)</strong></div>
+                    </div>
+                    <button
+                      type="button"
+                      className="px-8 py-3 rounded-xl bg-[#02B8C2] text-white font-black text-xs uppercase tracking-widest shadow-lg shadow-[#02B8C2]/30 hover:bg-[#029FA8] transition-colors whitespace-nowrap"
+                      onClick={() => {
+                        setFormData(prev => ({
+                          ...prev,
+                          totalAreaAcre: '84.6',
+                          totalAreaHa: '34.2',
+                          actualSowingAreaHa: '34.2',
+                          convertedSowingAreaAcre: '84.6'
+                        }));
+                        setShowGisMap(false);
+                      }}
+                    >
+                      Auto-Fill Area Fields
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           <div>
@@ -1941,10 +2010,10 @@ export default function FarmerRegistration() {
       <FarmerDetailsView
         farmerData={{
           ...formData,
-          registrationDate: new Date().toLocaleDateString('en-IN', { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
+          registrationDate: new Date().toLocaleDateString('en-IN', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
           }),
           status: 'Active'
         }}
@@ -2146,9 +2215,9 @@ export default function FarmerRegistration() {
                   onChange={(e) => handleOfflineOtpChange(index, e.target.value)}
                   onKeyDown={(e) => handleOfflineOtpKeyDown(index, e)}
                   className="flex-1 min-w-0 h-12 text-center rounded-lg border-2 transition-all outline-none"
-                  style={{ 
-                    borderColor: '#CCD8DF', 
-                    fontSize: '18px', 
+                  style={{
+                    borderColor: '#CCD8DF',
+                    fontSize: '18px',
                     fontWeight: '600',
                     maxWidth: '100%'
                   }}
@@ -2209,8 +2278,8 @@ export default function FarmerRegistration() {
             <div className="flex items-center justify-between mb-4">
               <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#003A5D' }}>
                 {formData.authenticationMethod === 'offline' && offlineVerificationStatus === 'liveness-checking' ? 'Liveness Check' :
-                 formData.authenticationMethod === 'offline' && offlineVerificationStatus === 'face-verifying' ? 'Face Verification' :
-                 'Face Capture'}
+                  formData.authenticationMethod === 'offline' && offlineVerificationStatus === 'face-verifying' ? 'Face Verification' :
+                    'Face Capture'}
               </h3>
               {formData.authenticationMethod !== 'offline' && (
                 <button onClick={cancelFaceVerification} className="p-1">
@@ -2218,7 +2287,7 @@ export default function FarmerRegistration() {
                 </button>
               )}
             </div>
-            
+
             <div className="mb-6">
               <div className="relative w-full h-64 rounded-lg overflow-hidden border-2 mb-4" style={{ borderColor: '#027F83', backgroundColor: '#F7F9FA' }}>
                 {capturedFaceImage ? (
@@ -2227,7 +2296,7 @@ export default function FarmerRegistration() {
                   <div className="flex flex-col items-center justify-center h-full">
                     <Camera className="w-16 h-16 mb-4" style={{ color: '#027F83' }} />
                     <p style={{ fontSize: '14px', color: '#666', textAlign: 'center' }}>
-                      {formData.authenticationMethod === 'offline' && offlineVerificationStatus === 'liveness-checking' 
+                      {formData.authenticationMethod === 'offline' && offlineVerificationStatus === 'liveness-checking'
                         ? 'Please look at the camera for liveness detection'
                         : 'Position your face within the frame'}
                     </p>
@@ -2237,14 +2306,14 @@ export default function FarmerRegistration() {
                   </div>
                 )}
               </div>
-              
+
               {(faceVerificationStatus === 'processing' || offlineVerificationStatus === 'liveness-checking' || offlineVerificationStatus === 'face-verifying') && !capturedFaceImage && (
                 <div className="text-center">
                   <Loader2 className="w-8 h-8 animate-spin mx-auto mb-2" style={{ color: '#027F83' }} />
                   <p style={{ fontSize: '14px', color: '#666' }}>
                     {offlineVerificationStatus === 'liveness-checking' ? 'Checking liveness...' :
-                     offlineVerificationStatus === 'face-verifying' ? 'Verifying face...' :
-                     'Detecting face...'}
+                      offlineVerificationStatus === 'face-verifying' ? 'Verifying face...' :
+                        'Detecting face...'}
                   </p>
                 </div>
               )}

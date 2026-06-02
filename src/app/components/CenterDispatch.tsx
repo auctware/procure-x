@@ -37,12 +37,12 @@ interface Dispatch {
 
 export default function CenterDispatch() {
   const [createDrawerOpen, setCreateDrawerOpen] = useState(false);
-  
+
   // Create Dispatch Form Data
   const [createFormData, setCreateFormData] = useState({
     yearSeason: '2025 - Kharif',
     scheme: 'MAIZE FOR ETHA...',
-    state: 'Karnataka',
+    state: 'Maharashtra',
     commodity: 'MAIZE',
     center: '',
     warehouse: '',
@@ -117,7 +117,7 @@ export default function CenterDispatch() {
   ];
 
   const stateOptions = [
-    { value: 'Karnataka', label: 'Karnataka' },
+    { value: 'Maharashtra', label: 'Maharashtra' },
     { value: 'Maharashtra', label: 'Maharashtra' },
     { value: 'Gujarat', label: 'Gujarat' }
   ];
@@ -147,7 +147,7 @@ export default function CenterDispatch() {
     {
       id: '1',
       dispatchId: 'DISP001',
-      state: 'Karnataka',
+      state: 'Maharashtra',
       sourceName: 'Main Procurement Center',
       destinationName: 'Warehouse 1',
       sourceType: 'Center',
@@ -233,7 +233,7 @@ export default function CenterDispatch() {
         filterStatusRef, filterStateRef, filterYearSeasonRef, filterSchemeRef,
         filterCommodityRef, filterCenterRef
       ];
-      
+
       refs.forEach(ref => {
         if (ref.current && !ref.current.contains(event.target as Node)) {
           if (ref === yearSeasonRef) setYearSeasonDropdownOpen(false);
@@ -259,10 +259,10 @@ export default function CenterDispatch() {
   useEffect(() => {
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      
+
       if (query.includes('pending') || query.includes('transit') || query.includes('delivered')) {
         setNlpSuggestion('Filtering by status');
-      } else if (query.includes('karnataka') || query.includes('maharashtra') || query.includes('gujarat')) {
+      } else if (query.includes('Maharashtra') || query.includes('maharashtra') || query.includes('gujarat')) {
         setNlpSuggestion('Searching by state');
       } else if (query.match(/disp\d+/i) || query.includes('dispatch')) {
         setNlpSuggestion('Searching by dispatch ID');
@@ -322,7 +322,7 @@ export default function CenterDispatch() {
     // NLP Search
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      const matchesSearch = 
+      const matchesSearch =
         dispatch.dispatchId.toLowerCase().includes(query) ||
         dispatch.state.toLowerCase().includes(query) ||
         dispatch.sourceName.toLowerCase().includes(query) ||
@@ -330,7 +330,7 @@ export default function CenterDispatch() {
         dispatch.vehicleNumber.toLowerCase().includes(query) ||
         dispatch.referenceNumber.toLowerCase().includes(query) ||
         dispatch.status.toLowerCase().includes(query);
-      
+
       if (!matchesSearch) return false;
     }
 
@@ -385,7 +385,7 @@ export default function CenterDispatch() {
     setCreateFormData({
       yearSeason: '2025 - Kharif',
       scheme: 'MAIZE FOR ETHA...',
-      state: 'Karnataka',
+      state: 'Maharashtra',
       commodity: 'MAIZE',
       center: '',
       warehouse: '',
@@ -436,7 +436,7 @@ export default function CenterDispatch() {
       {/* Breadcrumb */}
       <div className="mb-6 flex items-center gap-2" style={{ fontSize: '14px', color: '#666' }}>
         <Home className="w-4 h-4" style={{ color: '#027F83' }} />
-        <button 
+        <button
           onClick={() => {
             console.log('Navigate to home');
           }}
@@ -470,7 +470,7 @@ export default function CenterDispatch() {
           <div className="flex items-center gap-3">
             {/* NLP Search */}
             <div className="relative">
-              <div 
+              <div
                 className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-lg"
                 style={{ backgroundColor: '#F2FCFB' }}
               >
@@ -478,7 +478,7 @@ export default function CenterDispatch() {
               </div>
               <input
                 type="text"
-                placeholder="Try: 'pending dispatches', 'Karnataka', 'DISP001'..."
+                placeholder="Try: 'pending dispatches', 'Maharashtra', 'DISP001'..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="h-12 pl-14 pr-12 rounded-lg border transition-all outline-none"
@@ -508,9 +508,8 @@ export default function CenterDispatch() {
                 title={isListening ? 'Listening...' : isProcessingVoice ? 'Processing...' : 'Voice search'}
               >
                 <Mic
-                  className={`w-4 h-4 transition-colors ${
-                    isListening ? 'text-white' : isProcessingVoice ? 'text-white' : ''
-                  }`}
+                  className={`w-4 h-4 transition-colors ${isListening ? 'text-white' : isProcessingVoice ? 'text-white' : ''
+                    }`}
                   style={{
                     color: isListening ? '#FFFFFF' : isProcessingVoice ? '#FFFFFF' : '#666666'
                   }}
@@ -544,13 +543,13 @@ export default function CenterDispatch() {
               <div className="flex items-center gap-2">
                 <Filter className="w-5 h-5" />
                 {activeFilterCount > 0 && (
-                  <span 
+                  <span
                     className="w-5 h-5 rounded-full flex items-center justify-center"
-                    style={{ 
-                      backgroundColor: '#027F83', 
-                      color: '#FFFFFF', 
-                      fontSize: '11px', 
-                      fontWeight: '700' 
+                    style={{
+                      backgroundColor: '#027F83',
+                      color: '#FFFFFF',
+                      fontSize: '11px',
+                      fontWeight: '700'
                     }}
                   >
                     {activeFilterCount}
@@ -664,9 +663,9 @@ export default function CenterDispatch() {
             <tbody>
               {filteredDispatches.length > 0 ? (
                 filteredDispatches.map((dispatch) => (
-                  <tr 
+                  <tr
                     key={dispatch.id}
-                    className="border-t transition-colors hover:bg-gray-50" 
+                    className="border-t transition-colors hover:bg-gray-50"
                     style={{ borderColor: '#E5EBEF' }}
                   >
                     <td className="px-4 py-3" style={{ fontSize: '13px', color: '#315B78', fontWeight: '600' }}>
@@ -808,14 +807,14 @@ export default function CenterDispatch() {
       {/* Create Dispatch Drawer */}
       {createDrawerOpen && (
         <>
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-30 z-40 transition-opacity"
             onClick={() => setCreateDrawerOpen(false)}
           />
 
-          <div 
+          <div
             className="fixed top-0 right-0 h-full w-full md:w-[600px] bg-white shadow-2xl z-50 overflow-y-auto"
-            style={{ 
+            style={{
               animation: 'slideInRight 0.3s ease-out',
               borderLeft: '1px solid #E5EBEF'
             }}
@@ -1101,14 +1100,14 @@ export default function CenterDispatch() {
       {/* Filter Drawer */}
       {filterDrawerOpen && (
         <>
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-30 z-40 transition-opacity"
             onClick={() => setFilterDrawerOpen(false)}
           />
 
-          <div 
+          <div
             className="fixed top-0 right-0 h-full w-full md:w-[450px] bg-white shadow-2xl z-50 overflow-y-auto"
-            style={{ 
+            style={{
               animation: 'slideInRight 0.3s ease-out',
               borderLeft: '1px solid #E5EBEF'
             }}
@@ -1162,7 +1161,7 @@ export default function CenterDispatch() {
                     onChange={(value) => setFilters({ ...filters, state: value })}
                     options={[
                       { value: 'All', label: 'All States' },
-                      { value: 'Karnataka', label: 'Karnataka' },
+                      { value: 'Maharashtra', label: 'Maharashtra' },
                       { value: 'Maharashtra', label: 'Maharashtra' },
                       { value: 'Gujarat', label: 'Gujarat' }
                     ]}
@@ -1305,7 +1304,7 @@ export default function CenterDispatch() {
                 >
                   Clear All
                 </button>
-                
+
                 <button
                   onClick={() => {
                     setFilterDrawerOpen(false);

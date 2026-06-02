@@ -99,7 +99,7 @@ export default function CreateWarehouse() {
       warehouseCode: 'WH001',
       warehouseName: 'Bangalore Central Warehouse',
       warehouseServiceProvider: 'AGENCY ONE',
-      state: 'Karnataka',
+      state: 'Maharashtra',
       district: 'Bangalore',
       location: 'Industrial Area',
       capacity: '5000 MT',
@@ -122,12 +122,12 @@ export default function CreateWarehouse() {
       setIsFetchingPincode(true);
       setTimeout(() => {
         const mockData: Record<string, { state: string; district: string }> = {
-          '560001': { state: 'Karnataka', district: 'Bangalore' },
-          '560002': { state: 'Karnataka', district: 'Bangalore' },
+          '560001': { state: 'Maharashtra', district: 'Bangalore' },
+          '560002': { state: 'Maharashtra', district: 'Bangalore' },
           '411001': { state: 'Maharashtra', district: 'Pune' },
           '600001': { state: 'Tamil Nadu', district: 'Chennai' }
         };
-        
+
         const locationData = mockData[pincode] || { state: '', district: '' };
         setFormData(prev => ({
           ...prev,
@@ -152,7 +152,7 @@ export default function CreateWarehouse() {
         const lat = position.coords.latitude.toString();
         const lng = position.coords.longitude.toString();
         const geocode = `${lat},${lng}`;
-        
+
         setFormData(prev => ({
           ...prev,
           latitude: lat,
@@ -206,12 +206,12 @@ export default function CreateWarehouse() {
   useEffect(() => {
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      
+
       if (query.includes('active') || query.includes('pending') || query.includes('inactive')) {
         setNlpSuggestion('Filtering by status');
-      } else if (query.includes('karnataka') || query.includes('maharashtra') || query.includes('tamil')) {
+      } else if (query.includes('Maharashtra') || query.includes('maharashtra') || query.includes('tamil')) {
         setNlpSuggestion('Searching by state');
-        } else if (query.includes('agency one') || query.includes('agency two') || query.includes('agency three')) {
+      } else if (query.includes('agency one') || query.includes('agency two') || query.includes('agency three')) {
         setNlpSuggestion('Searching by service provider');
       } else if (query.match(/\d{6}/)) {
         setNlpSuggestion('Searching by pincode');
@@ -270,13 +270,13 @@ export default function CreateWarehouse() {
   const filteredWarehouses = warehouses.filter(warehouse => {
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      const matchesSearch = 
+      const matchesSearch =
         warehouse.warehouseCode.toLowerCase().includes(query) ||
         warehouse.warehouseName.toLowerCase().includes(query) ||
         warehouse.state.toLowerCase().includes(query) ||
         warehouse.district.toLowerCase().includes(query) ||
         warehouse.pincode.includes(query);
-      
+
       if (!matchesSearch) return false;
     }
 
@@ -297,18 +297,18 @@ export default function CreateWarehouse() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const newWarehouse: Warehouse = {
       id: editingId || (warehouses.length + 1).toString(),
       ...formData,
-      registeredDate: editingId 
+      registeredDate: editingId
         ? warehouses.find(w => w.id === editingId)?.registeredDate || new Date().toISOString().split('T')[0]
         : new Date().toISOString().split('T')[0],
       status: 'Active'
     };
 
     if (editingId) {
-      setWarehouses(warehouses.map(warehouse => 
+      setWarehouses(warehouses.map(warehouse =>
         warehouse.id === editingId ? newWarehouse : warehouse
       ));
     } else {
@@ -398,7 +398,7 @@ export default function CreateWarehouse() {
       {/* Breadcrumb */}
       <div className="mb-6 flex items-center gap-2" style={{ fontSize: '14px', color: '#666' }}>
         <Home className="w-4 h-4" style={{ color: '#027F83' }} />
-        <button 
+        <button
           onClick={() => console.log('Navigate to home')}
           className="hover:underline transition-colors cursor-pointer"
           style={{ color: '#027F83', fontWeight: '500', background: 'none', border: 'none', padding: 0 }}
@@ -430,7 +430,7 @@ export default function CreateWarehouse() {
           <div className="flex items-center gap-3">
             {/* NLP Search */}
             <div className="relative">
-              <div 
+              <div
                 className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-lg"
                 style={{ backgroundColor: '#F2FCFB' }}
               >
@@ -438,7 +438,7 @@ export default function CreateWarehouse() {
               </div>
               <input
                 type="text"
-                placeholder="Try: 'active warehouses', 'Karnataka Agency One'..."
+                placeholder="Try: 'active warehouses', 'Maharashtra Agency One'..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="h-12 pl-14 pr-12 rounded-lg border transition-all outline-none"
@@ -468,9 +468,8 @@ export default function CreateWarehouse() {
                 title={isListening ? 'Listening...' : isProcessingVoice ? 'Processing...' : 'Voice search'}
               >
                 <Mic
-                  className={`w-4 h-4 transition-colors ${
-                    isListening ? 'text-white' : isProcessingVoice ? 'text-white' : ''
-                  }`}
+                  className={`w-4 h-4 transition-colors ${isListening ? 'text-white' : isProcessingVoice ? 'text-white' : ''
+                    }`}
                   style={{
                     color: isListening ? '#FFFFFF' : isProcessingVoice ? '#FFFFFF' : '#666666'
                   }}
@@ -559,9 +558,9 @@ export default function CreateWarehouse() {
             <tbody>
               {filteredWarehouses.length > 0 ? (
                 filteredWarehouses.map((warehouse) => (
-                  <tr 
+                  <tr
                     key={warehouse.id}
-                    className="border-t transition-colors hover:bg-gray-50" 
+                    className="border-t transition-colors hover:bg-gray-50"
                     style={{ borderColor: '#E5EBEF' }}
                   >
                     <td className="px-6 py-4" style={{ color: '#315B78' }}>
@@ -649,7 +648,7 @@ export default function CreateWarehouse() {
                           </button>
 
                           {activeActionMenu === warehouse.id && (
-                            <div 
+                            <div
                               className="absolute right-0 top-full mt-1 w-40 rounded-lg shadow-xl overflow-hidden z-50 border"
                               style={{ backgroundColor: '#FFFFFF', borderColor: '#E5EBEF' }}
                               onClick={(e) => e.stopPropagation()}
@@ -713,14 +712,14 @@ export default function CreateWarehouse() {
       {/* Form Drawer */}
       {drawerOpen && (
         <>
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-30 z-40 transition-opacity"
             onClick={handleCloseDrawer}
           />
 
-          <div 
+          <div
             className="fixed top-0 right-0 h-full w-full md:w-[700px] bg-white shadow-2xl z-50 overflow-y-auto"
-            style={{ 
+            style={{
               animation: 'slideInRight 0.3s ease-out',
               borderLeft: '1px solid #E5EBEF'
             }}
@@ -839,7 +838,7 @@ export default function CreateWarehouse() {
                           onChange={(value) => setFormData({ ...formData, state: value })}
                           options={[
                             { value: '', label: 'Select State' },
-                            { value: 'Karnataka', label: 'Karnataka' },
+                            { value: 'Maharashtra', label: 'Maharashtra' },
                             { value: 'Maharashtra', label: 'Maharashtra' },
                             { value: 'Tamil Nadu', label: 'Tamil Nadu' },
                             { value: 'Gujarat', label: 'Gujarat' }
@@ -1169,7 +1168,7 @@ export default function CreateWarehouse() {
                     <CheckCircle2 className="w-5 h-5" style={{ color: '#027F83' }} />
                     {editingId ? 'Update Warehouse' : 'Create Warehouse'}
                   </button>
-                  
+
                   <button
                     type="button"
                     onClick={handleCloseDrawer}
@@ -1194,14 +1193,14 @@ export default function CreateWarehouse() {
       {/* Filter Drawer */}
       {filterDrawerOpen && (
         <>
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-30 z-40 transition-opacity"
             onClick={() => setFilterDrawerOpen(false)}
           />
 
-          <div 
+          <div
             className="fixed top-0 right-0 h-full w-full md:w-[450px] bg-white shadow-2xl z-50 overflow-y-auto"
-            style={{ 
+            style={{
               animation: 'slideInRight 0.3s ease-out',
               borderLeft: '1px solid #E5EBEF'
             }}
@@ -1253,7 +1252,7 @@ export default function CreateWarehouse() {
                     onChange={(value) => setFilters({ ...filters, state: value })}
                     options={[
                       { value: 'All', label: 'All States' },
-                      { value: 'Karnataka', label: 'Karnataka' },
+                      { value: 'Maharashtra', label: 'Maharashtra' },
                       { value: 'Maharashtra', label: 'Maharashtra' },
                       { value: 'Tamil Nadu', label: 'Tamil Nadu' }
                     ]}
@@ -1297,7 +1296,7 @@ export default function CreateWarehouse() {
                 >
                   Apply Filters
                 </button>
-                
+
                 <button
                   onClick={clearFilters}
                   className="px-6 h-12 rounded-lg transition-all"

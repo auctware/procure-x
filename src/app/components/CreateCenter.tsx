@@ -94,7 +94,7 @@ export default function CreateCenter() {
       id: '1',
       centerCode: 'CNT001',
       centerName: 'Bangalore North Center',
-      state: 'Karnataka',
+      state: 'Maharashtra',
       district: 'Bangalore',
       location: 'Industrial Area',
       geocode: '12.9716,77.5946',
@@ -119,12 +119,12 @@ export default function CreateCenter() {
       setTimeout(() => {
         // Mock data based on pincode
         const mockData: Record<string, { state: string; district: string }> = {
-          '560001': { state: 'Karnataka', district: 'Bangalore' },
-          '560002': { state: 'Karnataka', district: 'Bangalore' },
+          '560001': { state: 'Maharashtra', district: 'Bangalore' },
+          '560002': { state: 'Maharashtra', district: 'Bangalore' },
           '411001': { state: 'Maharashtra', district: 'Pune' },
           '600001': { state: 'Tamil Nadu', district: 'Chennai' }
         };
-        
+
         const locationData = mockData[pincode] || { state: '', district: '' };
         setFormData(prev => ({
           ...prev,
@@ -149,7 +149,7 @@ export default function CreateCenter() {
         const lat = position.coords.latitude.toString();
         const lng = position.coords.longitude.toString();
         const geocode = `${lat},${lng}`;
-        
+
         setFormData(prev => ({
           ...prev,
           latitude: lat,
@@ -200,10 +200,10 @@ export default function CreateCenter() {
   useEffect(() => {
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      
+
       if (query.includes('active') || query.includes('pending') || query.includes('inactive')) {
         setNlpSuggestion('Filtering by status');
-      } else if (query.includes('karnataka') || query.includes('maharashtra') || query.includes('tamil')) {
+      } else if (query.includes('Maharashtra') || query.includes('maharashtra') || query.includes('tamil')) {
         setNlpSuggestion('Searching by state');
       } else if (query.includes('bangalore') || query.includes('mysore')) {
         setNlpSuggestion('Searching by district');
@@ -264,13 +264,13 @@ export default function CreateCenter() {
   const filteredCenters = centers.filter(center => {
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      const matchesSearch = 
+      const matchesSearch =
         center.centerCode.toLowerCase().includes(query) ||
         center.centerName.toLowerCase().includes(query) ||
         center.state.toLowerCase().includes(query) ||
         center.district.toLowerCase().includes(query) ||
         center.pincode.includes(query);
-      
+
       if (!matchesSearch) return false;
     }
 
@@ -291,18 +291,18 @@ export default function CreateCenter() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const newCenter: Center = {
       id: editingId || (centers.length + 1).toString(),
       ...formData,
-      registeredDate: editingId 
+      registeredDate: editingId
         ? centers.find(c => c.id === editingId)?.registeredDate || new Date().toISOString().split('T')[0]
         : new Date().toISOString().split('T')[0],
       status: 'Active'
     };
 
     if (editingId) {
-      setCenters(centers.map(center => 
+      setCenters(centers.map(center =>
         center.id === editingId ? newCenter : center
       ));
     } else {
@@ -390,7 +390,7 @@ export default function CreateCenter() {
       {/* Breadcrumb */}
       <div className="mb-6 flex items-center gap-2" style={{ fontSize: '14px', color: '#666' }}>
         <Home className="w-4 h-4" style={{ color: '#027F83' }} />
-        <button 
+        <button
           onClick={() => console.log('Navigate to home')}
           className="hover:underline transition-colors cursor-pointer"
           style={{ color: '#027F83', fontWeight: '500', background: 'none', border: 'none', padding: 0 }}
@@ -422,7 +422,7 @@ export default function CreateCenter() {
           <div className="flex items-center gap-3">
             {/* NLP Search */}
             <div className="relative">
-              <div 
+              <div
                 className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-lg"
                 style={{ backgroundColor: '#F2FCFB' }}
               >
@@ -430,7 +430,7 @@ export default function CreateCenter() {
               </div>
               <input
                 type="text"
-                placeholder="Try: 'active centers', 'Karnataka Bangalore'..."
+                placeholder="Try: 'active centers', 'Maharashtra Bangalore'..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="h-12 pl-14 pr-12 rounded-lg border transition-all outline-none"
@@ -460,9 +460,8 @@ export default function CreateCenter() {
                 title={isListening ? 'Listening...' : isProcessingVoice ? 'Processing...' : 'Voice search'}
               >
                 <Mic
-                  className={`w-4 h-4 transition-colors ${
-                    isListening ? 'text-white' : isProcessingVoice ? 'text-white' : ''
-                  }`}
+                  className={`w-4 h-4 transition-colors ${isListening ? 'text-white' : isProcessingVoice ? 'text-white' : ''
+                    }`}
                   style={{
                     color: isListening ? '#FFFFFF' : isProcessingVoice ? '#FFFFFF' : '#666666'
                   }}
@@ -551,9 +550,9 @@ export default function CreateCenter() {
             <tbody>
               {filteredCenters.length > 0 ? (
                 filteredCenters.map((center) => (
-                  <tr 
+                  <tr
                     key={center.id}
-                    className="border-t transition-colors hover:bg-gray-50" 
+                    className="border-t transition-colors hover:bg-gray-50"
                     style={{ borderColor: '#E5EBEF' }}
                   >
                     <td className="px-6 py-4" style={{ color: '#315B78' }}>
@@ -641,7 +640,7 @@ export default function CreateCenter() {
                           </button>
 
                           {activeActionMenu === center.id && (
-                            <div 
+                            <div
                               className="absolute right-0 top-full mt-1 w-40 rounded-lg shadow-xl overflow-hidden z-50 border"
                               style={{ backgroundColor: '#FFFFFF', borderColor: '#E5EBEF' }}
                               onClick={(e) => e.stopPropagation()}
@@ -705,14 +704,14 @@ export default function CreateCenter() {
       {/* Form Drawer */}
       {drawerOpen && (
         <>
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-30 z-40 transition-opacity"
             onClick={handleCloseDrawer}
           />
 
-          <div 
+          <div
             className="fixed top-0 right-0 h-full w-full md:w-[700px] bg-white shadow-2xl z-50 overflow-y-auto"
-            style={{ 
+            style={{
               animation: 'slideInRight 0.3s ease-out',
               borderLeft: '1px solid #E5EBEF'
             }}
@@ -831,7 +830,7 @@ export default function CreateCenter() {
                           onChange={(value) => setFormData({ ...formData, state: value })}
                           options={[
                             { value: '', label: 'Select State' },
-                            { value: 'Karnataka', label: 'Karnataka' },
+                            { value: 'Maharashtra', label: 'Maharashtra' },
                             { value: 'Maharashtra', label: 'Maharashtra' },
                             { value: 'Tamil Nadu', label: 'Tamil Nadu' },
                             { value: 'Gujarat', label: 'Gujarat' }
@@ -1137,7 +1136,7 @@ export default function CreateCenter() {
                     <CheckCircle2 className="w-5 h-5" style={{ color: '#027F83' }} />
                     {editingId ? 'Update Center' : 'Create Center'}
                   </button>
-                  
+
                   <button
                     type="button"
                     onClick={handleCloseDrawer}
@@ -1162,14 +1161,14 @@ export default function CreateCenter() {
       {/* Filter Drawer */}
       {filterDrawerOpen && (
         <>
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-30 z-40 transition-opacity"
             onClick={() => setFilterDrawerOpen(false)}
           />
 
-          <div 
+          <div
             className="fixed top-0 right-0 h-full w-full md:w-[450px] bg-white shadow-2xl z-50 overflow-y-auto"
-            style={{ 
+            style={{
               animation: 'slideInRight 0.3s ease-out',
               borderLeft: '1px solid #E5EBEF'
             }}
@@ -1221,7 +1220,7 @@ export default function CreateCenter() {
                     onChange={(value) => setFilters({ ...filters, state: value })}
                     options={[
                       { value: 'All', label: 'All States' },
-                      { value: 'Karnataka', label: 'Karnataka' },
+                      { value: 'Maharashtra', label: 'Maharashtra' },
                       { value: 'Maharashtra', label: 'Maharashtra' },
                       { value: 'Tamil Nadu', label: 'Tamil Nadu' }
                     ]}
@@ -1265,7 +1264,7 @@ export default function CreateCenter() {
                 >
                   Apply Filters
                 </button>
-                
+
                 <button
                   onClick={clearFilters}
                   className="px-6 h-12 rounded-lg transition-all"

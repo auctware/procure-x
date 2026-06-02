@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-import { 
-  Search, User, Phone, Mail, MapPin, Calendar, Eye, 
+import {
+  Search, User, Phone, Mail, MapPin, Calendar, Eye,
   MoreVertical, Filter, Download,
   Home, ChevronRight, Mic, X
 } from 'lucide-react';
@@ -41,7 +41,7 @@ export default function FarmerList({ onViewDetails }: FarmerListProps) {
   const [nlpSuggestion, setNlpSuggestion] = useState('');
   const [isListening, setIsListening] = useState(false);
   const [isProcessingVoice, setIsProcessingVoice] = useState(false);
-  
+
   // Filter State
   const [filters, setFilters] = useState({
     status: 'All',
@@ -100,7 +100,7 @@ export default function FarmerList({ onViewDetails }: FarmerListProps) {
       mobileNumber: '9000000003',
       emailId: 'farmer3@dummy.com',
       aadhaarNumber: '9000 0000 0003',
-      state: 'Karnataka',
+      state: 'Maharashtra',
       district: 'Bangalore',
       village: 'Bangalore South',
       farmerCategory: 'Large Farmer',
@@ -130,7 +130,7 @@ export default function FarmerList({ onViewDetails }: FarmerListProps) {
       mobileNumber: '9000000005',
       emailId: 'farmer5@dummy.com',
       aadhaarNumber: '9000 0000 0005',
-      state: 'Karnataka',
+      state: 'Maharashtra',
       district: 'Mysore',
       village: 'Mysore City',
       farmerCategory: 'Marginal Farmer',
@@ -163,7 +163,7 @@ export default function FarmerList({ onViewDetails }: FarmerListProps) {
       const query = searchQuery.toLowerCase();
       if (query.includes('active') || query.includes('pending') || query.includes('inactive')) {
         setNlpSuggestion('Filtering by status');
-      } else if (query.includes('maharashtra') || query.includes('karnataka') || query.includes('gujarat')) {
+      } else if (query.includes('maharashtra') || query.includes('Maharashtra') || query.includes('gujarat')) {
         setNlpSuggestion('Searching by state');
       } else if (query.includes('small') || query.includes('marginal') || query.includes('large')) {
         setNlpSuggestion('Searching by farmer category');
@@ -227,7 +227,7 @@ export default function FarmerList({ onViewDetails }: FarmerListProps) {
     // NLP Search
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      const matchesSearch = 
+      const matchesSearch =
         farmer.farmerName.toLowerCase().includes(query) ||
         farmer.farmerId.toLowerCase().includes(query) ||
         farmer.mobileNumber.includes(query) ||
@@ -237,7 +237,7 @@ export default function FarmerList({ onViewDetails }: FarmerListProps) {
         farmer.village.toLowerCase().includes(query) ||
         farmer.farmerCategory.toLowerCase().includes(query) ||
         farmer.status.toLowerCase().includes(query);
-      
+
       if (!matchesSearch) return false;
     }
 
@@ -281,7 +281,7 @@ export default function FarmerList({ onViewDetails }: FarmerListProps) {
       {/* Breadcrumb */}
       <div className="mb-6 flex items-center gap-2" style={{ fontSize: '14px', color: '#666' }}>
         <Home className="w-4 h-4" style={{ color: '#027F83' }} />
-        <button 
+        <button
           onClick={() => {
             console.log('Navigate to home');
           }}
@@ -325,7 +325,7 @@ export default function FarmerList({ onViewDetails }: FarmerListProps) {
           <div className="flex items-center gap-3">
             {/* NLP Search */}
             <div className="relative">
-              <div 
+              <div
                 className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-lg"
                 style={{ backgroundColor: '#F2FCFB' }}
               >
@@ -363,9 +363,8 @@ export default function FarmerList({ onViewDetails }: FarmerListProps) {
                 title={isListening ? 'Listening...' : isProcessingVoice ? 'Processing...' : 'Voice search'}
               >
                 <Mic
-                  className={`w-4 h-4 transition-colors ${
-                    isListening ? 'text-white' : isProcessingVoice ? 'text-white' : ''
-                  }`}
+                  className={`w-4 h-4 transition-colors ${isListening ? 'text-white' : isProcessingVoice ? 'text-white' : ''
+                    }`}
                   style={{
                     color: isListening ? '#FFFFFF' : isProcessingVoice ? '#FFFFFF' : '#666666'
                   }}
@@ -399,13 +398,13 @@ export default function FarmerList({ onViewDetails }: FarmerListProps) {
               <div className="flex items-center gap-2">
                 <Filter className="w-5 h-5" />
                 {activeFilterCount > 0 && (
-                  <span 
+                  <span
                     className="w-5 h-5 rounded-full flex items-center justify-center"
-                    style={{ 
-                      backgroundColor: '#027F83', 
-                      color: '#FFFFFF', 
-                      fontSize: '11px', 
-                      fontWeight: '700' 
+                    style={{
+                      backgroundColor: '#027F83',
+                      color: '#FFFFFF',
+                      fontSize: '11px',
+                      fontWeight: '700'
                     }}
                   >
                     {activeFilterCount}
@@ -651,14 +650,14 @@ export default function FarmerList({ onViewDetails }: FarmerListProps) {
       {/* Filter Drawer */}
       {filterDrawerOpen && (
         <>
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-30 z-40 transition-opacity"
             onClick={() => setFilterDrawerOpen(false)}
           />
 
-          <div 
+          <div
             className="fixed top-0 right-0 h-full w-full md:w-[450px] bg-white shadow-2xl z-50 overflow-y-auto"
-            style={{ 
+            style={{
               animation: 'slideInRight 0.3s ease-out',
               borderLeft: '1px solid #E5EBEF'
             }}
@@ -733,7 +732,7 @@ export default function FarmerList({ onViewDetails }: FarmerListProps) {
                     options={[
                       { value: 'All', label: 'All States' },
                       { value: 'Maharashtra', label: 'Maharashtra' },
-                      { value: 'Karnataka', label: 'Karnataka' },
+                      { value: 'Maharashtra', label: 'Maharashtra' },
                       { value: 'Gujarat', label: 'Gujarat' },
                       { value: 'Rajasthan', label: 'Rajasthan' }
                     ]}

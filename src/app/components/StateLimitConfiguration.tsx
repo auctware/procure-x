@@ -78,7 +78,7 @@ export default function StateLimitConfiguration() {
   const [stateLimits, setStateLimits] = useState<StateLimit[]>([
     {
       id: '1',
-      state: 'Karnataka',
+      state: 'Maharashtra',
       agency: 'AGENCY ONE',
       scheme: 'MMFT FOR ETHANGK KHARIF 2025',
       season: 'Kharif',
@@ -93,12 +93,12 @@ export default function StateLimitConfiguration() {
   useEffect(() => {
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      
+
       if (query.includes('active') || query.includes('inactive')) {
         setNlpSuggestion('Filtering by status');
-      } else if (query.includes('karnataka') || query.includes('maharashtra') || query.includes('tamil')) {
+      } else if (query.includes('Maharashtra') || query.includes('maharashtra') || query.includes('tamil')) {
         setNlpSuggestion('Searching by state');
-        } else if (query.includes('agency one') || query.includes('agency two') || query.includes('agency three')) {
+      } else if (query.includes('agency one') || query.includes('agency two') || query.includes('agency three')) {
         setNlpSuggestion('Searching by agency');
       } else if (query.includes('kharif') || query.includes('rabi')) {
         setNlpSuggestion('Searching by season');
@@ -200,7 +200,7 @@ export default function StateLimitConfiguration() {
   const filteredData = stateLimits.filter(item => {
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      const matchesSearch = 
+      const matchesSearch =
         item.state.toLowerCase().includes(query) ||
         item.agency.toLowerCase().includes(query) ||
         item.scheme.toLowerCase().includes(query) ||
@@ -208,7 +208,7 @@ export default function StateLimitConfiguration() {
         item.commodity.toLowerCase().includes(query) ||
         item.totalLimit.toLowerCase().includes(query) ||
         item.status.toLowerCase().includes(query);
-      
+
       if (!matchesSearch) return false;
     }
 
@@ -221,18 +221,18 @@ export default function StateLimitConfiguration() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const newItem: StateLimit = {
       id: editingId || (stateLimits.length + 1).toString(),
       ...formData,
-      createdDate: editingId 
+      createdDate: editingId
         ? stateLimits.find(s => s.id === editingId)?.createdDate || new Date().toISOString().split('T')[0]
         : new Date().toISOString().split('T')[0],
       status: 'Active'
     };
 
     if (editingId) {
-      setStateLimits(stateLimits.map(item => 
+      setStateLimits(stateLimits.map(item =>
         item.id === editingId ? newItem : item
       ));
     } else {
@@ -299,7 +299,7 @@ export default function StateLimitConfiguration() {
       {/* Breadcrumb */}
       <div className="mb-6 flex items-center gap-2" style={{ fontSize: '14px', color: '#666' }}>
         <Home className="w-4 h-4" style={{ color: '#027F83' }} />
-        <button 
+        <button
           onClick={() => console.log('Navigate to home')}
           className="hover:underline transition-colors cursor-pointer"
           style={{ color: '#027F83', fontWeight: '500', background: 'none', border: 'none', padding: 0 }}
@@ -331,7 +331,7 @@ export default function StateLimitConfiguration() {
           <div className="flex items-center gap-3">
             {/* NLP Search */}
             <div className="relative">
-              <div 
+              <div
                 className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-lg"
                 style={{ backgroundColor: '#F2FCFB' }}
               >
@@ -339,7 +339,7 @@ export default function StateLimitConfiguration() {
               </div>
               <input
                 type="text"
-                placeholder="Try: 'active configurations', 'Karnataka Agency One'..."
+                placeholder="Try: 'active configurations', 'Maharashtra Agency One'..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="h-12 pl-14 pr-12 rounded-lg border transition-all outline-none"
@@ -369,9 +369,8 @@ export default function StateLimitConfiguration() {
                 title={isListening ? 'Listening...' : isProcessingVoice ? 'Processing...' : 'Voice search'}
               >
                 <Mic
-                  className={`w-4 h-4 transition-colors ${
-                    isListening ? 'text-white' : isProcessingVoice ? 'text-white' : ''
-                  }`}
+                  className={`w-4 h-4 transition-colors ${isListening ? 'text-white' : isProcessingVoice ? 'text-white' : ''
+                    }`}
                   style={{
                     color: isListening ? '#FFFFFF' : isProcessingVoice ? '#FFFFFF' : '#666666'
                   }}
@@ -457,9 +456,9 @@ export default function StateLimitConfiguration() {
             <tbody>
               {filteredData.length > 0 ? (
                 filteredData.map((item) => (
-                  <tr 
+                  <tr
                     key={item.id}
-                    className="border-t transition-colors hover:bg-gray-50" 
+                    className="border-t transition-colors hover:bg-gray-50"
                     style={{ borderColor: '#E5EBEF' }}
                   >
                     <td className="px-6 py-4" style={{ color: '#315B78' }}>
@@ -537,7 +536,7 @@ export default function StateLimitConfiguration() {
                           </button>
 
                           {activeActionMenu === item.id && (
-                            <div 
+                            <div
                               className="absolute right-0 top-full mt-1 w-40 rounded-lg shadow-xl overflow-hidden z-50 border"
                               style={{ backgroundColor: '#FFFFFF', borderColor: '#E5EBEF' }}
                               onClick={(e) => e.stopPropagation()}
@@ -601,14 +600,14 @@ export default function StateLimitConfiguration() {
       {/* Form Drawer */}
       {drawerOpen && (
         <>
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-30 z-40 transition-opacity"
             onClick={handleCloseDrawer}
           />
 
-          <div 
+          <div
             className="fixed top-0 right-0 h-full w-full md:w-[700px] bg-white shadow-2xl z-50 overflow-y-auto"
-            style={{ 
+            style={{
               animation: 'slideInRight 0.3s ease-out',
               borderLeft: '1px solid #E5EBEF'
             }}
@@ -643,7 +642,7 @@ export default function StateLimitConfiguration() {
                         onChange={(value) => setFormData({ ...formData, state: value })}
                         options={[
                           { value: '', label: 'Select State' },
-                          { value: 'Karnataka', label: 'Karnataka' },
+                          { value: 'Maharashtra', label: 'Maharashtra' },
                           { value: 'Maharashtra', label: 'Maharashtra' },
                           { value: 'Tamil Nadu', label: 'Tamil Nadu' },
                           { value: 'Gujarat', label: 'Gujarat' }
@@ -779,7 +778,7 @@ export default function StateLimitConfiguration() {
                     <CheckCircle2 className="w-5 h-5" style={{ color: '#027F83' }} />
                     {editingId ? 'Update Configuration' : 'Create Configuration'}
                   </button>
-                  
+
                   <button
                     type="button"
                     onClick={handleCloseDrawer}
@@ -804,14 +803,14 @@ export default function StateLimitConfiguration() {
       {/* Filter Drawer */}
       {filterDrawerOpen && (
         <>
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-30 z-40 transition-opacity"
             onClick={() => setFilterDrawerOpen(false)}
           />
 
-          <div 
+          <div
             className="fixed top-0 right-0 h-full w-full md:w-[450px] bg-white shadow-2xl z-50 overflow-y-auto"
-            style={{ 
+            style={{
               animation: 'slideInRight 0.3s ease-out',
               borderLeft: '1px solid #E5EBEF'
             }}
@@ -862,7 +861,7 @@ export default function StateLimitConfiguration() {
                     onChange={(value) => setFilters({ ...filters, state: value })}
                     options={[
                       { value: 'All', label: 'All States' },
-                      { value: 'Karnataka', label: 'Karnataka' },
+                      { value: 'Maharashtra', label: 'Maharashtra' },
                       { value: 'Maharashtra', label: 'Maharashtra' },
                       { value: 'Tamil Nadu', label: 'Tamil Nadu' }
                     ]}
@@ -905,7 +904,7 @@ export default function StateLimitConfiguration() {
                 >
                   Apply Filters
                 </button>
-                
+
                 <button
                   onClick={clearFilters}
                   className="px-6 h-12 rounded-lg transition-all"
